@@ -33,7 +33,7 @@ export default function Navbar() {
             {/* Desktop Logo (md and up) */}
             <div className="relative w-56 h-20 hidden md:block">
               <Image
-                src="/images/navlogo11.png"
+                src="/images/navlogo12.png"
                 alt="Christopher Ryan Properties"
                 fill
                 className="object-contain brightness-125 contrast-150 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
@@ -44,7 +44,7 @@ export default function Navbar() {
             {/* Mobile Logo (below md) */}
             <div className="relative w-35 h-12 md:hidden">
               <Image
-                src="/images/navlogo11.png"
+                src="/images/navlogo12.png"
                 alt="Christopher Ryan Properties"
                 fill
                 className="object-contain brightness-125 contrast-150 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"

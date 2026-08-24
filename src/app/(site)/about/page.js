@@ -126,7 +126,7 @@ export default function About() {
         {/* <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: `url('/images/navlogo11.png')`,
+            backgroundImage: `url('/images/navlogo12.png')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
             backgroundSize: "50% auto",
@@ -139,7 +139,7 @@ export default function About() {
         <div
           className="absolute inset-0 pointer-events-none sm:hidden"
           style={{
-            backgroundImage: `url('/images/navlogo11.png')`,
+            backgroundImage: `url('/images/navlogo12.png')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
             backgroundSize: "75% auto",
