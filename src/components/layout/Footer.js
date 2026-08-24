@@ -368,7 +368,7 @@ export default function Footer() {
               <p className="text-[10px] uppercase tracking-[0.2em] font-bold mb-3" style={{ color: MINT }}>
                 Follow Along
               </p>
-              <div className="flex items-center gap-2.5">
+              {/* <div className="flex items-center gap-2.5">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
@@ -398,7 +398,7 @@ export default function Footer() {
                     {social.icon}
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
 

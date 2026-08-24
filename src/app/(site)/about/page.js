@@ -451,8 +451,8 @@ export default function About() {
                   <span
                     className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg shrink-0 transition-colors"
                     style={{
-                      backgroundColor: `${DARK}40`,
-                      border: `1px solid ${MINT}40`,
+                       backgroundColor: `${MINT}30`,
+                      border: `1px solid ${MINT}60`,
                     }}
                   >
                     <svg
