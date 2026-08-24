@@ -364,7 +364,7 @@ export default function HeroSection() {
           </div>
 
           {/* Social proof */}
-          <Link
+          {/* <Link
             href="/testimonials"
             className="group mt-8 sm:mt-9 flex w-fit items-center gap-3 sm:gap-4"
           >
@@ -403,7 +403,7 @@ export default function HeroSection() {
             >
               ( Testimonials )
             </span>
-          </Link>
+          </Link> */}
         </div>
 
         {/* ============ RIGHT : PROPERTY GALLERY ============ */}

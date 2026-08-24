@@ -126,7 +126,7 @@ export default function About() {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: `url('/images/navbarlogo1.png')`,
+            backgroundImage: `url('/images/navlogo11.png')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
             backgroundSize: "50% auto",
@@ -139,7 +139,7 @@ export default function About() {
         <div
           className="absolute inset-0 pointer-events-none sm:hidden"
           style={{
-            backgroundImage: `url('/images/navbarlogo1.png')`,
+            backgroundImage: `url('/images/navlogo11.png')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
             backgroundSize: "75% auto",
@@ -320,7 +320,7 @@ export default function About() {
             >
               Hi, I&apos;m{" "}
               <span className="relative inline-block">
-                <span style={{ color: MINT }}>Christopher Ryan</span>
+                <span style={{ color: '#fffff' }}>Christopher Ryan</span>
                 <svg
                   className="absolute -bottom-1 left-0 w-full"
                   height="8"
@@ -419,13 +419,13 @@ export default function About() {
                   <span
                     className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg shrink-0 transition-colors"
                     style={{
-                      backgroundColor: `${GREEN}30`,
-                      border: `1px solid ${GREEN}60`,
+                       backgroundColor: `${MINT}30`,
+                      border: `1px solid ${MINT}60`,
                     }}
                   >
                     <svg
                       className="w-4 h-4 sm:w-5 sm:h-5"
-                      style={{ color: GREEN }}
+                      style={{ color: MINT }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

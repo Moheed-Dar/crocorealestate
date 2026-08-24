@@ -500,7 +500,7 @@
 //         <div className="absolute inset-0 flex items-center justify-center opacity-[0.3]">
 //           <div className="relative w-75 h-75 sm:w-100 sm:h-100">
 //             <Image
-//               src="/images/solidlogo11.png"
+//               src="/images/logo12.png"
 //               alt="Watermark"
 //               fill
 //               className="object-contain"
@@ -941,7 +941,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.06]">
           <div className="relative w-75 h-75 sm:w-100 sm:h-100">
             <Image
-              src="/images/solidlogo11.png"
+              src="/images/logo12.png"
               alt="Watermark"
               fill
               className="object-contain"

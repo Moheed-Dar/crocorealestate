@@ -245,7 +245,7 @@ export default function Footer() {
           <div className="lg:col-span-6 flex flex-col">
             <div className="mb-6">
               <Image
-                src="/images/solidlogo11.png"
+                src="/images/navlogo11.png"
                 alt="Christopher Ryan Logo"
                 width={180}
                 height={55}

@@ -107,7 +107,7 @@
 //       {/* ===== LOGO WATERMARK ===== */}
 //       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
 //         <img
-//           src="/images/solidlogo11.png"
+//           src="/images/logo12.png"
 //           alt="Logo Watermark"
 //           width={400}
 //           height={400}
@@ -188,7 +188,7 @@ export default function AdminLoginPage() {
       {/* ===== LOGO WATERMARK ===== */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
         <img
-          src="/images/solidlogo11.png"
+          src="/images/logo12.png"
           alt="Logo Watermark"
           width={400}
           height={400}

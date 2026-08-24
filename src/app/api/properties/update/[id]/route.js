@@ -1919,7 +1919,7 @@ const updatePropertyHandler = async (request, context, user) => {
     updateData.updatedBy = user._id;
 
     const updatedProperty = await Property.findByIdAndUpdate(id, updateData, {
-      new: true,
+      returnDocument: 'after', 
       runValidators: true,
     });
 

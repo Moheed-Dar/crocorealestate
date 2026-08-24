@@ -7,7 +7,7 @@ const page = () => {
     <>
     <Hero/>
     <About/>
-    <Testimonials/>
+    {/* <Testimonials/> */}
     </>
   )
 }

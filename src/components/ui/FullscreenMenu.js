@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const DEFAULT_NAV_LINKS = [
   { label: "Home", href: "/", icon: Home },
   { label: "About", href: "/about", icon: User },
-  { label: "Testimonials", href: "/testimonials", icon: Building2 },
+  // { label: "Testimonials", href: "/testimonials", icon: Building2 },
   { label: "Blogs", href: "/blogs", icon: BookOpen },
 ];
 
@@ -216,7 +216,7 @@ export default function FullscreenMenu({ isOpen, onClose }) {
                 <div className="relative w-24 h-8 flex items-center justify-center">
                   <div className="relative z-10 mt-10 w-50 h-20">
                     <Image
-                      src="/images/solidlogo11.png"
+                      src="/images/logo12.png"
                       alt="Christopher Ryan"
                       fill
                       className="object-contain"
