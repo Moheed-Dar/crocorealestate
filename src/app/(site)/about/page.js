@@ -123,7 +123,7 @@ export default function About() {
         />
 
         {/* ===== WATERMARK: navbarlogo11.png (PROPERLY VISIBLE) ===== */}
-        <div
+        {/* <div
           className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage: `url('/images/navlogo11.png')`,
@@ -133,7 +133,7 @@ export default function About() {
             opacity: 0.15,
             mixBlendMode: "multiply",
           }}
-        />
+        /> */}
 
         {/* Mobile pe watermark chhota */}
         <div
