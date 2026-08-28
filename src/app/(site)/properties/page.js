@@ -35,28 +35,34 @@ const inter = Inter({
 });
 
 // ==========================================
-// ✅ UPDATED COLOR PALETTE
+// ✅ BLACK & WHITE (MONOCHROME) SCHEME
 // ==========================================
-const TEAL = "#019586";
-const DARK_TEAL = "#014D41";
-const MINT = "#B1F1E9";
-const BRIGHT_CYAN = "#04D3C7";
+const BLACK = "#000000";
+const DARK_GRAY = "#333333";
+const PURE_WHITE = "#FFFFFF";
+const LIGHT_GRAY = "#E5E5E5"; // Mapped to MINT
 
-// Derived colors from new palette
-const NAVY = "#0A2D28";
-const NAVY_LIGHT = "#0F3D36";
-const NAVY_DARK = "#06211D";
-const NAVY_CARD = "#0D332D";
+// Derived colors mapped to old palette
+const TEAL = PURE_WHITE;       // Main accent on dark bg is white
+const DARK_TEAL = BLACK;
+const MINT = LIGHT_GRAY;
+const BRIGHT_CYAN = DARK_GRAY;
 
-// Creamy White with opacity helpers
-const CREAM_30 = "#B1F1E94D";
-const CREAM_40 = "#B1F1E966";
-const CREAM_50 = "#B1F1E980";
-const CREAM_60 = "#B1F1E999";
-const CREAM_70 = "#B1F1E9B3";
-const CREAM_75 = "#B1F1E9BF";
-const CREAM_80 = "#B1F1E9CC";
-const CREAM_90 = "#B1F1E9E6";
+const NAVY = BLACK;
+const NAVY_LIGHT = "#1A1A1A";
+const NAVY_DARK = "#000000";
+const NAVY_CARD = "#111111"; // Slightly lighter than bg for cards
+
+// White opacity helpers (replacing CREAM)
+const CREAM_20 = "rgba(255, 255, 255, 0.2)";
+const CREAM_30 = "rgba(255, 255, 255, 0.3)";
+const CREAM_40 = "rgba(255, 255, 255, 0.4)";
+const CREAM_50 = "rgba(255, 255, 255, 0.5)";
+const CREAM_60 = "rgba(255, 255, 255, 0.6)";
+const CREAM_70 = "rgba(255, 255, 255, 0.7)";
+const CREAM_75 = "rgba(255, 255, 255, 0.75)";
+const CREAM_80 = "rgba(255, 255, 255, 0.8)";
+const CREAM_90 = "rgba(255, 255, 255, 0.9)";
 
 const PROPERTY_TYPES = [
   "all",
@@ -97,27 +103,27 @@ const PLACEHOLDER =
   "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80";
 
 // ============================================
-// STATUS COLOR HELPER
+// STATUS COLOR HELPER (Grayscale)
 // ============================================
 const getStatusStyles = (status) => {
   const s = (status || "").toLowerCase().trim();
   switch (s) {
     case "available":
-      return "bg-emerald-500/15 text-emerald-300 border border-emerald-400/15";
+      return "bg-gray-400/20 text-gray-100 border border-gray-300/20";
     case "sold":
-      return "bg-red-500/15 text-red-300 border border-red-400/15";
+      return "bg-black/30 text-white/70 border border-white/10";
     case "rented":
-      return "bg-amber-500/15 text-amber-300 border border-amber-400/15";
+      return "bg-gray-500/20 text-gray-200 border border-gray-400/20";
     case "pending":
-      return "bg-yellow-400/15 text-yellow-200 border border-yellow-300/15";
+      return "bg-gray-600/20 text-gray-300 border border-gray-500/20";
     case "reserved":
-      return "bg-purple-500/15 text-purple-300 border border-purple-400/15";
+      return "bg-gray-700/20 text-gray-300 border border-gray-600/20";
     case "under construction":
-      return "bg-sky-500/15 text-sky-300 border border-sky-400/15";
+      return "bg-gray-500/15 text-gray-300 border border-gray-400/15";
     case "off plan":
-      return "bg-indigo-500/15 text-indigo-300 border border-indigo-400/15";
+      return "bg-gray-600/15 text-gray-300 border border-gray-500/15";
     case "new":
-      return "bg-teal-500/15 text-teal-300 border border-teal-400/15";
+      return "bg-white/15 text-white border border-white/20";
     default:
       return "bg-gray-500/15 text-gray-300 border border-gray-400/15";
   }
@@ -126,14 +132,14 @@ const getStatusStyles = (status) => {
 const getStatusDotColor = (status) => {
   const s = (status || "").toLowerCase().trim();
   switch (s) {
-    case "available": return "bg-emerald-400";
-    case "sold": return "bg-red-400";
-    case "rented": return "bg-amber-400";
-    case "pending": return "bg-yellow-400";
-    case "reserved": return "bg-purple-400";
-    case "under construction": return "bg-sky-400";
-    case "off plan": return "bg-indigo-400";
-    case "new": return "bg-teal-400";
+    case "available": return "bg-gray-200";
+    case "sold": return "bg-white/40";
+    case "rented": return "bg-gray-300";
+    case "pending": return "bg-gray-400";
+    case "reserved": return "bg-gray-400";
+    case "under construction": return "bg-gray-400";
+    case "off plan": return "bg-gray-500";
+    case "new": return "bg-white";
     default: return "bg-gray-400";
   }
 };
@@ -154,7 +160,7 @@ const HighlightText = ({ text, query }) => {
     <>
       {parts.map((part, i) =>
         regex.test(part) ? (
-          <span key={i} style={{ color: TEAL }} className="font-semibold">
+          <span key={i} style={{ color: PURE_WHITE }} className="font-semibold">
             {part}
           </span>
         ) : (
@@ -177,15 +183,15 @@ const DarkSelect = ({ value, onChange, options, className = "" }) => (
       style={{
         backgroundColor: `${NAVY_CARD}CC`,
         color: CREAM_90,
-        borderColor: `${MINT}15`,
+        borderColor: `rgba(255,255,255,0.1)`,
         colorScheme: "dark",
       }}
       onFocus={(e) => {
-        e.currentTarget.style.borderColor = `${TEAL}50`;
-        e.currentTarget.style.boxShadow = `0 0 0 2px ${TEAL}20`;
+        e.currentTarget.style.borderColor = `rgba(255,255,255,0.5)`;
+        e.currentTarget.style.boxShadow = `0 0 0 2px rgba(255,255,255,0.2)`;
       }}
       onBlur={(e) => {
-        e.currentTarget.style.borderColor = `${MINT}15`;
+        e.currentTarget.style.borderColor = `rgba(255,255,255,0.1)`;
         e.currentTarget.style.boxShadow = "none";
       }}
     >
@@ -354,12 +360,12 @@ export default function PropertiesPage() {
   const SkeletonCard = () => (
     <div
       className="rounded-2xl overflow-hidden animate-pulse"
-      style={{ backgroundColor: NAVY_CARD, border: `1px solid ${MINT}08` }}
+      style={{ backgroundColor: NAVY_CARD, border: `1px solid rgba(255,255,255,0.05)` }}
     >
-      <div className="h-72" style={{ backgroundColor: `${MINT}05` }} />
+      <div className="h-72" style={{ backgroundColor: `rgba(255,255,255,0.05)` }} />
       <div className="p-5 space-y-3">
-        <div className="h-5 rounded w-3/4" style={{ backgroundColor: `${MINT}05` }} />
-        <div className="h-3 rounded w-1/2" style={{ backgroundColor: `${MINT}05` }} />
+        <div className="h-5 rounded w-3/4" style={{ backgroundColor: `rgba(255,255,255,0.05)` }} />
+        <div className="h-3 rounded w-1/2" style={{ backgroundColor: `rgba(255,255,255,0.05)` }} />
       </div>
     </div>
   );
@@ -367,12 +373,12 @@ export default function PropertiesPage() {
   const SkeletonList = () => (
     <div
       className="rounded-2xl overflow-hidden animate-pulse flex h-48"
-      style={{ backgroundColor: NAVY_CARD, border: `1px solid ${MINT}08` }}
+      style={{ backgroundColor: NAVY_CARD, border: `1px solid rgba(255,255,255,0.05)` }}
     >
-      <div className="w-56 shrink-0" style={{ backgroundColor: `${MINT}05` }} />
+      <div className="w-56 shrink-0" style={{ backgroundColor: `rgba(255,255,255,0.05)` }} />
       <div className="p-5 flex-1 space-y-3">
-        <div className="h-5 rounded w-2/3" style={{ backgroundColor: `${MINT}05` }} />
-        <div className="h-3 rounded w-1/3" style={{ backgroundColor: `${MINT}05` }} />
+        <div className="h-5 rounded w-2/3" style={{ backgroundColor: `rgba(255,255,255,0.05)` }} />
+        <div className="h-3 rounded w-1/3" style={{ backgroundColor: `rgba(255,255,255,0.05)` }} />
       </div>
     </div>
   );
@@ -393,15 +399,15 @@ export default function PropertiesPage() {
           className="relative h-105 sm:h-110px rounded-2xl overflow-hidden shadow-xl shadow-black/30 cursor-pointer transition-all duration-500"
           style={{
             backgroundColor: NAVY_CARD,
-            border: `1px solid ${MINT}10`,
+            border: `1px solid rgba(255,255,255,0.1)`,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = `0 25px 50px -12px ${TEAL}20`;
-            e.currentTarget.style.borderColor = `${TEAL}30`;
+            e.currentTarget.style.boxShadow = `0 25px 50px -12px rgba(255,255,255,0.2)`;
+            e.currentTarget.style.borderColor = `rgba(255,255,255,0.3)`;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = "0 25px 50px -12px rgba(0,0,0,0.3)";
-            e.currentTarget.style.borderColor = `${MINT}10`;
+            e.currentTarget.style.borderColor = `rgba(255,255,255,0.1)`;
           }}
         >
           <Image
@@ -410,7 +416,7 @@ export default function PropertiesPage() {
             fill
             priority
             unoptimized
-            className="object-cover group-hover:scale-105 transition-transform duration-700"
+            className="object-cover group-hover:scale-105 transition-transform duration-700 grayscale-30 group-hover:grayscale-0"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-black/10 pointer-events-none" />
@@ -423,20 +429,20 @@ export default function PropertiesPage() {
                 <span
                   className="inline-flex items-center gap-1 px-2.5 py-1 backdrop-blur-md text-[10px] font-bold rounded-full uppercase tracking-wider"
                   style={{
-                    backgroundColor: `${TEAL}E0`,
-                    color: NAVY,
+                    backgroundColor: `rgba(255,255,255,0.9)`,
+                    color: BLACK,
                   }}
                 >
-                  <Crown size={9} style={{ fill: NAVY }} />
+                  <Crown size={9} style={{ fill: BLACK }} />
                   Featured
                 </span>
               )}
               <span
                 className="inline-flex items-center px-2.5 py-1 backdrop-blur-md text-[10px] font-bold rounded-full uppercase tracking-wider"
                 style={{
-                  backgroundColor: `${MINT}15`,
+                  backgroundColor: `rgba(255,255,255,0.1)`,
                   color: CREAM_90,
-                  border: `1px solid ${MINT}10`,
+                  border: `1px solid rgba(255,255,255,0.1)`,
                 }}
               >
                 {property.priceType}
@@ -447,12 +453,12 @@ export default function PropertiesPage() {
               className="w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-md transition-all"
               style={{
                 backgroundColor: "rgba(0,0,0,0.3)",
-                border: `1px solid ${MINT}10`,
+                border: `1px solid rgba(255,255,255,0.1)`,
               }}
             >
               <Heart
                 size={15}
-                className={isLiked ? "fill-red-400 text-red-400" : ""}
+                className={isLiked ? "fill-white text-white" : ""}
                 style={!isLiked ? { color: CREAM_70 } : undefined}
               />
             </button>
@@ -465,10 +471,10 @@ export default function PropertiesPage() {
                   className="flex items-center gap-1.5 px-2.5 py-1.5 backdrop-blur-md rounded-lg"
                   style={{
                     backgroundColor: "rgba(0,0,0,0.4)",
-                    border: `1px solid ${MINT}10`,
+                    border: `1px solid rgba(255,255,255,0.1)`,
                   }}
                 >
-                  <Bed size={12} style={{ color: `${TEAL}80` }} />
+                  <Bed size={12} style={{ color: `rgba(255,255,255,0.8)` }} />
                   <span className="text-white text-xs font-semibold">{property.bedrooms}</span>
                 </div>
               )}
@@ -477,10 +483,10 @@ export default function PropertiesPage() {
                   className="flex items-center gap-1.5 px-2.5 py-1.5 backdrop-blur-md rounded-lg"
                   style={{
                     backgroundColor: "rgba(0,0,0,0.4)",
-                    border: `1px solid ${MINT}10`,
+                    border: `1px solid rgba(255,255,255,0.1)`,
                   }}
                 >
-                  <Bath size={12} style={{ color: `${TEAL}80` }} />
+                  <Bath size={12} style={{ color: `rgba(255,255,255,0.8)` }} />
                   <span className="text-white text-xs font-semibold">{property.bathrooms}</span>
                 </div>
               )}
@@ -489,10 +495,10 @@ export default function PropertiesPage() {
                   className="flex items-center gap-1.5 px-2.5 py-1.5 backdrop-blur-md rounded-lg"
                   style={{
                     backgroundColor: "rgba(0,0,0,0.4)",
-                    border: `1px solid ${MINT}10`,
+                    border: `1px solid rgba(255,255,255,0.1)`,
                   }}
                 >
-                  <Maximize size={12} style={{ color: `${TEAL}80` }} />
+                  <Maximize size={12} style={{ color: `rgba(255,255,255,0.8)` }} />
                   <span className="text-white text-xs font-semibold">
                     {property.areaSize || property.area} {property.areaUnit || "sqft"}
                   </span>
@@ -509,9 +515,9 @@ export default function PropertiesPage() {
                 <span
                   className="inline-flex items-center px-2 py-0.5 text-[11px] font-mono font-bold rounded-md"
                   style={{
-                    backgroundColor: `${TEAL}15`,
-                    color: TEAL,
-                    border: `1px solid ${TEAL}25`,
+                    backgroundColor: `rgba(255,255,255,0.1)`,
+                    color: PURE_WHITE,
+                    border: `1px solid rgba(255,255,255,0.2)`,
                   }}
                 >
                   {property.propertyCode}
@@ -520,7 +526,7 @@ export default function PropertiesPage() {
             )}
 
             <div className="flex items-center gap-1.5 text-sm mb-4" style={{ color: CREAM_70 }}>
-              <MapPin size={13} style={{ color: `${TEAL}70` }} className="shrink-0" />
+              <MapPin size={13} style={{ color: `rgba(255,255,255,0.7)` }} className="shrink-0" />
               <span className="truncate">{property.location || property.city}</span>
             </div>
 
@@ -529,7 +535,7 @@ export default function PropertiesPage() {
                 <p
                   className="text-2xl leading-none font-inter"
                   style={{
-                    background: `linear-gradient(to right, ${MINT}, ${TEAL}, ${BRIGHT_CYAN})`,
+                    background: `linear-gradient(to right, ${LIGHT_GRAY}, ${PURE_WHITE}, ${DARK_GRAY})`,
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
@@ -553,9 +559,9 @@ export default function PropertiesPage() {
               <div
                 className="w-9 h-9 flex items-center justify-center rounded-xl opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                 style={{
-                  backgroundColor: TEAL,
-                  color: NAVY,
-                  boxShadow: `0 4px 12px ${TEAL}30`,
+                  backgroundColor: PURE_WHITE,
+                  color: BLACK,
+                  boxShadow: `0 4px 12px rgba(255,255,255,0.3)`,
                 }}
               >
                 <ArrowUpRight size={16} />
@@ -583,15 +589,15 @@ export default function PropertiesPage() {
           className="relative h-52 sm:h-56 rounded-2xl overflow-hidden shadow-lg shadow-black/30 cursor-pointer transition-all duration-500"
           style={{
             backgroundColor: NAVY_CARD,
-            border: `1px solid ${MINT}10`,
+            border: `1px solid rgba(255,255,255,0.1)`,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = `0 25px 50px -12px ${TEAL}20`;
-            e.currentTarget.style.borderColor = `${TEAL}30`;
+            e.currentTarget.style.boxShadow = `0 25px 50px -12px rgba(255,255,255,0.2)`;
+            e.currentTarget.style.borderColor = `rgba(255,255,255,0.3)`;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = "0 25px 50px -12px rgba(0,0,0,0.3)";
-            e.currentTarget.style.borderColor = `${MINT}10`;
+            e.currentTarget.style.borderColor = `rgba(255,255,255,0.1)`;
           }}
         >
           <Image
@@ -599,7 +605,7 @@ export default function PropertiesPage() {
             alt={property.title}
             fill
             unoptimized
-            className="object-cover group-hover:scale-105 transition-transform duration-700"
+            className="object-cover group-hover:scale-105 transition-transform duration-700 grayscale-30 group-hover:grayscale-0"
             sizes="(max-width: 1024px) 100vw"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
@@ -609,18 +615,18 @@ export default function PropertiesPage() {
               {property.isFeatured && (
                 <span
                   className="px-2 py-0.5 text-[9px] font-bold rounded-full uppercase tracking-wider"
-                  style={{ backgroundColor: `${TEAL}E0`, color: NAVY }}
+                  style={{ backgroundColor: `rgba(255,255,255,0.9)`, color: BLACK }}
                 >
-                  <Crown size={8} style={{ fill: NAVY }} className="inline mr-0.5" />
+                  <Crown size={8} style={{ fill: BLACK }} className="inline mr-0.5" />
                   Featured
                 </span>
               )}
               <span
                 className="px-2 py-0.5 backdrop-blur-md text-[9px] font-bold rounded-full uppercase tracking-wider"
                 style={{
-                  backgroundColor: `${MINT}15`,
+                  backgroundColor: `rgba(255,255,255,0.1)`,
                   color: CREAM_90,
-                  border: `1px solid ${MINT}10`,
+                  border: `1px solid rgba(255,255,255,0.1)`,
                 }}
               >
                 {property.priceType}
@@ -637,12 +643,12 @@ export default function PropertiesPage() {
               className="w-8 h-8 flex items-center justify-center rounded-full backdrop-blur-md transition-all"
               style={{
                 backgroundColor: "rgba(0,0,0,0.3)",
-                border: `1px solid ${MINT}10`,
+                border: `1px solid rgba(255,255,255,0.1)`,
               }}
             >
               <Heart
                 size={14}
-                className={isLiked ? "fill-red-400 text-red-400" : ""}
+                className={isLiked ? "fill-white text-white" : ""}
                 style={!isLiked ? { color: CREAM_70 } : undefined}
               />
             </button>
@@ -659,16 +665,16 @@ export default function PropertiesPage() {
                     <span
                       className="inline-block font-mono text-[10px] font-bold mr-2 px-1.5 py-0.5 rounded"
                       style={{
-                        color: `${TEAL}80`,
-                        backgroundColor: `${TEAL}10`,
+                        color: `rgba(255,255,255,0.8)`,
+                        backgroundColor: `rgba(255,255,255,0.1)`,
                       }}
                     >
                       {property.propertyCode}
                     </span>
                   )}
-                  <MapPin size={11} style={{ color: `${TEAL}70` }} />
+                  <MapPin size={11} style={{ color: `rgba(255,255,255,0.7)` }} />
                   <span className="truncate">{property.location || property.city}</span>
-                  <span style={{ color: `${MINT}20` }} className="mx-1">·</span>
+                  <span style={{ color: `rgba(255,255,255,0.2)` }} className="mx-1">·</span>
                   <div className="flex items-center gap-2">
                     {property.bedrooms > 0 && <span>{property.bedrooms} Bed</span>}
                     {property.bathrooms > 0 && <span>{property.bathrooms} Bath</span>}
@@ -681,7 +687,7 @@ export default function PropertiesPage() {
               <p
                 className="text-xl leading-none font-inter"
                 style={{
-                  background: `linear-gradient(to right, ${MINT}, ${TEAL})`,
+                  background: `linear-gradient(to right, ${LIGHT_GRAY}, ${PURE_WHITE})`,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}
@@ -700,7 +706,7 @@ export default function PropertiesPage() {
   // ============================================
   const darkOptionStyle = {
     backgroundColor: NAVY_CARD,
-    color: MINT,
+    color: PURE_WHITE,
     padding: "8px 12px",
   };
 
@@ -708,13 +714,20 @@ export default function PropertiesPage() {
   // RENDER
   // ============================================
   return (
-    <div className="min-h-screen font-inter" style={{ backgroundColor: NAVY }}>
+    <div className="min-h-screen font-inter">
       {/* Background Texture + Watermark */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Main Background Gradient: Top Black to Bottom White */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom, ${BLACK} 0%, #0a0a0a 60%, #121212 80%, ${PURE_WHITE} 100%)`,
+          }}
+        />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, ${TEAL} 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, ${PURE_WHITE} 1px, transparent 0)`,
             backgroundSize: "40px 40px",
           }}
         />
@@ -732,13 +745,13 @@ export default function PropertiesPage() {
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse at top left, ${TEAL}10 0%, transparent 40%)`,
+            background: `radial-gradient(ellipse at top left, rgba(255,255,255,0.1) 0%, transparent 40%)`,
           }}
         />
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse at bottom right, ${MINT}08 0%, transparent 50%)`,
+            background: `radial-gradient(ellipse at bottom right, rgba(255,255,255,0.05) 0%, transparent 50%)`,
           }}
         />
       </div>
@@ -751,12 +764,12 @@ export default function PropertiesPage() {
               <div
                 className="w-8 h-px"
                 style={{
-                  background: `linear-gradient(to right, ${TEAL}, transparent)`,
+                  background: `linear-gradient(to right, ${PURE_WHITE}, transparent)`,
                 }}
               />
               <p
                 className="text-sm font-semibold uppercase tracking-[0.2em] flex items-center gap-2"
-                style={{ color: TEAL }}
+                style={{ color: PURE_WHITE }}
               >
                 <Building2 size={14} />
                 Explore Listings
@@ -778,8 +791,8 @@ export default function PropertiesPage() {
                   <div
                     className="relative flex items-center rounded-2xl transition-all"
                     style={{
-                      backgroundColor: `${MINT}0A`,
-                      border: `1px solid ${MINT}15`,
+                      backgroundColor: `rgba(255,255,255,0.04)`,
+                      border: `1px solid rgba(255,255,255,0.1)`,
                     }}
                   >
                     <Search size={16} className="absolute left-3.5" style={{ color: CREAM_40 }} />
@@ -796,7 +809,7 @@ export default function PropertiesPage() {
                       }}
                       placeholder="Search by title, location, or property code..."
                       className="w-full pl-9 pr-20 py-3 text-sm bg-transparent text-white focus:outline-none"
-                      style={{ color: MINT }}
+                      style={{ color: PURE_WHITE }}
                       autoComplete="off"
                     />
                     {searchInput && (
@@ -804,7 +817,7 @@ export default function PropertiesPage() {
                         type="button"
                         onClick={handleClearSearch}
                         className="absolute right-12 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full transition-colors group"
-                        style={{ backgroundColor: `${MINT}08` }}
+                        style={{ backgroundColor: `rgba(255,255,255,0.05)` }}
                         title="Clear search"
                       >
                         <X size={14} style={{ color: CREAM_50 }} />
@@ -814,9 +827,9 @@ export default function PropertiesPage() {
                       type="submit"
                       className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-xl transition-colors"
                       style={{
-                        backgroundColor: TEAL,
-                        color: NAVY,
-                        boxShadow: `0 4px 12px ${TEAL}25`,
+                        backgroundColor: PURE_WHITE,
+                        color: BLACK,
+                        boxShadow: `0 4px 12px rgba(255,255,255,0.25)`,
                       }}
                       title="Search"
                     >
@@ -836,25 +849,25 @@ export default function PropertiesPage() {
                       transition={{ duration: 0.2 }}
                       className="absolute top-full left-0 right-0 mt-2 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 overflow-hidden z-50"
                       style={{
-                        backgroundColor: `${NAVY_CARD}F2`,
-                        border: `1px solid ${MINT}10`,
+                        backgroundColor: `rgba(17,17,17,0.95)`,
+                        border: `1px solid rgba(255,255,255,0.1)`,
                       }}
                     >
-                      <div className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: `1px solid ${MINT}08` }}>
+                      <div className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: `1px solid rgba(255,255,255,0.05)` }}>
                         <span className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: CREAM_40 }}>
                           {suggestions.length} suggestion{suggestions.length !== 1 ? "s" : ""} found
                         </span>
                         <button
                           onClick={() => setShowSuggestions(false)}
                           className="w-5 h-5 flex items-center justify-center rounded-full transition-colors"
-                          style={{ backgroundColor: `${MINT}08` }}
+                          style={{ backgroundColor: `rgba(255,255,255,0.05)` }}
                         >
                           <X size={11} style={{ color: CREAM_30 }} />
                         </button>
                       </div>
                       <div
                         className="max-h-80 overflow-y-auto"
-                        style={{ scrollbarWidth: "thin", scrollbarColor: `${TEAL}30 transparent` }}
+                        style={{ scrollbarWidth: "thin", scrollbarColor: `rgba(255,255,255,0.3) transparent` }}
                       >
                         {suggestions.map((property) => {
                           const img = getSafeImg(property.thumbnail) || getSafeImg(property.images?.[0]) || PLACEHOLDER;
@@ -864,25 +877,25 @@ export default function PropertiesPage() {
                               href={`/properties/${property._id}`}
                               onClick={handleSuggestionClick}
                               className="flex items-center gap-3.5 px-4 py-3 transition-colors"
-                              style={{ borderBottom: `1px solid ${MINT}05` }}
-                              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${MINT}08`)}
+                              style={{ borderBottom: `1px solid rgba(255,255,255,0.05)` }}
+                              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `rgba(255,255,255,0.05)`)}
                               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                             >
                               <div
                                 className="relative w-16 h-12 rounded-lg overflow-hidden shrink-0 shadow-lg shadow-black/30"
                                 style={{
-                                  backgroundColor: `${MINT}05`,
-                                  boxShadow: `inset 0 0 0 1px ${MINT}10`,
+                                  backgroundColor: `rgba(255,255,255,0.05)`,
+                                  boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.1)`,
                                 }}
                               >
-                                <Image src={img} alt="" fill className="object-cover" sizes="64px" unoptimized />
+                                <Image src={img} alt="" fill className="object-cover grayscale-30" sizes="64px" unoptimized />
                               </div>
                               <div className="flex-1 min-w-0">
                                 <p className="text-sm font-semibold text-white leading-tight line-clamp-1 font-inter">
                                   <HighlightText text={property.title} query={searchInput} />
                                 </p>
                                 <div className="flex items-center gap-1.5 mt-1">
-                                  <MapPin size={10} style={{ color: `${TEAL}70` }} className="shrink-0" />
+                                  <MapPin size={10} style={{ color: `rgba(255,255,255,0.7)` }} className="shrink-0" />
                                   <span className="text-[11px] truncate" style={{ color: CREAM_50 }}>
                                     <HighlightText text={property.location || property.city || "N/A"} query={searchInput} />
                                   </span>
@@ -890,8 +903,8 @@ export default function PropertiesPage() {
                                     <span
                                       className="ml-2 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded"
                                       style={{
-                                        color: `${TEAL}70`,
-                                        backgroundColor: `${TEAL}10`,
+                                        color: `rgba(255,255,255,0.7)`,
+                                        backgroundColor: `rgba(255,255,255,0.1)`,
                                       }}
                                     >
                                       {property.propertyCode}
@@ -906,24 +919,24 @@ export default function PropertiesPage() {
                                 <span className={`inline-block w-2 h-2 rounded-full ${getStatusDotColor(property.status)}`} title={property.status} />
                                 <div
                                   className="w-6 h-6 rounded-md flex items-center justify-center"
-                                  style={{ backgroundColor: `${TEAL}10` }}
+                                  style={{ backgroundColor: `rgba(255,255,255,0.1)` }}
                                 >
-                                  <ArrowUpRight size={11} style={{ color: `${TEAL}60` }} />
+                                  <ArrowUpRight size={11} style={{ color: `rgba(255,255,255,0.6)` }} />
                                 </div>
                               </div>
                             </Link>
                           );
                         })}
                       </div>
-                      <div style={{ borderTop: `1px solid ${MINT}05` }}>
+                      <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)` }}>
                         <button
                           onClick={() => {
                             setSearch(searchInput);
                             setShowSuggestions(false);
                           }}
                           className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold transition-colors"
-                          style={{ color: TEAL }}
-                          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${TEAL}10`)}
+                          style={{ color: PURE_WHITE }}
+                          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `rgba(255,255,255,0.1)`)}
                           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                         >
                           <Search size={12} />
@@ -946,19 +959,19 @@ export default function PropertiesPage() {
                       transition={{ duration: 0.2 }}
                       className="absolute top-full left-0 right-0 mt-2 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 overflow-hidden z-50"
                       style={{
-                        backgroundColor: `${NAVY_CARD}F2`,
-                        border: `1px solid ${MINT}10`,
+                        backgroundColor: `rgba(17,17,17,0.95)`,
+                        border: `1px solid rgba(255,255,255,0.1)`,
                       }}
                     >
                       <div className="flex flex-col items-center justify-center py-8 px-4">
                         <div
                           className="w-10 h-10 rounded-full flex items-center justify-center mb-3"
                           style={{
-                            backgroundColor: `${TEAL}08`,
-                            border: `1px solid ${TEAL}15`,
+                            backgroundColor: `rgba(255,255,255,0.05)`,
+                            border: `1px solid rgba(255,255,255,0.1)`,
                           }}
                         >
-                          <Search size={16} style={{ color: `${TEAL}40` }} />
+                          <Search size={16} style={{ color: `rgba(255,255,255,0.4)` }} />
                         </div>
                         <p className="text-sm font-medium" style={{ color: CREAM_50 }}>No matches found</p>
                         <p className="text-[11px] mt-1" style={{ color: CREAM_30 }}>Try different keywords</p>
@@ -972,8 +985,8 @@ export default function PropertiesPage() {
               <div
                 className="shrink-0 px-3 py-1.5 backdrop-blur-sm rounded-full text-xs font-medium whitespace-nowrap"
                 style={{
-                  backgroundColor: `${MINT}0A`,
-                  border: `1px solid ${MINT}10`,
+                  backgroundColor: `rgba(255,255,255,0.04)`,
+                  border: `1px solid rgba(255,255,255,0.1)`,
                   color: CREAM_80,
                 }}
               >
@@ -986,8 +999,8 @@ export default function PropertiesPage() {
                 disabled={loading}
                 className="p-2.5 rounded-xl transition-all shrink-0 disabled:opacity-40"
                 style={{
-                  backgroundColor: `${MINT}0A`,
-                  border: `1px solid ${MINT}15`,
+                  backgroundColor: `rgba(255,255,255,0.04)`,
+                  border: `1px solid rgba(255,255,255,0.1)`,
                   color: CREAM_60,
                 }}
                 title="Refresh listings"
@@ -1002,14 +1015,14 @@ export default function PropertiesPage() {
                 style={
                   showFilters || hasActiveFilters
                     ? {
-                        backgroundColor: TEAL,
-                        color: NAVY,
-                        boxShadow: `0 4px 12px ${TEAL}25`,
+                        backgroundColor: PURE_WHITE,
+                        color: BLACK,
+                        boxShadow: `0 4px 12px rgba(255,255,255,0.25)`,
                       }
                     : {
-                        backgroundColor: `${MINT}0A`,
+                        backgroundColor: `rgba(255,255,255,0.04)`,
                         color: CREAM_70,
-                        border: `1px solid ${MINT}15`,
+                        border: `1px solid rgba(255,255,255,0.1)`,
                       }
                 }
               >
@@ -1018,7 +1031,7 @@ export default function PropertiesPage() {
                 {hasActiveFilters && (
                   <span
                     className="w-4 h-4 flex items-center justify-center text-[10px] font-black rounded-full"
-                    style={{ backgroundColor: NAVY, color: TEAL }}
+                    style={{ backgroundColor: BLACK, color: PURE_WHITE }}
                   >
                     !
                   </span>
@@ -1029,8 +1042,8 @@ export default function PropertiesPage() {
               <div
                 className="flex items-center rounded-xl p-1 shrink-0"
                 style={{
-                  backgroundColor: `${MINT}0A`,
-                  border: `1px solid ${MINT}10`,
+                  backgroundColor: `rgba(255,255,255,0.04)`,
+                  border: `1px solid rgba(255,255,255,0.1)`,
                 }}
               >
                 <button
@@ -1038,7 +1051,7 @@ export default function PropertiesPage() {
                   className="p-1.5 rounded-lg transition-colors"
                   style={
                     viewMode === "grid"
-                      ? { backgroundColor: TEAL, color: NAVY, boxShadow: `0 4px 12px ${TEAL}25` }
+                      ? { backgroundColor: PURE_WHITE, color: BLACK, boxShadow: `0 4px 12px rgba(255,255,255,0.25)` }
                       : { color: CREAM_40 }
                   }
                 >
@@ -1049,7 +1062,7 @@ export default function PropertiesPage() {
                   className="p-1.5 rounded-lg transition-colors"
                   style={
                     viewMode === "list"
-                      ? { backgroundColor: TEAL, color: NAVY, boxShadow: `0 4px 12px ${TEAL}25` }
+                      ? { backgroundColor: PURE_WHITE, color: BLACK, boxShadow: `0 4px 12px rgba(255,255,255,0.25)` }
                       : { color: CREAM_40 }
                   }
                 >
@@ -1085,9 +1098,9 @@ export default function PropertiesPage() {
                   <span
                     className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full capitalize"
                     style={{
-                      backgroundColor: `${TEAL}20`,
-                      color: MINT,
-                      border: `1px solid ${TEAL}25`,
+                      backgroundColor: `rgba(255,255,255,0.1)`,
+                      color: PURE_WHITE,
+                      border: `1px solid rgba(255,255,255,0.2)`,
                     }}
                   >
                     {propertyType}
@@ -1098,9 +1111,9 @@ export default function PropertiesPage() {
                   <span
                     className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full capitalize"
                     style={{
-                      backgroundColor: `${TEAL}20`,
-                      color: MINT,
-                      border: `1px solid ${TEAL}25`,
+                      backgroundColor: `rgba(255,255,255,0.1)`,
+                      color: PURE_WHITE,
+                      border: `1px solid rgba(255,255,255,0.2)`,
                     }}
                   >
                     {priceType}
@@ -1111,9 +1124,9 @@ export default function PropertiesPage() {
                   <span
                     className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full"
                     style={{
-                      backgroundColor: `${TEAL}20`,
-                      color: MINT,
-                      border: `1px solid ${TEAL}25`,
+                      backgroundColor: `rgba(255,255,255,0.1)`,
+                      color: PURE_WHITE,
+                      border: `1px solid rgba(255,255,255,0.2)`,
                     }}
                   >
                     &quot;{search.slice(0, 15)}&quot;
@@ -1123,7 +1136,7 @@ export default function PropertiesPage() {
                 <button
                   onClick={clearAllFilters}
                   className="text-[11px] font-semibold hover:underline"
-                  style={{ color: BRIGHT_CYAN }}
+                  style={{ color: PURE_WHITE }}
                 >
                   Clear all
                 </button>
@@ -1143,8 +1156,8 @@ export default function PropertiesPage() {
             transition={{ duration: 0.25 }}
             className="relative z-40 overflow-hidden backdrop-blur-xl shadow-lg"
             style={{
-              backgroundColor: `${NAVY_LIGHT}F2`,
-              borderBottom: `1px solid ${MINT}10`,
+              backgroundColor: `rgba(26,26,26,0.95)`,
+              borderBottom: `1px solid rgba(255,255,255,0.1)`,
             }}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5">
@@ -1207,10 +1220,10 @@ export default function PropertiesPage() {
                     onClick={clearAllFilters}
                     className="w-full px-4 py-2.5 text-sm font-semibold rounded-xl transition-colors"
                     style={{
-                      border: `1px solid ${MINT}15`,
+                      border: `1px solid rgba(255,255,255,0.1)`,
                       color: CREAM_60,
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${MINT}0A`)}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `rgba(255,255,255,0.05)`)}
                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                   >
                     Reset
@@ -1243,11 +1256,11 @@ export default function PropertiesPage() {
             <div
               className="w-20 h-20 rounded-full flex items-center justify-center mb-4"
               style={{
-                backgroundColor: `${TEAL}10`,
-                border: `1px solid ${TEAL}15`,
+                backgroundColor: `rgba(255,255,255,0.1)`,
+                border: `1px solid rgba(255,255,255,0.15)`,
               }}
             >
-              <Search size={28} style={{ color: `${TEAL}40` }} />
+              <Search size={28} style={{ color: `rgba(255,255,255,0.4)` }} />
             </div>
             <h3 className="text-lg text-white mb-1 font-inter">No Properties Found</h3>
             <p className="text-sm max-w-sm mb-4" style={{ color: CREAM_60 }}>
@@ -1260,9 +1273,9 @@ export default function PropertiesPage() {
                 onClick={clearAllFilters}
                 className="px-5 py-2.5 text-sm font-semibold rounded-xl transition-colors"
                 style={{
-                  backgroundColor: TEAL,
-                  color: NAVY,
-                  boxShadow: `0 4px 12px ${TEAL}25`,
+                  backgroundColor: PURE_WHITE,
+                  color: BLACK,
+                  boxShadow: `0 4px 12px rgba(255,255,255,0.25)`,
                 }}
               >
                 Clear All Filters
@@ -1291,7 +1304,7 @@ export default function PropertiesPage() {
               disabled={!pagination.hasPrevPage}
               className="w-10 h-10 flex items-center justify-center rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               style={{
-                border: `1px solid ${MINT}15`,
+                border: `1px solid rgba(255,255,255,0.1)`,
                 color: CREAM_40,
               }}
             >
@@ -1317,12 +1330,12 @@ export default function PropertiesPage() {
                     style={
                       page === item
                         ? {
-                            backgroundColor: TEAL,
-                            color: NAVY,
-                            boxShadow: `0 4px 12px ${TEAL}25`,
+                            backgroundColor: PURE_WHITE,
+                            color: BLACK,
+                            boxShadow: `0 4px 12px rgba(255,255,255,0.25)`,
                           }
                         : {
-                            border: `1px solid ${MINT}15`,
+                            border: `1px solid rgba(255,255,255,0.1)`,
                             color: CREAM_50,
                           }
                     }
@@ -1336,7 +1349,7 @@ export default function PropertiesPage() {
               disabled={!pagination.hasNextPage}
               className="w-10 h-10 flex items-center justify-center rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               style={{
-                border: `1px solid ${MINT}15`,
+                border: `1px solid rgba(255,255,255,0.1)`,
                 color: CREAM_40,
               }}
             >

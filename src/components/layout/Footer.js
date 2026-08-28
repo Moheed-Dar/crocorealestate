@@ -14,12 +14,17 @@ import {
 } from "lucide-react";
 
 // ============================================
-// SAME 3-COLOR SCHEME
+// BLACK & WHITE (MONOCHROME) SCHEME
 // ============================================
-const TEAL = "#019586";
-const GREEN = "#00B777";
-const MINT = "#B1F1E9";
-const DARK = "#072A26";
+const BLACK = "#000000";      // Primary Black
+const DARK_GRAY = "#333333";  // Secondary Dark Gray
+const LIGHT_GRAY = "#F4F4F5"; // Main Background / Mint equivalent
+const PURE_WHITE = "#FFFFFF"; // White for cards/text on black
+
+const TEAL = BLACK;
+const GREEN = "#888888";      // Medium gray for small text labels for readability
+const MINT = LIGHT_GRAY;
+const DARK = BLACK;
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -49,7 +54,7 @@ export default function Footer() {
     {
       name: "Facebook",
       href: "https://www.facebook.com/ChristopherRyanConsultantrealtor/",
-      hoverColor: TEAL,
+      hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -59,7 +64,7 @@ export default function Footer() {
     {
       name: "Instagram",
       href: "https://www.instagram.com/ChristopherRyanConsultantrealtor/",
-      hoverColor: GREEN,
+      hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
@@ -69,7 +74,7 @@ export default function Footer() {
     {
       name: "YouTube",
       href: "https://www.youtube.com/@ChristopherRyanConsultant",
-      hoverColor: "#FF0000",
+      hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -79,7 +84,7 @@ export default function Footer() {
     {
       name: "Pinterest",
       href: "https://www.pinterest.com/ChristopherRyan_Consultant/",
-      hoverColor: "#E60023",
+      hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
@@ -91,36 +96,31 @@ export default function Footer() {
   return (
     <footer
       className="relative overflow-hidden text-white"
-      style={{ backgroundColor: DARK }}
+      // Removed backgroundColor: DARK
     >
       {/* ===== LAYERED BACKGROUND ===== */}
       <div className="absolute inset-0 z-0">
+        {/* Main Top-White to Bottom-Black Gradient */}
         <div
           className="absolute inset-0"
           style={{
             background: `
-              linear-gradient(0deg, 
-                ${DARK} 0%, 
-                #061e1b 30%, 
-                #0a2824 55%, 
-                #0e3531 80%,
-                #134039 100%
+              linear-gradient(180deg, 
+                ${PURE_WHITE} 0%, 
+                #E5E5E5 8%, 
+                #2a2a2a 18%, 
+                #121212 35%, 
+                ${BLACK} 60%, 
+                ${BLACK} 100%
               )
             `,
           }}
         />
 
         <div
-          className="absolute inset-x-0 top-0 h-112.5 pointer-events-none"
-          style={{
-            background: `linear-gradient(180deg, ${MINT} 0%, ${MINT}B3 25%, ${MINT}66 55%, transparent 100%)`,
-          }}
-        />
-
-        <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-250 h-96 rounded-full pointer-events-none"
           style={{
-            background: `radial-gradient(circle, ${MINT}CC 0%, ${MINT}66 45%, transparent 70%)`,
+            background: `radial-gradient(circle, ${PURE_WHITE}20 0%, ${PURE_WHITE}10 45%, transparent 70%)`,
             filter: "blur(60px)",
           }}
         />
@@ -128,7 +128,7 @@ export default function Footer() {
         <div
           className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full pointer-events-none"
           style={{
-            background: `radial-gradient(circle, ${GREEN}25 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${DARK_GRAY}40 0%, transparent 70%)`,
             filter: "blur(80px)",
           }}
         />
@@ -136,7 +136,7 @@ export default function Footer() {
         <div
           className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full pointer-events-none"
           style={{
-            background: `radial-gradient(circle, ${MINT}15 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${PURE_WHITE}10 0%, transparent 70%)`,
             filter: "blur(80px)",
           }}
         />
@@ -155,7 +155,7 @@ export default function Footer() {
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, ${MINT} 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, ${LIGHT_GRAY} 1px, transparent 0)`,
             backgroundSize: "48px 48px",
           }}
         />
@@ -166,20 +166,20 @@ export default function Footer() {
         <div
           className="relative mt-12 sm:mt-16 mb-16 rounded-3xl overflow-hidden hidden md:block"
           style={{
-            background: `linear-gradient(135deg, ${TEAL} 0%, ${DARK} 70%, ${GREEN} 140%)`,
-            border: `1px solid ${MINT}20`,
+            background: `linear-gradient(135deg, ${BLACK} 0%, ${DARK} 70%, ${DARK_GRAY} 140%)`,
+            border: `1px solid ${LIGHT_GRAY}20`,
           }}
         >
           <div
             className="absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-30 pointer-events-none"
             style={{
-              background: `radial-gradient(circle, ${MINT} 0%, transparent 70%)`,
+              background: `radial-gradient(circle, ${PURE_WHITE} 0%, transparent 70%)`,
             }}
           />
           <div
             className="absolute -bottom-16 -left-16 w-48 h-48 rounded-full opacity-20 pointer-events-none"
             style={{
-              background: `radial-gradient(circle, ${GREEN} 0%, transparent 70%)`,
+              background: `radial-gradient(circle, ${DARK_GRAY} 0%, transparent 70%)`,
             }}
           />
 
@@ -188,9 +188,9 @@ export default function Footer() {
               <div
                 className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-3"
                 style={{
-                  backgroundColor: `${MINT}20`,
-                  color: MINT,
-                  border: `1px solid ${MINT}30`,
+                  backgroundColor: `${LIGHT_GRAY}20`,
+                  color: LIGHT_GRAY,
+                  border: `1px solid ${LIGHT_GRAY}30`,
                 }}
               >
                 <Sparkles size={12} />
@@ -198,11 +198,11 @@ export default function Footer() {
               </div>
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-[-0.02em]">
                 Ready to find your <br className="hidden sm:block" />
-                <span style={{ color: MINT }}>next chapter?</span>
+                <span style={{ color: LIGHT_GRAY }}>next chapter?</span>
               </h3>
               <p
                 className="mt-3 text-sm sm:text-base max-w-md mx-auto lg:mx-0"
-                style={{ color: `${MINT}CC` }}
+                style={{ color: `${LIGHT_GRAY}CC` }}
               >
                 Whether you're downsizing, upgrading, or investing — I'm here
                 to guide you every step of the way.
@@ -214,8 +214,8 @@ export default function Footer() {
                 href="https://calendar.app.google/zf9eeGFTRRb44AKU6"
                 className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm font-extrabold transition-all duration-300 hover:scale-105 shadow-xl"
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  color: TEAL,
+                  backgroundColor: PURE_WHITE,
+                  color: BLACK,
                 }}
               >
                 Book a Consultation
@@ -228,9 +228,9 @@ export default function Footer() {
                 href="/properties"
                 className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm font-extrabold transition-all duration-300 hover:scale-105"
                 style={{
-                  backgroundColor: `${MINT}15`,
-                  color: MINT,
-                  border: `1px solid ${MINT}40`,
+                  backgroundColor: `${LIGHT_GRAY}15`,
+                  color: LIGHT_GRAY,
+                  border: `1px solid ${LIGHT_GRAY}40`,
                 }}
               >
                 Browse Properties
@@ -257,7 +257,7 @@ export default function Footer() {
 
             <p
               className="text-sm sm:text-base leading-relaxed mb-6 max-w-md"
-              style={{ color: `${MINT}CC` }}
+              style={{ color: `${LIGHT_GRAY}CC` }}
             >
               Helping Northern Virginia homeowners embrace their next chapter with
               thoughtful guidance, local knowledge, and a real estate experience
@@ -270,23 +270,23 @@ export default function Footer() {
                 href="tel:(202) 848-4567"
                 className="group flex items-center gap-3 p-3 rounded-xl transition-all duration-300 hover:-translate-x-1"
                 style={{
-                  backgroundColor: `${MINT}08`,
-                  border: `1px solid ${MINT}15`,
+                  backgroundColor: `${LIGHT_GRAY}08`,
+                  border: `1px solid ${LIGHT_GRAY}15`,
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = `${TEAL}20`;
-                  e.currentTarget.style.borderColor = `${TEAL}40`;
+                  e.currentTarget.style.backgroundColor = `${PURE_WHITE}10`;
+                  e.currentTarget.style.borderColor = `${PURE_WHITE}25`;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = `${MINT}08`;
-                  e.currentTarget.style.borderColor = `${MINT}15`;
+                  e.currentTarget.style.backgroundColor = `${LIGHT_GRAY}08`;
+                  e.currentTarget.style.borderColor = `${LIGHT_GRAY}15`;
                 }}
               >
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors"
                   style={{
-                    backgroundColor: `${TEAL}25`,
-                    color: MINT,
+                    backgroundColor: `${PURE_WHITE}15`,
+                    color: LIGHT_GRAY,
                   }}
                 >
                   <Phone size={16} />
@@ -305,23 +305,23 @@ export default function Footer() {
                 href="mailto:ChristopherRyan@ChristopherRyanConsultant.ca"
                 className="group flex items-center gap-3 p-3 rounded-xl transition-all duration-300 hover:-translate-x-1"
                 style={{
-                  backgroundColor: `${MINT}08`,
-                  border: `1px solid ${MINT}15`,
+                  backgroundColor: `${LIGHT_GRAY}08`,
+                  border: `1px solid ${LIGHT_GRAY}15`,
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = `${TEAL}20`;
-                  e.currentTarget.style.borderColor = `${TEAL}40`;
+                  e.currentTarget.style.backgroundColor = `${PURE_WHITE}10`;
+                  e.currentTarget.style.borderColor = `${PURE_WHITE}25`;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = `${MINT}08`;
-                  e.currentTarget.style.borderColor = `${MINT}15`;
+                  e.currentTarget.style.backgroundColor = `${LIGHT_GRAY}08`;
+                  e.currentTarget.style.borderColor = `${LIGHT_GRAY}15`;
                 }}
               >
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors"
                   style={{
-                    backgroundColor: `${TEAL}25`,
-                    color: MINT,
+                    backgroundColor: `${PURE_WHITE}15`,
+                    color: LIGHT_GRAY,
                   }}
                 >
                   <Mail size={16} />
@@ -339,15 +339,15 @@ export default function Footer() {
               <div
                 className="flex items-center gap-3 p-3 rounded-xl"
                 style={{
-                  backgroundColor: `${MINT}08`,
-                  border: `1px solid ${MINT}15`,
+                  backgroundColor: `${LIGHT_GRAY}08`,
+                  border: `1px solid ${LIGHT_GRAY}15`,
                 }}
               >
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
                   style={{
-                    backgroundColor: `${TEAL}25`,
-                    color: MINT,
+                    backgroundColor: `${PURE_WHITE}15`,
+                    color: LIGHT_GRAY,
                   }}
                 >
                   <MapPin size={16} />
@@ -365,7 +365,7 @@ export default function Footer() {
 
             {/* Social */}
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold mb-3" style={{ color: MINT }}>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-bold mb-3" style={{ color: LIGHT_GRAY }}>
                 Follow Along
               </p>
               {/* <div className="flex items-center gap-2.5">
@@ -377,20 +377,20 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1"
                     style={{
-                      backgroundColor: `${MINT}10`,
-                      border: `1px solid ${MINT}20`,
-                      color: MINT,
+                      backgroundColor: `${LIGHT_GRAY}10`,
+                      border: `1px solid ${LIGHT_GRAY}20`,
+                      color: LIGHT_GRAY,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = social.hoverColor;
-                      e.currentTarget.style.color = "#FFFFFF";
+                      e.currentTarget.style.color = BLACK;
                       e.currentTarget.style.borderColor = "transparent";
                       e.currentTarget.style.boxShadow = `0 6px 16px ${social.hoverColor}60`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = `${MINT}10`;
-                      e.currentTarget.style.color = MINT;
-                      e.currentTarget.style.borderColor = `${MINT}20`;
+                      e.currentTarget.style.backgroundColor = `${LIGHT_GRAY}10`;
+                      e.currentTarget.style.color = LIGHT_GRAY;
+                      e.currentTarget.style.borderColor = `${LIGHT_GRAY}20`;
                       e.currentTarget.style.boxShadow = "none";
                     }}
                     aria-label={social.name}
@@ -408,7 +408,7 @@ export default function Footer() {
             <div>
               <h4
                 className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-extrabold mb-5"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: PURE_WHITE }}
               >
                 <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: GREEN }} />
                 Company
@@ -419,9 +419,9 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="group flex items-center gap-2 text-sm transition-all duration-300"
-                      style={{ color: `${MINT}B0` }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = `${MINT}B0`)}
+                      style={{ color: `${LIGHT_GRAY}B0` }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = `${LIGHT_GRAY}B0`)}
                     >
                       <ArrowUpRight
                         size={12}
@@ -441,9 +441,9 @@ export default function Footer() {
             <div>
               <h4
                 className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-extrabold mb-5"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: PURE_WHITE }}
               >
-                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: TEAL }} />
+                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: LIGHT_GRAY }} />
                 Resources
               </h4>
               <ul className="space-y-3">
@@ -452,9 +452,9 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="group flex items-center gap-2 text-sm transition-all duration-300"
-                      style={{ color: `${MINT}B0` }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = `${MINT}B0`)}
+                      style={{ color: `${LIGHT_GRAY}B0` }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = `${LIGHT_GRAY}B0`)}
                     >
                       <ArrowUpRight
                         size={12}
@@ -473,8 +473,8 @@ export default function Footer() {
               <div
                 className="mt-6 p-4 rounded-xl"
                 style={{
-                  backgroundColor: `${MINT}08`,
-                  border: `1px solid ${MINT}15`,
+                  backgroundColor: `${LIGHT_GRAY}08`,
+                  border: `1px solid ${LIGHT_GRAY}15`,
                 }}
               >
                 <p
@@ -483,13 +483,13 @@ export default function Footer() {
                 >
                   Quick Question?
                 </p>
-                <p className="text-sm mb-3" style={{ color: `${MINT}CC` }}>
+                <p className="text-sm mb-3" style={{ color: `${LIGHT_GRAY}CC` }}>
                   Let's talk about your real estate goals.
                 </p>
                 <Link
                   href="/contact"
                   className="inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 hover:gap-2.5"
-                  style={{ color: MINT }}
+                  style={{ color: LIGHT_GRAY }}
                 >
                   Reach Out
                   <ArrowUpRight size={12} />
@@ -503,35 +503,35 @@ export default function Footer() {
         <div
           className="relative rounded-2xl overflow-hidden mb-12 hidden md:block"
           style={{
-            backgroundColor: `${MINT}08`,
-            border: `1px solid ${MINT}20`,
+            backgroundColor: `${LIGHT_GRAY}08`,
+            border: `1px solid ${LIGHT_GRAY}20`,
           }}
         >
           <div
             className="absolute top-0 left-0 w-full h-0.5"
             style={{
-              background: `linear-gradient(to right, transparent, ${TEAL}, ${GREEN}, transparent)`,
+              background: `linear-gradient(to right, transparent, ${PURE_WHITE}, ${LIGHT_GRAY}, transparent)`,
             }}
           />
           <div
             className="absolute -right-20 -top-20 w-64 h-64 rounded-full opacity-20 pointer-events-none"
             style={{
-              background: `radial-gradient(circle, ${TEAL} 0%, transparent 70%)`,
+              background: `radial-gradient(circle, ${PURE_WHITE} 0%, transparent 70%)`,
             }}
           />
 
           <div className="relative px-5 sm:px-8 lg:px-12 py-6 sm:py-8 flex flex-col md:flex-row items-start md:items-center gap-5">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
-                <Send size={16} style={{ color: GREEN }} />
-                <p className="text-[10px] uppercase tracking-[0.2em] font-extrabold" style={{ color: GREEN }}>
+                <Send size={16} style={{ color: LIGHT_GRAY }} />
+                <p className="text-[10px] uppercase tracking-[0.2em] font-extrabold" style={{ color: LIGHT_GRAY }}>
                   Newsletter
                 </p>
               </div>
-              <h4 className="text-lg sm:text-xl font-extrabold mb-1" style={{ color: "#FFFFFF" }}>
+              <h4 className="text-lg sm:text-xl font-extrabold mb-1" style={{ color: PURE_WHITE }}>
                 Stay Updated with Northern Virginia Real Estate
               </h4>
-              <p className="text-xs sm:text-sm" style={{ color: `${MINT}B0` }}>
+              <p className="text-xs sm:text-sm" style={{ color: `${LIGHT_GRAY}B0` }}>
                 Get market insights, new listings, and tips delivered monthly.
               </p>
             </div>
@@ -545,23 +545,23 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 rounded-full py-3 pl-5 pr-4 text-sm text-white placeholder-white/40 focus:outline-none transition-all duration-300"
                   style={{
-                    backgroundColor: `${MINT}10`,
-                    border: `1px solid ${MINT}25`,
+                    backgroundColor: `${LIGHT_GRAY}10`,
+                    border: `1px solid ${LIGHT_GRAY}25`,
                   }}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = TEAL;
-                    e.currentTarget.style.boxShadow = `0 0 0 3px ${TEAL}25`;
+                    e.currentTarget.style.borderColor = PURE_WHITE;
+                    e.currentTarget.style.boxShadow = `0 0 0 3px ${PURE_WHITE}25`;
                   }}
                   onBlur={(e) => {
-                    e.currentTarget.style.borderColor = `${MINT}25`;
+                    e.currentTarget.style.borderColor = `${LIGHT_GRAY}25`;
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 />
                 <button
                   className="shrink-0 px-5 sm:px-6 rounded-full text-sm font-extrabold text-white transition-all duration-300 hover:scale-105 flex items-center gap-2"
                   style={{
-                    background: `linear-gradient(135deg, ${TEAL}, ${GREEN})`,
-                    boxShadow: `0 6px 20px ${TEAL}50`,
+                    background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
+                    boxShadow: `0 6px 20px ${BLACK}50`,
                   }}
                   aria-label="Subscribe"
                 >
@@ -586,7 +586,7 @@ export default function Footer() {
           />
           <p
             className="text-[11px] leading-[1.7] sm:text-xs text-center max-w-4xl"
-            style={{ color: `${MINT}90` }}
+            style={{ color: `${LIGHT_GRAY}90` }}
           >
             © 2026 Bright MLS. All rights reserved. The data relating to real estate for sale on this website appears in part through the Bright MLS Internet Data Exchange (IDX) program, a voluntary cooperative exchange of property listing data between licensed real estate brokerage firms in which Casey Margenau Fine Homes and Estates participates, and is provided by Bright MLS through a licensing agreement.
             <br />
@@ -597,11 +597,11 @@ export default function Footer() {
         {/* ===== SECTION 5: FINAL COPYRIGHT LINE (LAST) ===== */}
         <div
           className="pt-6 pb-4 flex flex-col items-center"
-          style={{ borderTop: `1px solid ${MINT}15` }}
+          style={{ borderTop: `1px solid ${LIGHT_GRAY}15` }}
         >
           <p
             className="text-xs sm:text-sm transition-colors text-center"
-            style={{ color: `${MINT}80` }}
+            style={{ color: `${LIGHT_GRAY}80` }}
           >
             © 2026 Christopher Ryan. All rights reserved.
           </p>
@@ -617,8 +617,9 @@ export default function Footer() {
             : "opacity-0 translate-y-4 pointer-events-none"
         }`}
         style={{
-          background: `linear-gradient(135deg, ${TEAL}, ${GREEN})`,
-          boxShadow: `0 8px 24px ${TEAL}60`,
+          background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
+          boxShadow: `0 8px 24px ${BLACK}60`,
+          border: `1px solid ${PURE_WHITE}20`
         }}
         aria-label="Scroll to top"
       >

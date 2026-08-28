@@ -19,13 +19,19 @@ import {
 } from "lucide-react";
 
 // ==========================================
-// ✅ UPDATED COLOR PALETTE
+// ✅ BLACK & WHITE (MONOCHROME) SCHEME
 // ==========================================
-const TEAL = "#019586";
-const DARK_TEAL = "#014D41";
-const MINT = "#B1F1E9";
-const BRIGHT_TEAL = "#04D3C7";
-const WHITE = "#FFFFFF";
+const BLACK = "#000000";      // Primary Black
+const DARK_GRAY = "#333333";  // Secondary Dark Gray
+const LIGHT_GRAY = "#E5E5E5"; // For borders / soft backgrounds
+const PURE_WHITE = "#FFFFFF"; // White for cards/text on black
+
+// Mapped to old variable names for seamless update
+const TEAL = BLACK;
+const DARK_TEAL = BLACK;
+const MINT = LIGHT_GRAY;
+const BRIGHT_TEAL = DARK_GRAY;
+const WHITE = PURE_WHITE;
 
 // ==========================================
 // ✅ SAFE IMAGE HELPER
@@ -66,16 +72,16 @@ const BlogCard = ({ blog }) => {
       <article
         className="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
         style={{
-          border: `1px solid ${MINT}80`,
-          boxShadow: `0 2px 12px ${TEAL}10`,
+          border: `1px solid ${LIGHT_GRAY}80`,
+          boxShadow: `0 2px 12px ${BLACK}10`,
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = `${TEAL}`;
-          e.currentTarget.style.boxShadow = `0 8px 30px ${TEAL}25`;
+          e.currentTarget.style.borderColor = `${BLACK}`;
+          e.currentTarget.style.boxShadow = `0 8px 30px ${BLACK}25`;
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = `${MINT}80`;
-          e.currentTarget.style.boxShadow = `0 2px 12px ${TEAL}10`;
+          e.currentTarget.style.borderColor = `${LIGHT_GRAY}80`;
+          e.currentTarget.style.boxShadow = `0 2px 12px ${BLACK}10`;
         }}
       >
         {/* Image */}
@@ -85,17 +91,17 @@ const BlogCard = ({ blog }) => {
               src={imageUrl}
               alt={blog.title || "Blog image"}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover transition-transform duration-500 group-hover:scale-105 grayscale-20 group-hover:grayscale-0"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <div
               className="flex items-center justify-center h-full"
               style={{
-                background: `linear-gradient(to bottom right, ${MINT}, ${TEAL}20)`,
+                background: `linear-gradient(to bottom right, ${LIGHT_GRAY}, ${BLACK}20)`,
               }}
             >
-              <BookOpen className="w-12 h-12" style={{ color: `${TEAL}80` }} />
+              <BookOpen className="w-12 h-12" style={{ color: `${BLACK}80` }} />
             </div>
           )}
 
@@ -103,7 +109,7 @@ const BlogCard = ({ blog }) => {
             <span
               className="absolute top-3 left-3 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide z-10"
               style={{
-                background: `linear-gradient(135deg, ${TEAL}, ${BRIGHT_TEAL})`,
+                background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
               }}
             >
               {blog.category}
@@ -130,9 +136,9 @@ const BlogCard = ({ blog }) => {
           {/* Title */}
           <h3
             className="text-lg font-semibold text-slate-900 mb-2 line-clamp-2 transition-colors duration-200"
-            style={{ color: DARK_TEAL }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = TEAL)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = DARK_TEAL)}
+            style={{ color: BLACK }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = DARK_GRAY)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = BLACK)}
           >
             {blog.title}
           </h3>
@@ -150,8 +156,8 @@ const BlogCard = ({ blog }) => {
                   key={i}
                   className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-md"
                   style={{
-                    color: TEAL,
-                    backgroundColor: `${MINT}`,
+                    color: BLACK,
+                    backgroundColor: `${LIGHT_GRAY}`,
                   }}
                 >
                   <Tag className="w-3 h-3" />
@@ -169,7 +175,7 @@ const BlogCard = ({ blog }) => {
           {/* Read More */}
           <div
             className="flex items-center gap-1 text-sm font-medium group-hover:gap-2 transition-all duration-200"
-            style={{ color: TEAL }}
+            style={{ color: BLACK }}
           >
             Read More
             <ArrowRight className="w-4 h-4" />
@@ -190,25 +196,25 @@ const CategoryButton = ({ category, count, isActive, onClick }) => (
     style={
       isActive
         ? {
-            background: `linear-gradient(135deg, ${TEAL}, ${BRIGHT_TEAL})`,
-            color: WHITE,
-            boxShadow: `0 2px 8px ${TEAL}40`,
+            background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
+            color: PURE_WHITE,
+            boxShadow: `0 2px 8px ${BLACK}40`,
           }
         : {
-            backgroundColor: WHITE,
+            backgroundColor: PURE_WHITE,
             color: "#64748b",
-            border: `1px solid ${MINT}`,
+            border: `1px solid ${LIGHT_GRAY}`,
           }
     }
     onMouseEnter={(e) => {
       if (!isActive) {
-        e.currentTarget.style.borderColor = TEAL;
-        e.currentTarget.style.color = TEAL;
+        e.currentTarget.style.borderColor = BLACK;
+        e.currentTarget.style.color = BLACK;
       }
     }}
     onMouseLeave={(e) => {
       if (!isActive) {
-        e.currentTarget.style.borderColor = MINT;
+        e.currentTarget.style.borderColor = LIGHT_GRAY;
         e.currentTarget.style.color = "#64748b";
       }
     }}
@@ -417,16 +423,16 @@ export default function BlogsPage() {
       {/* ============================== */}
       <section
         className="relative overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${DARK_TEAL}, ${TEAL})` }}
+        style={{ background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})` }}
       >
         {/* Decorative blobs */}
         <div
           className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl -mr-20 -mt-20"
-          style={{ background: `radial-gradient(circle, ${BRIGHT_TEAL}40, transparent)` }}
+          style={{ background: `radial-gradient(circle, ${DARK_GRAY}40, transparent)` }}
         />
         <div
           className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl -ml-20 -mb-20"
-          style={{ background: `radial-gradient(circle, ${MINT}30, transparent)` }}
+          style={{ background: `radial-gradient(circle, ${LIGHT_GRAY}30, transparent)` }}
         />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -434,9 +440,9 @@ export default function BlogsPage() {
             <span
               className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full mb-6"
               style={{
-                backgroundColor: `${MINT}20`,
+                backgroundColor: `${LIGHT_GRAY}20`,
                 backdropFilter: "blur(8px)",
-                color: MINT,
+                color: LIGHT_GRAY,
               }}
             >
               <BookOpen className="w-4 h-4" />
@@ -447,7 +453,7 @@ export default function BlogsPage() {
               Insights &{" "}
               <span
                 style={{
-                  background: `linear-gradient(to right, ${BRIGHT_TEAL}, ${MINT})`,
+                  background: `linear-gradient(to right, ${DARK_GRAY}, ${LIGHT_GRAY})`,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}
@@ -456,7 +462,7 @@ export default function BlogsPage() {
               </span>
             </h1>
 
-            <p className="text-lg leading-relaxed mb-8" style={{ color: `${MINT}CC` }}>
+            <p className="text-lg leading-relaxed mb-8" style={{ color: `${LIGHT_GRAY}CC` }}>
               Stay updated with the latest trends, tips, and stories from our experts.
             </p>
 
@@ -472,14 +478,14 @@ export default function BlogsPage() {
                 style={{
                   backgroundColor: "rgba(255,255,255,0.08)",
                   backdropFilter: "blur(8px)",
-                  borderColor: `${MINT}40`,
+                  borderColor: `${LIGHT_GRAY}40`,
                 }}
                 onFocus={(e) => {
-                  e.currentTarget.style.borderColor = `${BRIGHT_TEAL}`;
-                  e.currentTarget.style.boxShadow = `0 0 0 2px ${BRIGHT_TEAL}40`;
+                  e.currentTarget.style.borderColor = `${DARK_GRAY}`;
+                  e.currentTarget.style.boxShadow = `0 0 0 2px ${DARK_GRAY}40`;
                 }}
                 onBlur={(e) => {
-                  e.currentTarget.style.borderColor = `${MINT}40`;
+                  e.currentTarget.style.borderColor = `${LIGHT_GRAY}40`;
                   e.currentTarget.style.boxShadow = "none";
                 }}
               />
@@ -502,8 +508,8 @@ export default function BlogsPage() {
       <section
         className="sticky top-0 z-30 backdrop-blur-sm"
         style={{
-          backgroundColor: `${WHITE}F2`, // Slightly transparent white
-          borderBottom: `1px solid ${MINT}`,
+          backgroundColor: `${PURE_WHITE}F2`, // Slightly transparent white
+          borderBottom: `1px solid ${LIGHT_GRAY}`,
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -550,14 +556,14 @@ export default function BlogsPage() {
                 onChange={handleSortChange}
                 className="text-sm border rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:outline-none transition-all"
                 style={{
-                  borderColor: `${MINT}`,
+                  borderColor: `${LIGHT_GRAY}`,
                 }}
                 onFocus={(e) => {
-                  e.currentTarget.style.borderColor = TEAL;
-                  e.currentTarget.style.boxShadow = `0 0 0 2px ${TEAL}30`;
+                  e.currentTarget.style.borderColor = BLACK;
+                  e.currentTarget.style.boxShadow = `0 0 0 2px ${BLACK}30`;
                 }}
                 onBlur={(e) => {
-                  e.currentTarget.style.borderColor = MINT;
+                  e.currentTarget.style.borderColor = LIGHT_GRAY;
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
@@ -588,14 +594,14 @@ export default function BlogsPage() {
                 {search && (
                   <>
                     {" "}for &ldquo;
-                    <span className="font-semibold" style={{ color: TEAL }}>{search}</span>
+                    <span className="font-semibold" style={{ color: BLACK }}>{search}</span>
                     &rdquo;
                   </>
                 )}
                 {activeCategory && (
                   <>
                     {" "}in{" "}
-                    <span className="font-semibold" style={{ color: TEAL }}>{activeCategory}</span>
+                    <span className="font-semibold" style={{ color: BLACK }}>{activeCategory}</span>
                   </>
                 )}
               </>
@@ -607,7 +613,7 @@ export default function BlogsPage() {
               onClick={clearAllFilters}
               className="text-xs text-slate-500 underline underline-offset-2 transition-colors"
               style={{ color: "#64748b" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = TEAL)}
+              onMouseEnter={(e) => (e.currentTarget.style.color = BLACK)}
               onMouseLeave={(e) => (e.currentTarget.style.color = "#64748b")}
             >
               Clear all filters
@@ -620,7 +626,7 @@ export default function BlogsPage() {
           <div className="flex flex-col items-center justify-center py-20">
             <Loader2
               className="w-10 h-10 animate-spin mb-4"
-              style={{ color: TEAL }}
+              style={{ color: BLACK }}
             />
             <p className="text-slate-500 text-sm">Loading blogs...</p>
           </div>
@@ -632,22 +638,22 @@ export default function BlogsPage() {
             <div
               className="border rounded-xl p-8 text-center max-w-md"
               style={{
-                backgroundColor: `${DARK_TEAL}08`,
-                borderColor: `${DARK_TEAL}20`,
+                backgroundColor: `${BLACK}08`,
+                borderColor: `${BLACK}20`,
               }}
             >
-              <p className="font-medium mb-2" style={{ color: DARK_TEAL }}>
+              <p className="font-medium mb-2" style={{ color: BLACK }}>
                 Failed to load blogs
               </p>
-              <p className="text-sm mb-4" style={{ color: `${DARK_TEAL}CC` }}>{error}</p>
+              <p className="text-sm mb-4" style={{ color: `${BLACK}CC` }}>{error}</p>
               <button
                 onClick={fetchBlogs}
                 className="px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors"
                 style={{
-                  backgroundColor: TEAL,
+                  backgroundColor: BLACK,
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = BRIGHT_TEAL)}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = TEAL)}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = DARK_GRAY)}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = BLACK)}
               >
                 Try Again
               </button>
@@ -658,7 +664,7 @@ export default function BlogsPage() {
         {/* Empty */}
         {!loading && !error && blogs.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20">
-            <BookOpen className="w-16 h-16 mb-4" style={{ color: `${TEAL}40` }} />
+            <BookOpen className="w-16 h-16 mb-4" style={{ color: `${BLACK}40` }} />
             <h3 className="text-xl font-semibold text-slate-700 mb-2">No blogs found</h3>
             <p className="text-slate-500 text-sm mb-6 text-center max-w-md">
               {search || activeCategory
@@ -670,7 +676,7 @@ export default function BlogsPage() {
                 onClick={clearAllFilters}
                 className="px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors"
                 style={{
-                  background: `linear-gradient(135deg, ${TEAL}, ${BRIGHT_TEAL})`,
+                  background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
                 }}
               >
                 Clear Filters
@@ -698,9 +704,9 @@ export default function BlogsPage() {
               style={
                 hasPrevPage
                   ? {
-                      backgroundColor: WHITE,
-                      border: `1px solid ${MINT}`,
-                      color: DARK_TEAL,
+                      backgroundColor: PURE_WHITE,
+                      border: `1px solid ${LIGHT_GRAY}`,
+                      color: BLACK,
                     }
                   : {
                       backgroundColor: "#f1f5f9",
@@ -721,14 +727,14 @@ export default function BlogsPage() {
                   style={
                     page === currentPage
                       ? {
-                          background: `linear-gradient(135deg, ${TEAL}, ${BRIGHT_TEAL})`,
-                          color: WHITE,
-                          boxShadow: `0 2px 8px ${TEAL}40`,
+                          background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
+                          color: PURE_WHITE,
+                          boxShadow: `0 2px 8px ${BLACK}40`,
                         }
                       : {
-                          backgroundColor: WHITE,
-                          border: `1px solid ${MINT}`,
-                          color: DARK_TEAL,
+                          backgroundColor: PURE_WHITE,
+                          border: `1px solid ${LIGHT_GRAY}`,
+                          color: BLACK,
                         }
                   }
                 >
@@ -744,9 +750,9 @@ export default function BlogsPage() {
               style={
                 hasNextPage
                   ? {
-                      backgroundColor: WHITE,
-                      border: `1px solid ${MINT}`,
-                      color: DARK_TEAL,
+                      backgroundColor: PURE_WHITE,
+                      border: `1px solid ${LIGHT_GRAY}`,
+                      color: BLACK,
                     }
                   : {
                       backgroundColor: "#f1f5f9",

@@ -5,12 +5,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Quote, Star, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 
 // ============================================
-// SAME 3-COLOR SCHEME AS HERO & ABOUT
+// BLACK & WHITE (MONOCHROME) SCHEME
 // ============================================
-const TEAL = "#019586";
-const GREEN = "#00B777";
-const MINT = "#B1F1E9";
-const DARK = "#072A26";
+const BLACK = "#000000";      // Primary Black
+const DARK_GRAY = "#333333";  // Secondary Dark Gray
+const LIGHT_GRAY = "#F4F4F5"; // Main Background
+const PURE_WHITE = "#FFFFFF"; // White for cards/text on black
+
+const TEAL = BLACK;
+const GREEN = DARK_GRAY;
+const MINT = LIGHT_GRAY;
+const DARK = BLACK;
 
 const testimonials = [
   { id: 1, name: "Erin", text: "Being a military spouse, I have 4 moves under my belt. But when it came time to help my mother sell her house, I wasn't as certain. Christopher Ryan was wonderful, and definitely went above and beyond for us. Compared to the previous realtors we had worked with, Christopher Ryan definetly stands out, and I will recommend her every time someone is looking for a realtor." },
@@ -56,10 +61,10 @@ const slideVariants = {
 // ============================================
 const TestimonialCard = ({ t, index = 0, total = 1 }) => {
   const avatarColors = [
-    `linear-gradient(135deg, ${TEAL}, ${GREEN})`,
-    `linear-gradient(135deg, ${DARK}, ${TEAL})`,
-    `linear-gradient(135deg, ${GREEN}, ${TEAL})`,
-    `linear-gradient(135deg, ${TEAL}, ${DARK})`,
+    `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
+    `linear-gradient(135deg, ${DARK_GRAY}, ${BLACK})`,
+    `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
+    `linear-gradient(135deg, ${DARK_GRAY}, ${BLACK})`,
   ];
   const getAvatarColor = (id) => avatarColors[(id - 1) % avatarColors.length];
 
@@ -73,21 +78,21 @@ const TestimonialCard = ({ t, index = 0, total = 1 }) => {
       <div
         className="relative rounded-2xl overflow-hidden flex flex-col h-full transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
         style={{
-          backgroundColor: "#FFFFFF",
-          border: `1px solid ${TEAL}20`,
-          boxShadow: `0 10px 40px -10px ${TEAL}30`,
+          backgroundColor: PURE_WHITE,
+          border: `1px solid ${BLACK}20`,
+          boxShadow: `0 10px 40px -10px ${BLACK}30`,
         }}
       >
         <div className="relative p-5 sm:p-6 md:p-7 flex flex-col flex-1">
           {/* Decorative quote */}
           <div className="absolute top-3 right-3 opacity-[0.07]">
-            <Quote size={total === 1 ? 72 : 52} style={{ color: TEAL }} />
+            <Quote size={total === 1 ? 72 : 52} style={{ color: BLACK }} />
           </div>
 
           {/* Stars */}
           <div className="flex items-center gap-1 mb-4">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} size={14} className="fill-[#FFC107] text-[#FFC107]" />
+              <Star key={i} size={14} className={`fill-[${BLACK}] text-[${BLACK}]`} />
             ))}
           </div>
 
@@ -95,7 +100,7 @@ const TestimonialCard = ({ t, index = 0, total = 1 }) => {
           <p
             className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed relative z-10 flex-1"
             style={{
-              color: `${DARK}CC`,
+              color: `${BLACK}CC`,
               display: "-webkit-box",
               WebkitLineClamp: total === 1 ? 8 : 5,
               WebkitBoxOrient: "vertical",
@@ -109,7 +114,7 @@ const TestimonialCard = ({ t, index = 0, total = 1 }) => {
           <div
             className="w-full h-px my-4"
             style={{
-              background: `linear-gradient(to right, transparent, ${TEAL}30, transparent)`,
+              background: `linear-gradient(to right, transparent, ${BLACK}30, transparent)`,
             }}
           />
 
@@ -119,16 +124,16 @@ const TestimonialCard = ({ t, index = 0, total = 1 }) => {
               className="relative w-11 h-11 rounded-full flex items-center justify-center shrink-0 text-sm font-extrabold text-white shadow-md"
               style={{
                 background: getAvatarColor(t.id),
-                border: `2px solid ${MINT}`,
+                border: `2px solid ${LIGHT_GRAY}`,
               }}
             >
               {t.name.charAt(0)}
             </div>
             <div className="min-w-0">
-              <h4 className="font-extrabold text-[14px] sm:text-[15px] truncate" style={{ color: DARK }}>
+              <h4 className="font-extrabold text-[14px] sm:text-[15px] truncate" style={{ color: BLACK }}>
                 {t.name}
               </h4>
-              <p className="text-[10px] sm:text-xs font-bold truncate" style={{ color: GREEN }}>
+              <p className="text-[10px] sm:text-xs font-bold truncate" style={{ color: DARK_GRAY }}>
                 Verified Client
               </p>
             </div>
@@ -139,7 +144,7 @@ const TestimonialCard = ({ t, index = 0, total = 1 }) => {
         <div
           className="h-1 w-full"
           style={{
-            background: `linear-gradient(to right, ${TEAL}, ${GREEN})`,
+            background: `linear-gradient(to right, ${BLACK}, ${DARK_GRAY})`,
           }}
         />
       </div>
@@ -156,17 +161,17 @@ const NavButton = ({ onClick, disabled, icon, label }) => (
     disabled={disabled}
     className="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5"
     style={{
-      backgroundColor: "#FFFFFF",
-      border: `1px solid ${TEAL}40`,
-      color: TEAL,
+      backgroundColor: PURE_WHITE,
+      border: `1px solid ${BLACK}40`,
+      color: BLACK,
     }}
     onMouseEnter={(e) => {
-      e.currentTarget.style.backgroundColor = TEAL;
-      e.currentTarget.style.color = "#FFFFFF";
+      e.currentTarget.style.backgroundColor = BLACK;
+      e.currentTarget.style.color = PURE_WHITE;
     }}
     onMouseLeave={(e) => {
-      e.currentTarget.style.backgroundColor = "#FFFFFF";
-      e.currentTarget.style.color = TEAL;
+      e.currentTarget.style.backgroundColor = PURE_WHITE;
+      e.currentTarget.style.color = BLACK;
     }}
     aria-label={label}
   >
@@ -179,22 +184,22 @@ const NavButton = ({ onClick, disabled, icon, label }) => (
 // ============================================
 const ProgressCounter = ({ current, total }) => (
   <div className="flex items-center gap-3 sm:gap-4">
-    <span className="text-base sm:text-lg font-extrabold" style={{ color: TEAL }}>
+    <span className="text-base sm:text-lg font-extrabold" style={{ color: BLACK }}>
       {String(current).padStart(2, "0")}
     </span>
     <div
       className="relative h-0.75 w-24 sm:w-36 md:w-48 overflow-hidden rounded-full"
-      style={{ backgroundColor: `${DARK}25` }}
+      style={{ backgroundColor: `${BLACK}25` }}
     >
       <div
         className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
         style={{
           width: `${(current / total) * 100}%`,
-          backgroundColor: TEAL,
+          backgroundColor: BLACK,
         }}
       />
     </div>
-    <span className="text-base sm:text-lg font-extrabold" style={{ color: TEAL }}>
+    <span className="text-base sm:text-lg font-extrabold" style={{ color: BLACK }}>
       {String(total).padStart(2, "0")}
     </span>
   </div>
@@ -293,26 +298,26 @@ export default function TestimonialsSection() {
       ref={sectionRef}
       className="relative w-full overflow-hidden py-16 sm:py-20 lg:py-28"
     >
-      {/* ===== BACKGROUND: TOP TO BOTTOM GRADIENT (reverse of about) ===== */}
+      {/* ===== BACKGROUND: TOP TO BOTTOM GRADIENT ===== */}
       <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(180deg, ${TEAL} 0%, ${GREEN} 25%, ${MINT} 60%, ${MINT} 100%)`,
+            background: `linear-gradient(180deg, ${BLACK} 0%, ${DARK_GRAY} 25%, ${LIGHT_GRAY} 60%, ${LIGHT_GRAY} 100%)`,
           }}
         />
         <div
           className="absolute -top-20 -right-20 w-80 h-80 rounded-full opacity-20 blur-3xl"
-          style={{ background: `radial-gradient(circle, ${GREEN} 0%, transparent 70%)` }}
+          style={{ background: `radial-gradient(circle, ${DARK_GRAY} 0%, transparent 70%)` }}
         />
         <div
           className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full opacity-[0.15] blur-3xl"
-          style={{ background: `radial-gradient(circle, ${TEAL} 0%, transparent 70%)` }}
+          style={{ background: `radial-gradient(circle, ${BLACK} 0%, transparent 70%)` }}
         />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, ${DARK} 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, ${BLACK} 1px, transparent 0)`,
             backgroundSize: "40px 40px",
           }}
         />
@@ -326,10 +331,10 @@ export default function TestimonialsSection() {
           }`}
         >
           <div className="flex items-center justify-center gap-2 mb-4">
-            <MessageCircle size={18} style={{ color: MINT }} />
+            <MessageCircle size={18} style={{ color: LIGHT_GRAY }} />
             <span
               className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-extrabold"
-              style={{ color: MINT }}
+              style={{ color: LIGHT_GRAY }}
             >
               Client Stories
             </span>
@@ -337,14 +342,14 @@ export default function TestimonialsSection() {
 
           <h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-extrabold leading-tight mb-4"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: PURE_WHITE }}
           >
             What Our Clients Say
           </h2>
 
           <p
             className="text-sm sm:text-base md:text-lg max-w-xl mx-auto transition-all duration-700 delay-200 ease-out"
-            style={{ color: "#FFFFFFD9" }}
+            style={{ color: `${PURE_WHITE}D9` }}
           >
             Nothing means more to me than helping my clients feel supported, informed, and confident throughout their move. I'm grateful for the trust they've placed in me, and I'm proud to share a few of their experiences below.
           </p>

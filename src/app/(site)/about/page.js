@@ -9,12 +9,17 @@ import { motion } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger);
 
 // ============================================
-// SAME 3-COLOR SCHEME AS HERO SECTION
+// BLACK & WHITE (MONOCHROME) SCHEME
 // ============================================
-const TEAL = "#019586";
-const GREEN = "#00B777";
-const MINT = "#B1F1E9";
-const DARK = "#072A26";
+const BLACK = "#000000";      // Primary Black
+const DARK_GRAY = "#333333";  // Secondary Dark Gray
+const LIGHT_GRAY = "#F4F4F5"; // Main Background
+const PURE_WHITE = "#FFFFFF";  // White for cards/text on black
+
+const TEAL = BLACK;
+const GREEN = DARK_GRAY;
+const MINT = LIGHT_GRAY;
+const DARK = BLACK;
 
 // ============================================
 // SOCIAL ICONS - Only LinkedIn
@@ -44,7 +49,7 @@ export default function About() {
       icon: LinkedInIcon,
       href: "https://www.linkedin.com/in/christopher-lepkowski/",
       label: "LinkedIn",
-      hoverColor: TEAL,
+      hoverColor: DARK_GRAY,
     },
   ];
 
@@ -118,22 +123,9 @@ export default function About() {
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(0deg, ${TEAL} 0%, ${GREEN} 25%, ${MINT} 60%, ${MINT} 100%)`,
+            background: `linear-gradient(0deg, ${BLACK} 0%, ${DARK_GRAY} 25%, ${LIGHT_GRAY} 60%, ${LIGHT_GRAY} 100%)`,
           }}
         />
-
-        {/* ===== WATERMARK: navbarlogo11.png (PROPERLY VISIBLE) ===== */}
-        {/* <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `url('/images/navlogo12.png')`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center center",
-            backgroundSize: "50% auto",
-            opacity: 0.15,
-            mixBlendMode: "multiply",
-          }}
-        /> */}
 
         {/* Mobile pe watermark chhota */}
         <div
@@ -152,7 +144,7 @@ export default function About() {
         <div
           className="absolute inset-0 opacity-20"
           style={{
-            background: `radial-gradient(circle at 20% 80%, ${DARK} 0%, transparent 50%)`,
+            background: `radial-gradient(circle at 20% 80%, ${BLACK} 0%, transparent 50%)`,
           }}
         />
       </div>
@@ -169,8 +161,8 @@ export default function About() {
           <span
             className="inline-block rounded-full px-5 py-1.5 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-extrabold shadow-md"
             style={{
-              backgroundColor: DARK,
-              color: MINT,
+              backgroundColor: BLACK,
+              color: LIGHT_GRAY,
             }}
           >
             ( Who I Am )
@@ -181,10 +173,10 @@ export default function About() {
         <div ref={headingRef} className="text-center mb-12 sm:mb-16 md:mb-20">
           <h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight max-w-4xl mx-auto tracking-[-0.02em]"
-            style={{ color: DARK }}
+            style={{ color: BLACK }}
           >
             Providing high-level{" "}
-            <span className="relative inline-block" style={{ color: DARK }}>
+            <span className="relative inline-block" style={{ color: BLACK }}>
               real estate consulting
               <svg
                 className="absolute -bottom-1 left-0 w-full"
@@ -195,7 +187,7 @@ export default function About() {
               >
                 <path
                   d="M2 6C50 2 150 2 198 6"
-                  stroke={GREEN}
+                  stroke={DARK_GRAY}
                   strokeWidth="3"
                   strokeLinecap="round"
                   opacity="0.7"
@@ -203,7 +195,7 @@ export default function About() {
               </svg>
             </span>
             , with a focus on data-driven insights, personalized service, and a{" "}
-            <span style={{ color: TEAL }}>smooth, stress-free transaction experience.</span>
+            <span style={{ color: DARK_GRAY }}>smooth, stress-free transaction experience.</span>
           </h2>
         </div>
 
@@ -243,8 +235,8 @@ export default function About() {
               <div
                 className="p-2 sm:p-3 rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500"
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  border: `2px solid ${TEAL}30`,
+                  backgroundColor: PURE_WHITE,
+                  border: `2px solid ${BLACK}30`,
                 }}
               >
                 <div className="relative aspect-4/3 rounded-xl overflow-hidden">
@@ -252,30 +244,30 @@ export default function About() {
                     src={img.src}
                     alt={img.alt}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-60 group-hover:grayscale-0"
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, 25vw"
                   />
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-all duration-500"
-                    style={{ backgroundColor: TEAL }}
+                    style={{ backgroundColor: BLACK }}
                   />
                   <div
                     className="absolute bottom-0 left-0 right-0 h-1/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{
-                      background: `linear-gradient(to top, ${DARK}40, transparent)`,
+                      background: `linear-gradient(to top, ${BLACK}40, transparent)`,
                     }}
                   />
                 </div>
                 <div className="mt-2 sm:mt-3 text-center">
                   <div
                     className="w-8 sm:w-10 h-1 rounded-full mx-auto transition-colors duration-500"
-                    style={{ backgroundColor: TEAL }}
+                    style={{ backgroundColor: BLACK }}
                   />
                 </div>
               </div>
               <motion.div
                 className="absolute -top-1.5 sm:-top-2 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full group-hover:scale-125 transition-all duration-300"
-                style={{ backgroundColor: `${GREEN}60` }}
+                style={{ backgroundColor: `${DARK_GRAY}60` }}
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
@@ -305,8 +297,8 @@ export default function About() {
               <span
                 className="inline-block rounded-md px-3 py-1 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold"
                 style={{
-                  backgroundColor: DARK,
-                  color: MINT,
+                  backgroundColor: BLACK,
+                  color: LIGHT_GRAY,
                 }}
               >
                 ( About Me )
@@ -316,11 +308,11 @@ export default function About() {
             <motion.h3
               variants={itemVariants}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 sm:mb-8 leading-tight"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: PURE_WHITE }}
             >
               Hi, I&apos;m{" "}
               <span className="relative inline-block">
-                <span style={{ color: '#fffff' }}>Christopher Ryan</span>
+                <span style={{ color: PURE_WHITE }}>Christopher Ryan</span>
                 <svg
                   className="absolute -bottom-1 left-0 w-full"
                   height="8"
@@ -330,7 +322,7 @@ export default function About() {
                 >
                   <path
                     d="M2 6C50 2 150 2 198 6"
-                    stroke={GREEN}
+                    stroke={DARK_GRAY}
                     strokeWidth="3"
                     strokeLinecap="round"
                     opacity="0.6"
@@ -342,7 +334,7 @@ export default function About() {
             <motion.div
               variants={itemVariants}
               className="space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg leading-relaxed"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: PURE_WHITE }}
             >
               <p>
                 I provide real estate consulting services in the Northern Virginia Area. I offer all of my clients high-level consulting services that combine data aggregation with proprietary analytical methods while maintaining strict industry standards to ensure thorough preparation for every transaction.
@@ -351,9 +343,9 @@ export default function About() {
               <blockquote
                 className="border-l-4 pl-4 py-2 rounded-r-lg italic"
                 style={{
-                  borderColor: MINT,
-                  backgroundColor: `${DARK}40`,
-                  color: "#FFFFFF",
+                  borderColor: LIGHT_GRAY,
+                  backgroundColor: `${BLACK}40`,
+                  color: PURE_WHITE,
                 }}
               >
                 "Real estate isn't just about properties — it's about people making informed decisions with confidence. My goal is to provide the strategic guidance needed to navigate today's complex market."
@@ -369,7 +361,7 @@ export default function About() {
                 What sets me apart is my commitment to combining analytical rigor with personalized service. Every client receives a customized strategy that addresses their unique needs and circumstances.
               </p>
 
-              <p className="font-extrabold" style={{ color: MINT }}>
+              <p className="font-extrabold" style={{ color: LIGHT_GRAY }}>
                 Let's work together! <br /> Christopher Ryan
               </p>
             </motion.div>
@@ -381,18 +373,18 @@ export default function About() {
                 <a
                   href="mailto:chris@margenau.com"
                   className="hover:scale-105 transition-all flex items-center gap-2 group"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: PURE_WHITE }}
                 >
                   <span
                     className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg shrink-0 transition-colors"
                     style={{
-                      backgroundColor: `${MINT}30`,
-                      border: `1px solid ${MINT}60`,
+                      backgroundColor: `${LIGHT_GRAY}30`,
+                      border: `1px solid ${LIGHT_GRAY}60`,
                     }}
                   >
                     <svg
                       className="w-4 h-4 sm:w-5 sm:h-5"
-                      style={{ color: MINT }}
+                      style={{ color: LIGHT_GRAY }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -405,7 +397,7 @@ export default function About() {
                       ></path>
                     </svg>
                   </span>
-                  <span className="truncate group-hover:underline" style={{ color: "#FFFFFF" }}>
+                  <span className="truncate group-hover:underline" style={{ color: PURE_WHITE }}>
                     chris@margenau.com
                   </span>
                 </a>
@@ -414,18 +406,18 @@ export default function About() {
                 <a
                   href="tel:(202) 848-4567"
                   className="hover:scale-105 transition-all flex items-center gap-2 group"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: PURE_WHITE }}
                 >
                   <span
                     className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg shrink-0 transition-colors"
                     style={{
-                       backgroundColor: `${MINT}30`,
-                      border: `1px solid ${MINT}60`,
+                       backgroundColor: `${LIGHT_GRAY}30`,
+                      border: `1px solid ${LIGHT_GRAY}60`,
                     }}
                   >
                     <svg
                       className="w-4 h-4 sm:w-5 sm:h-5"
-                      style={{ color: MINT }}
+                      style={{ color: LIGHT_GRAY }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -438,7 +430,7 @@ export default function About() {
                       ></path>
                     </svg>
                   </span>
-                  <span className="group-hover:underline" style={{ color: "#FFFFFF" }}>
+                  <span className="group-hover:underline" style={{ color: PURE_WHITE }}>
                     (202) 848-4567
                   </span>
                 </a>
@@ -446,18 +438,18 @@ export default function About() {
                 {/* Address - Separate Line */}
                 <div
                   className="flex items-center gap-2 group"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: PURE_WHITE }}
                 >
                   <span
                     className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg shrink-0 transition-colors"
                     style={{
-                       backgroundColor: `${MINT}30`,
-                      border: `1px solid ${MINT}60`,
+                       backgroundColor: `${LIGHT_GRAY}30`,
+                      border: `1px solid ${LIGHT_GRAY}60`,
                     }}
                   >
                     <svg
                       className="w-4 h-4 sm:w-5 sm:h-5"
-                      style={{ color: MINT }}
+                      style={{ color: LIGHT_GRAY }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -476,7 +468,7 @@ export default function About() {
                       />
                     </svg>
                   </span>
-                  <span style={{ color: "#FFFFFF" }}>
+                  <span style={{ color: PURE_WHITE }}>
                     20830 Gleedsville Rd. Leesburg, VA 20175
                   </span>
                 </div>
@@ -486,7 +478,7 @@ export default function About() {
             <motion.div variants={itemVariants} className="mt-6 sm:mt-8">
               <p
                 className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-bold mb-3 sm:mb-4"
-                style={{ color: MINT }}
+                style={{ color: LIGHT_GRAY }}
               >
                 ( Connect With Me )
               </p>
@@ -499,16 +491,16 @@ export default function About() {
                     rel="noopener noreferrer"
                     className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all duration-300"
                     style={{
-                      backgroundColor: `${MINT}40`,
-                      border: `1px solid ${MINT}60`,
-                      color: "#FFFFFF",
+                      backgroundColor: `${LIGHT_GRAY}40`,
+                      border: `1px solid ${LIGHT_GRAY}60`,
+                      color: PURE_WHITE,
                     }}
                     whileHover={{
                       scale: 1.1,
                       y: -3,
                       backgroundColor: social.hoverColor,
                       borderColor: social.hoverColor,
-                      color: "#FFFFFF",
+                      color: PURE_WHITE,
                     }}
                     transition={{ duration: 0.2 }}
                     aria-label={social.label}
@@ -528,11 +520,11 @@ export default function About() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative order-1 lg:order-2"
           >
-            <div className="relative mx-auto max-w-md lg:max-w-none">
+            <div className="relative mx-auto max-w-md lg:max-w-none group">
               {/* Subtle background accent - just one large shape */}
               <div
                 className="absolute -top-8 -right-8 sm:-top-12 sm:-right-12 w-48 h-48 sm:w-64 sm:h-64 rounded-full blur-3xl opacity-30 -z-10"
-                style={{ backgroundColor: MINT }}
+                style={{ backgroundColor: LIGHT_GRAY }}
               />
 
               {/* Main Portrait Container */}
@@ -540,8 +532,8 @@ export default function About() {
                 className="relative aspect-3/4 rounded-2xl overflow-hidden"
                 style={{
                   boxShadow: `
-                    0 25px 50px -12px ${DARK}80,
-                    0 10px 20px -5px ${TEAL}40
+                    0 25px 50px -12px ${BLACK}80,
+                    0 10px 20px -5px ${BLACK}40
                   `,
                 }}
               >
@@ -549,7 +541,7 @@ export default function About() {
                   src="/images/chirsaboutpic.png"
                   alt="Christopher Ryan"
                   fill
-                  className="object-cover"
+                  className="object-cover grayscale-30 group-hover:grayscale-0 transition-all duration-500"
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 45vw"
                   priority={false}
                 />
@@ -558,15 +550,15 @@ export default function About() {
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: `linear-gradient(180deg, transparent 0%, transparent 50%, ${DARK}90 100%)`,
+                    background: `linear-gradient(180deg, transparent 0%, transparent 50%, ${BLACK}90 100%)`,
                   }}
                 />
 
-                {/* Very subtle teal tint for brand cohesion */}
+                {/* Very subtle tint for brand cohesion */}
                 <div
                   className="absolute inset-0 opacity-[0.08]"
                   style={{
-                    background: `linear-gradient(135deg, ${TEAL} 0%, transparent 100%)`,
+                    background: `linear-gradient(135deg, ${BLACK} 0%, transparent 100%)`,
                   }}
                 />
               </div>
@@ -575,7 +567,7 @@ export default function About() {
               <div
                 className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 aspect-3/4 w-full rounded-2xl -z-10"
                 style={{
-                  border: `2px solid ${TEAL}`,
+                  border: `2px solid ${BLACK}`,
                 }}
               />
 
@@ -583,23 +575,23 @@ export default function About() {
               <motion.div
                 className="absolute left-4 right-4 sm:left-6 sm:right-6 bottom-4 sm:bottom-6 rounded-xl px-4 py-3 sm:px-5 sm:py-4 backdrop-blur-md shadow-xl"
                 style={{
-                  backgroundColor: `${DARK}E6`,
-                  border: `1px solid ${MINT}40`,
+                  backgroundColor: `${BLACK}E6`,
+                  border: `1px solid ${LIGHT_GRAY}40`,
                 }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                <p className="text-base sm:text-lg lg:text-xl font-extrabold" style={{ color: "#FFFFFF" }}>
+                <p className="text-base sm:text-lg lg:text-xl font-extrabold" style={{ color: PURE_WHITE }}>
                   Christopher Ryan
                 </p>
                 <div className="flex items-center gap-2 mt-1">
                   <div
                     className="h-0.5 w-6 sm:w-8 rounded-full"
-                    style={{ backgroundColor: GREEN }}
+                    style={{ backgroundColor: DARK_GRAY }}
                   />
-                  <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider" style={{ color: MINT }}>
+                  <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider" style={{ color: LIGHT_GRAY }}>
                     Real Estate Consultant
                   </p>
                 </div>
@@ -609,18 +601,18 @@ export default function About() {
               <motion.div
                 className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 rounded-2xl shadow-xl p-3 sm:p-4"
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  boxShadow: `0 10px 30px ${DARK}40`,
+                  backgroundColor: PURE_WHITE,
+                  boxShadow: `0 10px 30px ${BLACK}40`,
                 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                <p className="text-xs font-bold uppercase tracking-wider" style={{ color: TEAL }}>
+                <p className="text-xs font-bold uppercase tracking-wider" style={{ color: BLACK }}>
                   Since
                 </p>
-                <p className="text-2xl sm:text-3xl font-extrabold leading-none mt-0.5" style={{ color: TEAL }}>
+                <p className="text-2xl sm:text-3xl font-extrabold leading-none mt-0.5" style={{ color: BLACK }}>
                   2025
                 </p>
               </motion.div>
@@ -629,8 +621,8 @@ export default function About() {
               <motion.div
                 className="absolute top-4 right-4 sm:top-6 sm:right-6 rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 backdrop-blur-md flex items-center gap-1.5"
                 style={{
-                  backgroundColor: `${GREEN}E6`,
-                  border: `1px solid #FFFFFF60`,
+                  backgroundColor: `${DARK_GRAY}E6`,
+                  border: `1px solid ${PURE_WHITE}60`,
                 }}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -639,12 +631,12 @@ export default function About() {
               >
                 <svg
                   className="w-3 h-3 sm:w-3.5 sm:h-3.5"
-                  fill="#FFFFFF"
+                  fill={PURE_WHITE}
                   viewBox="0 0 24 24"
                 >
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                 </svg>
-                <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider" style={{ color: "#FFFFFF" }}>
+                <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider" style={{ color: PURE_WHITE }}>
                   Trusted
                 </span>
               </motion.div>
@@ -652,7 +644,7 @@ export default function About() {
               {/* Small accent line at bottom */}
               <div
                 className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-20 h-1 rounded-full -z-10"
-                style={{ backgroundColor: GREEN }}
+                style={{ backgroundColor: DARK_GRAY }}
               />
             </div>
           </motion.div>

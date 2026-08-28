@@ -25,28 +25,33 @@ import {
 import { getBlogById, getAllBlogs } from "@/lib/blogs/api";
 
 // ==========================================
-// ✅ UPDATED COLOR PALETTE
+// ✅ BLACK & WHITE (MONOCHROME) SCHEME
 // ==========================================
-const TEAL = "#019586";
-const DARK_TEAL = "#014D41";
-const MINT = "#B1F1E9";
-const BRIGHT_CYAN = "#04D3C7";
+const BLACK = "#000000";
+const DARK_GRAY = "#333333";
+const PURE_WHITE = "#FFFFFF";
+const LIGHT_GRAY = "#E5E5E5"; // Mapped to MINT
 
-// Derived colors from new palette
-const NAVY = "#0A2D28";
-const NAVY_LIGHT = "#0F3D36";
-const NAVY_DARK = "#06211D";
-const NAVY_CARD = "#0D332D";
+// Derived colors mapped to old palette
+const TEAL = PURE_WHITE;       // Main accent on dark bg is white
+const DARK_TEAL = BLACK;
+const MINT = LIGHT_GRAY;
+const BRIGHT_CYAN = DARK_GRAY;
 
-// Creamy White with opacity helpers
-const CREAM_30 = "#B1F1E94D";
-const CREAM_40 = "#B1F1E966";
-const CREAM_50 = "#B1F1E980";
-const CREAM_60 = "#B1F1E999";
-const CREAM_70 = "#B1F1E9B3";
-const CREAM_75 = "#B1F1E9BF";
-const CREAM_80 = "#B1F1E9CC";
-const CREAM_90 = "#B1F1E9E6";
+const NAVY = BLACK;
+const NAVY_LIGHT = "#1A1A1A";
+const NAVY_DARK = "#000000";
+const NAVY_CARD = "#111111"; // Slightly lighter than bg for cards
+
+// White opacity helpers (replacing CREAM)
+const CREAM_30 = "rgba(255, 255, 255, 0.3)";
+const CREAM_40 = "rgba(255, 255, 255, 0.4)";
+const CREAM_50 = "rgba(255, 255, 255, 0.5)";
+const CREAM_60 = "rgba(255, 255, 255, 0.6)";
+const CREAM_70 = "rgba(255, 255, 255, 0.7)";
+const CREAM_75 = "rgba(255, 255, 255, 0.75)";
+const CREAM_80 = "rgba(255, 255, 255, 0.8)";
+const CREAM_90 = "rgba(255, 255, 255, 0.9)";
 
 // ==========================================
 // ✅ SAFE IMAGE HELPER
@@ -59,7 +64,7 @@ const getSafeImage = (img) => {
 };
 
 // ==========================================
-// ✅ HTML DECODE HELPER (Fixes raw tags issue)
+// ✅ HTML DECODE HELPER
 // ==========================================
 const decodeHtml = (html) => {
   if (!html) return "";
@@ -105,10 +110,10 @@ const Toast = ({ message, visible, onClose }) => {
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl text-sm font-medium text-white animate-slide-up"
+      className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl text-sm font-medium text-black animate-slide-up"
       style={{
-        background: `linear-gradient(135deg, ${TEAL}, ${BRIGHT_CYAN})`,
-        boxShadow: `0 4px 16px ${TEAL}40`,
+        background: `linear-gradient(135deg, ${PURE_WHITE}, ${LIGHT_GRAY})`,
+        boxShadow: `0 4px 16px rgba(255,255,255,0.2)`,
       }}
     >
       ✓ {message}
@@ -134,12 +139,8 @@ export default function BlogDetailPage() {
   const showToast = (msg) => setToast({ message: msg, visible: true });
   const hideToast = () => setToast({ message: "", visible: false });
 
-  // ==========================================
-  // ✅ FETCH BLOG BY ID
-  // ==========================================
   useEffect(() => {
     if (!id) return;
-
     const fetchBlog = async () => {
       try {
         setLoading(true);
@@ -151,13 +152,9 @@ export default function BlogDetailPage() {
         setLoading(false);
       }
     };
-
     fetchBlog();
   }, [id]);
 
-  // ==========================================
-  // ✅ FETCH RECENT BLOGS
-  // ==========================================
   useEffect(() => {
     const fetchRecent = async () => {
       try {
@@ -176,22 +173,15 @@ export default function BlogDetailPage() {
         console.error("Fetch recent blogs error:", err);
       }
     };
-
     if (id) fetchRecent();
   }, [id]);
 
-  // ==========================================
-  // ✅ TRIGGER ANIMATIONS
-  // ==========================================
   useEffect(() => {
     if (!blog || loading) return;
     const timer = setTimeout(() => setIsVisible(true), 80);
     return () => clearTimeout(timer);
   }, [blog, loading]);
 
-  // ==========================================
-  // ✅ SHARE
-  // ==========================================
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const shareTitle = blog?.title || "Blog Post";
 
@@ -216,9 +206,6 @@ export default function BlogDetailPage() {
     }
   };
 
-  // ==========================================
-  // ✅ HELPERS
-  // ==========================================
   const formatDateShort = (dateStr) => {
     return new Date(dateStr).toLocaleDateString("en-US", {
       month: "short",
@@ -236,32 +223,27 @@ export default function BlogDetailPage() {
   };
 
   const blogImageUrl = blog ? getSafeImage(blog.featuredImage) || blog.image || null : null;
-  
-  // Decode content to render actual HTML instead of string tags
   const decodedContent = blog ? decodeHtml(blog.content) : "";
 
-  // ==========================================
-  // ✅ LOADING STATE
-  // ==========================================
   if (loading) {
     return (
       <div
         className="min-h-screen flex items-center justify-center"
-        style={{ backgroundColor: NAVY }}
+        style={{ background: `linear-gradient(to bottom, ${BLACK} 0%, ${BLACK} 60%, ${PURE_WHITE} 100%)` }}
       >
         <div className="flex flex-col items-center gap-5">
           <div className="relative">
             <div
               className="w-14 h-14 border-2 rounded-full animate-spin"
               style={{
-                borderColor: `${TEAL}20`,
-                borderTopColor: TEAL,
+                borderColor: `rgba(255,255,255,0.2)`,
+                borderTopColor: PURE_WHITE,
               }}
             />
             <Gem
               size={16}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ color: `${TEAL}60` }}
+              style={{ color: `rgba(255,255,255,0.6)` }}
             />
           </div>
           <p className="text-sm tracking-[0.2em] uppercase" style={{ color: CREAM_40 }}>
@@ -272,20 +254,17 @@ export default function BlogDetailPage() {
     );
   }
 
-  // ==========================================
-  // ✅ ERROR STATE
-  // ==========================================
   if (error || !blog) {
     return (
       <div
         className="min-h-screen flex flex-col items-center justify-center gap-4 px-4"
-        style={{ backgroundColor: NAVY }}
+        style={{ background: `linear-gradient(to bottom, ${BLACK} 0%, ${BLACK} 60%, ${PURE_WHITE} 100%)` }}
       >
         <div
           className="w-20 h-20 rounded-full flex items-center justify-center border"
           style={{
-            backgroundColor: "rgba(177,241,233,0.05)",
-            borderColor: "rgba(177,241,233,0.1)",
+            backgroundColor: "rgba(255,255,255,0.05)",
+            borderColor: "rgba(255,255,255,0.1)",
           }}
         >
           <X size={32} style={{ color: CREAM_40 }} />
@@ -296,12 +275,10 @@ export default function BlogDetailPage() {
         </p>
         <Link
           href="/blogs"
-          className="mt-2 flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl transition-colors"
+          className="mt-2 flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl transition-colors text-black"
           style={{
-            backgroundColor: `${TEAL}15`,
-            backdropFilter: "blur(8px)",
-            border: `1px solid ${TEAL}30`,
-            color: TEAL,
+            backgroundColor: PURE_WHITE,
+            border: `1px solid ${PURE_WHITE}`,
           }}
         >
           <ArrowLeft size={16} /> Browse Blogs
@@ -310,32 +287,37 @@ export default function BlogDetailPage() {
     );
   }
 
-  // ==========================================
-  // ✅ RENDER
-  // ==========================================
   return (
-    <div className="min-h-screen relative" style={{ backgroundColor: NAVY }}>
+    <div className="min-h-screen relative">
       <Toast message={toast.message} visible={toast.visible} onClose={hideToast} />
 
       {/* Background Effects */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Main Top-Black to Bottom-White Gradient */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom, ${BLACK} 0%, ${BLACK} 50%, #1a1a1a 75%, ${PURE_WHITE} 100%)`,
+          }}
+        />
+
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, ${TEAL} 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, ${PURE_WHITE} 1px, transparent 0)`,
             backgroundSize: "40px 40px",
           }}
         />
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse at top left, ${TEAL}10 0%, transparent 40%)`,
+            background: `radial-gradient(ellipse at top left, rgba(255,255,255,0.1) 0%, transparent 40%)`,
           }}
         />
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse at bottom right, ${MINT}08 0%, transparent 50%)`,
+            background: `radial-gradient(ellipse at bottom right, rgba(255,255,255,0.05) 0%, transparent 50%)`,
           }}
         />
       </div>
@@ -350,7 +332,7 @@ export default function BlogDetailPage() {
               src={blogImageUrl}
               alt={blog.title || "Blog cover"}
               fill
-              className="object-cover"
+              className="object-cover grayscale-30"
               priority
               sizes="100vw"
               unoptimized
@@ -364,62 +346,54 @@ export default function BlogDetailPage() {
             />
           )}
 
-          {/* TOP gradient */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: `linear-gradient(to bottom, ${NAVY}EE, ${NAVY}66, transparent)`,
+              background: `linear-gradient(to bottom, ${BLACK}EE, ${BLACK}66, transparent)`,
             }}
           />
-
-          {/* BOTTOM gradient */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: `linear-gradient(to top, ${NAVY}, ${NAVY}99, transparent)`,
+              background: `linear-gradient(to top, ${BLACK}, ${BLACK}99, transparent)`,
             }}
           />
 
-          {/* TITLE + META */}
           <div className="absolute inset-0 flex flex-col items-center justify-end pb-6 sm:pb-10 lg:pb-12 px-4 sm:px-6">
             <div className="max-w-4xl w-full text-center">
-              {/* Category Badge */}
               {blog.category && (
                 <span
                   className="inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold rounded-full mb-4 sm:mb-5"
                   style={{
-                    backgroundColor: `${BRIGHT_CYAN}20`,
-                    color: MINT,
-                    border: `1px solid ${BRIGHT_CYAN}40`,
+                    backgroundColor: `rgba(255,255,255,0.1)`,
+                    color: PURE_WHITE,
+                    border: `1px solid rgba(255,255,255,0.2)`,
                     backdropFilter: "blur(8px)",
                   }}
                 >
-                  <Tag size={11} style={{ color: BRIGHT_CYAN }} />
+                  <Tag size={11} style={{ color: PURE_WHITE }} />
                   {blog.category}
                 </span>
               )}
 
-              {/* Title */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.15] mb-4 sm:mb-5">
                 {blog.title}
               </h1>
 
-              {/* Excerpt */}
               {blog.excerpt && (
                 <p className="text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto mb-5 sm:mb-6" style={{ color: CREAM_75 }}>
                   {blog.excerpt}
                 </p>
               )}
 
-              {/* Meta Row */}
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mb-5 sm:mb-6">
                 {blog.author && (
                   <div className="flex items-center gap-2">
                     <div
                       className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center shrink-0 overflow-hidden"
                       style={{
-                        backgroundColor: `${TEAL}15`,
-                        border: `2px solid ${TEAL}25`,
+                        backgroundColor: `rgba(255,255,255,0.1)`,
+                        border: `2px solid rgba(255,255,255,0.2)`,
                       }}
                     >
                       {blog.author.avatar ? (
@@ -431,7 +405,7 @@ export default function BlogDetailPage() {
                           className="w-full h-full rounded-full object-cover"
                         />
                       ) : (
-                        <User size={14} style={{ color: `${TEAL}80` }} />
+                        <User size={14} style={{ color: `rgba(255,255,255,0.8)` }} />
                       )}
                     </div>
                     <span className="text-xs sm:text-sm font-bold text-white">
@@ -439,25 +413,25 @@ export default function BlogDetailPage() {
                     </span>
                   </div>
                 )}
-                <span className="h-5 w-px" style={{ backgroundColor: `${MINT}20` }} />
+                <span className="h-5 w-px" style={{ backgroundColor: `rgba(255,255,255,0.2)` }} />
                 <span className="flex items-center gap-1.5 text-xs sm:text-sm" style={{ color: CREAM_60 }}>
-                  <Calendar size={13} style={{ color: `${TEAL}80` }} />
+                  <Calendar size={13} style={{ color: `rgba(255,255,255,0.8)` }} />
                   {formatDateShort(blog.createdAt)}
                 </span>
-                <span className="h-5 w-px" style={{ backgroundColor: `${MINT}20` }} />
+                <span className="h-5 w-px" style={{ backgroundColor: `rgba(255,255,255,0.2)` }} />
                 <span className="flex items-center gap-1.5 text-xs sm:text-sm" style={{ color: CREAM_60 }}>
-                  <Clock size={13} style={{ color: `${TEAL}80` }} />
+                  <Clock size={13} style={{ color: `rgba(255,255,255,0.8)` }} />
                   {blog.readTime || getReadTime(blog.content)}
                 </span>
-                <span className="h-5 w-px" style={{ backgroundColor: `${MINT}20` }} />
+                <span className="h-5 w-px" style={{ backgroundColor: `rgba(255,255,255,0.2)` }} />
                 <button
                   onClick={handleShare}
                   className="flex items-center gap-1.5 text-xs sm:text-sm transition-colors"
                   style={{ color: CREAM_60 }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = TEAL)}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
                   onMouseLeave={(e) => (e.currentTarget.style.color = CREAM_60)}
                 >
-                  <Share2 size={13} style={{ color: `${TEAL}80` }} />
+                  <Share2 size={13} style={{ color: `rgba(255,255,255,0.8)` }} />
                   Share
                 </button>
               </div>
@@ -481,33 +455,33 @@ export default function BlogDetailPage() {
             style={{
               backgroundColor: `${NAVY_CARD}CC`,
               backdropFilter: "blur(8px)",
-              border: `1px solid ${MINT}10`,
+              border: `1px solid rgba(255,255,255,0.1)`,
             }}
           >
             <Link
               href="/"
               className="flex items-center gap-1.5 text-xs sm:text-sm font-medium shrink-0 transition-colors"
               style={{ color: CREAM_50 }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = TEAL)}
+              onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
               onMouseLeave={(e) => (e.currentTarget.style.color = CREAM_50)}
             >
               <Home size={13} className="shrink-0" />
               <span className="hidden sm:inline">Home</span>
             </Link>
 
-            <ChevronRight size={12} style={{ color: `${TEAL}40` }} className="shrink-0" />
+            <ChevronRight size={12} style={{ color: `rgba(255,255,255,0.4)` }} className="shrink-0" />
 
             <Link
               href="/blogs"
               className="text-xs sm:text-sm font-medium shrink-0 transition-colors"
               style={{ color: CREAM_50 }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = TEAL)}
+              onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
               onMouseLeave={(e) => (e.currentTarget.style.color = CREAM_50)}
             >
               Blogs
             </Link>
 
-            <ChevronRight size={12} style={{ color: `${TEAL}40` }} className="shrink-0" />
+            <ChevronRight size={12} style={{ color: `rgba(255,255,255,0.4)` }} className="shrink-0" />
 
             {blog.category && (
               <>
@@ -515,16 +489,16 @@ export default function BlogDetailPage() {
                   href={`/blogs?category=${encodeURIComponent(blog.category)}`}
                   className="text-xs sm:text-sm font-medium shrink-0 transition-colors"
                   style={{ color: CREAM_50 }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = TEAL)}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
                   onMouseLeave={(e) => (e.currentTarget.style.color = CREAM_50)}
                 >
                   {blog.category}
                 </Link>
-                <ChevronRight size={12} style={{ color: `${TEAL}40` }} className="shrink-0" />
+                <ChevronRight size={12} style={{ color: `rgba(255,255,255,0.4)` }} className="shrink-0" />
               </>
             )}
 
-            <span className="text-xs sm:text-sm font-semibold truncate" style={{ color: TEAL }}>
+            <span className="text-xs sm:text-sm font-semibold truncate" style={{ color: PURE_WHITE }}>
               {blog.title}
             </span>
           </nav>
@@ -534,8 +508,10 @@ export default function BlogDetailPage() {
       {/* ===== MAIN CONTENT ===== */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-8 lg:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+          
           {/* ===== LEFT COLUMN ===== */}
           <div className="lg:col-span-2 space-y-5 sm:space-y-6">
+            
             {/* 1️⃣ Headers */}
             {blog.headers && blog.headers.length > 0 && (
               <div
@@ -551,18 +527,18 @@ export default function BlogDetailPage() {
                       className="rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6"
                       style={{
                         backgroundColor: NAVY_CARD,
-                        border: `1px solid ${MINT}10`,
+                        border: `1px solid rgba(255,255,255,0.1)`,
                       }}
                     >
                       <div className="flex items-center gap-3 mb-3">
                         <div
                           className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center shrink-0"
                           style={{
-                            backgroundColor: `${TEAL}15`,
-                            border: `1px solid ${TEAL}25`,
+                            backgroundColor: `rgba(255,255,255,0.1)`,
+                            border: `1px solid rgba(255,255,255,0.2)`,
                           }}
                         >
-                          <span className="text-[10px] sm:text-[11px] font-bold" style={{ color: TEAL }}>
+                          <span className="text-[10px] sm:text-[11px] font-bold" style={{ color: PURE_WHITE }}>
                             {index + 1}
                           </span>
                         </div>
@@ -583,30 +559,30 @@ export default function BlogDetailPage() {
                           className="relative w-full aspect-video rounded-xl overflow-hidden mb-4"
                           style={{
                             backgroundColor: NAVY_DARK,
-                            boxShadow: `inset 0 0 0 1px ${MINT}10`,
+                            boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.1)`,
                           }}
                         >
                           <Image
                             src={getSafeImage(header.image)}
                             alt={header.title}
                             fill
-                            className="object-cover"
+                            className="object-cover grayscale-30"
                             sizes="(max-width: 1024px) 100vw, 66vw"
                             unoptimized
                           />
                           <div
                             className="absolute inset-0 pointer-events-none"
                             style={{
-                              background: `linear-gradient(to top, ${NAVY}40, transparent)`,
+                              background: `linear-gradient(to top, rgba(0,0,0,0.4), transparent)`,
                             }}
                           />
                         </div>
                       )}
                       {header.description && (
                         <div
-                          className="text-sm sm:text-[15px] leading-[1.9] text-[#B1F1E9BF]
+                          className="text-sm sm:text-[15px] leading-[1.9] text-white/75
                                      [&_p]:my-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 
-                                     [&_a]:text-[#019586] [&_b]:text-white [&_strong]:text-white"
+                                     [&_a]:text-white [&_b]:text-white [&_strong]:text-white"
                           dangerouslySetInnerHTML={{ __html: decodeHtml(header.description) }}
                         />
                       )}
@@ -627,27 +603,26 @@ export default function BlogDetailPage() {
                 className="rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8"
                 style={{
                   backgroundColor: NAVY_CARD,
-                  border: `1px solid ${MINT}10`,
+                  border: `1px solid rgba(255,255,255,0.1)`,
                 }}
               >
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="w-8 h-px"
                     style={{
-                      background: `linear-gradient(to right, ${TEAL}, transparent)`,
+                      background: `linear-gradient(to right, ${PURE_WHITE}, transparent)`,
                     }}
                   />
                   <span
                     className="text-[10px] font-bold uppercase tracking-[0.25em]"
-                    style={{ color: TEAL }}
+                    style={{ color: PURE_WHITE }}
                   >
                     Article
                   </span>
                 </div>
                 
-                {/* ✅ FIXED DECODED HTML & CUSTOM STYLES FOR EDITOR OUTPUT */}
                 <div
-                  className="max-w-none max-h-[70vh] overflow-y-auto pr-2 text-[#B1F1E9BF] text-sm sm:text-[15px] leading-[1.9]
+                  className="max-w-none max-h-[70vh] overflow-y-auto pr-2 text-white/75 text-sm sm:text-[15px] leading-[1.9]
                              [&_p]:my-3 
                              [&_div]:my-3 
                              [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:my-4 [&_h1]:text-white
@@ -656,12 +631,12 @@ export default function BlogDetailPage() {
                              [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-3
                              [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-3
                              [&_li]:ml-2 [&_li]:my-1
-                             [&_blockquote]:border-l-4 [&_blockquote]:border-[#019586]/50 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#B1F1E999]
-                             [&_a]:text-[#019586] [&_a]:underline
+                             [&_blockquote]:border-l-4 [&_blockquote]:border-white/30 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-white/60
+                             [&_a]:text-white [&_a]:underline
                              [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-xl [&_img]:my-4"
                   style={{
                     scrollbarWidth: "thin", 
-                    scrollbarColor: `${TEAL}50 transparent`,
+                    scrollbarColor: `rgba(255,255,255,0.2) transparent`,
                   }}
                   dangerouslySetInnerHTML={{ __html: decodedContent || "<p>No content available.</p>" }}
                 />
@@ -680,19 +655,19 @@ export default function BlogDetailPage() {
                   className="rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-7"
                   style={{
                     backgroundColor: NAVY_CARD,
-                    border: `1px solid ${MINT}10`,
+                    border: `1px solid rgba(255,255,255,0.1)`,
                   }}
                 >
                   <div className="flex items-center gap-3 mb-5">
                     <div
                       className="w-8 h-px"
                       style={{
-                        background: `linear-gradient(to right, ${TEAL}, transparent)`,
+                        background: `linear-gradient(to right, ${PURE_WHITE}, transparent)`,
                     }}
                     />
                     <span
                       className="text-[10px] font-bold uppercase tracking-[0.25em]"
-                      style={{ color: TEAL }}
+                      style={{ color: PURE_WHITE }}
                     >
                       Key Highlights
                     </span>
@@ -709,11 +684,11 @@ export default function BlogDetailPage() {
                             <div
                               className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5"
                               style={{
-                                backgroundColor: TEAL,
-                                boxShadow: `0 2px 8px ${TEAL}30`,
+                                backgroundColor: PURE_WHITE,
+                                boxShadow: `0 2px 8px rgba(255,255,255,0.2)`,
                               }}
                             >
-                              <span className="text-[10px] sm:text-xs font-bold text-white">
+                              <span className="text-[10px] sm:text-xs font-bold text-black">
                                 {index + 1}
                               </span>
                             </div>
@@ -735,7 +710,7 @@ export default function BlogDetailPage() {
                               <div
                                 className="h-px"
                                 style={{
-                                  background: `linear-gradient(to right, ${TEAL}20, ${MINT}10, ${TEAL}20)`,
+                                  background: `linear-gradient(to right, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2))`,
                                 }}
                               />
                             </div>
@@ -759,14 +734,14 @@ export default function BlogDetailPage() {
                   className="rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-7"
                   style={{
                     backgroundColor: NAVY_CARD,
-                    border: `1px solid ${MINT}10`,
+                    border: `1px solid rgba(255,255,255,0.1)`,
                   }}
                 >
                   <h3 className="text-lg sm:text-xl text-white mb-1">Tags</h3>
                   <div
                     className="w-12 h-0.5 rounded-full mb-4 sm:mb-5"
                     style={{
-                      background: `linear-gradient(to right, ${TEAL}, transparent)`,
+                      background: `linear-gradient(to right, ${PURE_WHITE}, transparent)`,
                     }}
                   />
                   <div className="flex flex-wrap gap-2 sm:gap-2.5">
@@ -777,25 +752,25 @@ export default function BlogDetailPage() {
                         className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm rounded-lg sm:rounded-xl px-2.5 sm:px-3 py-2 sm:py-2.5 transition-colors group"
                         style={{
                           color: CREAM_75,
-                          backgroundColor: `${MINT}08`,
-                          border: `1px solid ${MINT}10`,
+                          backgroundColor: `rgba(255,255,255,0.05)`,
+                          border: `1px solid rgba(255,255,255,0.1)`,
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = `${TEAL}15`;
-                          e.currentTarget.style.borderColor = `${TEAL}30`;
-                          e.currentTarget.style.color = MINT;
+                          e.currentTarget.style.backgroundColor = `rgba(255,255,255,0.15)`;
+                          e.currentTarget.style.borderColor = `rgba(255,255,255,0.3)`;
+                          e.currentTarget.style.color = PURE_WHITE;
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = `${MINT}08`;
-                          e.currentTarget.style.borderColor = `${MINT}10`;
+                          e.currentTarget.style.backgroundColor = `rgba(255,255,255,0.05)`;
+                          e.currentTarget.style.borderColor = `rgba(255,255,255,0.1)`;
                           e.currentTarget.style.color = CREAM_75;
                         }}
                       >
                         <div
                           className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shrink-0"
-                          style={{ backgroundColor: `${TEAL}15` }}
+                          style={{ backgroundColor: `rgba(255,255,255,0.15)` }}
                         >
-                          <Hash size={9} style={{ color: `${TEAL}80` }} />
+                          <Hash size={9} style={{ color: `rgba(255,255,255,0.8)` }} />
                         </div>
                         <span className="capitalize">{tag}</span>
                       </Link>
@@ -816,14 +791,14 @@ export default function BlogDetailPage() {
                 className="rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-7"
                 style={{
                   backgroundColor: NAVY_CARD,
-                  border: `1px solid ${MINT}10`,
+                  border: `1px solid rgba(255,255,255,0.1)`,
                 }}
               >
                 <h3 className="text-lg sm:text-xl text-white mb-1">Share This Article</h3>
                 <div
                   className="w-12 h-0.5 rounded-full mb-4 sm:mb-5"
                   style={{
-                    background: `linear-gradient(to right, ${TEAL}, transparent)`,
+                    background: `linear-gradient(to right, ${PURE_WHITE}, transparent)`,
                   }}
                 />
                 <div className="flex items-center gap-2.5 sm:gap-3">
@@ -833,9 +808,9 @@ export default function BlogDetailPage() {
                     rel="noopener noreferrer"
                     className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl transition-colors"
                     style={{
-                      backgroundColor: `${TEAL}15`,
-                      color: TEAL,
-                      border: `1px solid ${TEAL}25`,
+                      backgroundColor: `rgba(255,255,255,0.1)`,
+                      color: PURE_WHITE,
+                      border: `1px solid rgba(255,255,255,0.2)`,
                     }}
                   >
                     <FacebookIcon className="w-4 h-4" />
@@ -846,9 +821,9 @@ export default function BlogDetailPage() {
                     rel="noopener noreferrer"
                     className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl transition-colors"
                     style={{
-                      backgroundColor: `${MINT}08`,
+                      backgroundColor: `rgba(255,255,255,0.05)`,
                       color: CREAM_80,
-                      border: `1px solid ${MINT}12`,
+                      border: `1px solid rgba(255,255,255,0.1)`,
                     }}
                   >
                     <TwitterIcon className="w-4 h-4" />
@@ -859,9 +834,9 @@ export default function BlogDetailPage() {
                     rel="noopener noreferrer"
                     className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl transition-colors"
                     style={{
-                      backgroundColor: `${BRIGHT_CYAN}15`,
-                      color: BRIGHT_CYAN,
-                      border: `1px solid ${BRIGHT_CYAN}25`,
+                      backgroundColor: `rgba(255,255,255,0.1)`,
+                      color: PURE_WHITE,
+                      border: `1px solid rgba(255,255,255,0.2)`,
                     }}
                   >
                     <LinkedinIcon className="w-4 h-4" />
@@ -870,9 +845,9 @@ export default function BlogDetailPage() {
                     onClick={copyToClipboard}
                     className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl transition-colors"
                     style={{
-                      backgroundColor: `${MINT}15`,
-                      color: MINT,
-                      border: `1px solid ${MINT}25`,
+                      backgroundColor: `rgba(255,255,255,0.05)`,
+                      color: CREAM_80,
+                      border: `1px solid rgba(255,255,255,0.1)`,
                     }}
                   >
                     <LinkIcon className="w-4 h-4" />
@@ -885,6 +860,7 @@ export default function BlogDetailPage() {
           {/* ===== SIDEBAR ===== */}
           <div className="lg:col-span-1">
             <div className="lg:sticky lg:top-24 space-y-3 sm:space-y-4">
+              
               {/* Author */}
               {blog.author && (
                 <div
@@ -897,14 +873,14 @@ export default function BlogDetailPage() {
                     className="rounded-xl sm:rounded-2xl overflow-hidden"
                     style={{
                       backgroundColor: NAVY_CARD,
-                      border: `1px solid ${MINT}10`,
+                      border: `1px solid rgba(255,255,255,0.1)`,
                     }}
                   >
                     <div
                       className="px-4 sm:px-5 lg:px-6 py-4 sm:py-5"
                       style={{
-                        background: `linear-gradient(to right, ${TEAL}12, ${TEAL}06, transparent)`,
-                        borderBottom: `1px solid ${MINT}10`,
+                        background: `linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.02), transparent)`,
+                        borderBottom: `1px solid rgba(255,255,255,0.1)`,
                       }}
                     >
                       <h4
@@ -917,9 +893,9 @@ export default function BlogDetailPage() {
                         <div
                           className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 overflow-hidden"
                           style={{
-                            backgroundColor: `${TEAL}15`,
-                            border: `2px solid ${TEAL}25`,
-                            boxShadow: `0 4px 12px ${TEAL}20`,
+                            backgroundColor: `rgba(255,255,255,0.1)`,
+                            border: `2px solid rgba(255,255,255,0.2)`,
+                            boxShadow: `0 4px 12px rgba(255,255,255,0.1)`,
                           }}
                         >
                           {blog.author.avatar ? (
@@ -931,7 +907,7 @@ export default function BlogDetailPage() {
                               className="w-full h-full rounded-full object-cover"
                             />
                           ) : (
-                            <User size={18} style={{ color: `${TEAL}80` }} />
+                            <User size={18} style={{ color: `rgba(255,255,255,0.8)` }} />
                           )}
                         </div>
                         <div className="min-w-0">
@@ -949,7 +925,7 @@ export default function BlogDetailPage() {
                     <div className="p-4 sm:p-5">
                       <p className="text-xs sm:text-sm leading-relaxed" style={{ color: CREAM_60 }}>
                         Contributing writer sharing insights and expertise on{" "}
-                        <span className="font-medium" style={{ color: `${TEAL}CC` }}>
+                        <span className="font-medium" style={{ color: PURE_WHITE }}>
                           {blog.category || "various topics"}
                         </span>
                         .
@@ -970,7 +946,7 @@ export default function BlogDetailPage() {
                   className="rounded-xl sm:rounded-2xl p-4 sm:p-5"
                   style={{
                     backgroundColor: NAVY_CARD,
-                    border: `1px solid ${MINT}10`,
+                    border: `1px solid rgba(255,255,255,0.1)`,
                   }}
                 >
                   <h4
@@ -982,40 +958,40 @@ export default function BlogDetailPage() {
                   <div className="space-y-0">
                     <div
                       className="flex items-center justify-between text-xs sm:text-sm py-2 sm:py-2.5"
-                      style={{ borderBottom: `1px solid ${MINT}10` }}
+                      style={{ borderBottom: `1px solid rgba(255,255,255,0.1)` }}
                     >
                       <span className="flex items-center gap-1.5 sm:gap-2" style={{ color: CREAM_60 }}>
-                        <Calendar size={11} style={{ color: `${TEAL}60` }} />Published
+                        <Calendar size={11} style={{ color: `rgba(255,255,255,0.6)` }} />Published
                       </span>
                       <span className="font-semibold text-white">{formatDateShort(blog.createdAt)}</span>
                     </div>
                     {blog.updatedAt && blog.updatedAt !== blog.createdAt && (
                       <div
                         className="flex items-center justify-between text-xs sm:text-sm py-2 sm:py-2.5"
-                        style={{ borderBottom: `1px solid ${MINT}10` }}
+                        style={{ borderBottom: `1px solid rgba(255,255,255,0.1)` }}
                       >
                         <span className="flex items-center gap-1.5 sm:gap-2" style={{ color: CREAM_60 }}>
-                          <Clock size={11} style={{ color: `${TEAL}60` }} />Updated
+                          <Clock size={11} style={{ color: `rgba(255,255,255,0.6)` }} />Updated
                         </span>
                         <span className="font-semibold text-white">{formatDateShort(blog.updatedAt)}</span>
                       </div>
                     )}
                     <div
                       className="flex items-center justify-between text-xs sm:text-sm py-2 sm:py-2.5"
-                      style={{ borderBottom: `1px solid ${MINT}10` }}
+                      style={{ borderBottom: `1px solid rgba(255,255,255,0.1)` }}
                     >
                       <span className="flex items-center gap-1.5 sm:gap-2" style={{ color: CREAM_60 }}>
-                        <Clock size={11} style={{ color: `${TEAL}60` }} />Read Time
+                        <Clock size={11} style={{ color: `rgba(255,255,255,0.6)` }} />Read Time
                       </span>
                       <span className="font-semibold text-white">{blog.readTime || getReadTime(blog.content)}</span>
                     </div>
                     {blog.viewsCount > 0 && (
                       <div
                         className="flex items-center justify-between text-xs sm:text-sm py-2 sm:py-2.5"
-                        style={{ borderBottom: `1px solid ${MINT}10` }}
+                        style={{ borderBottom: `1px solid rgba(255,255,255,0.1)` }}
                       >
                         <span className="flex items-center gap-1.5 sm:gap-2" style={{ color: CREAM_60 }}>
-                          <Eye size={11} style={{ color: `${TEAL}60` }} />Views
+                          <Eye size={11} style={{ color: `rgba(255,255,255,0.6)` }} />Views
                         </span>
                         <span className="font-semibold text-white">{blog.viewsCount}</span>
                       </div>
@@ -1023,7 +999,7 @@ export default function BlogDetailPage() {
                     {blog.tags && blog.tags.length > 0 && (
                       <div className="flex items-center justify-between text-xs sm:text-sm py-2 sm:py-2.5">
                         <span className="flex items-center gap-1.5 sm:gap-2" style={{ color: CREAM_60 }}>
-                          <Hash size={11} style={{ color: `${TEAL}60` }} />Tags
+                          <Hash size={11} style={{ color: `rgba(255,255,255,0.6)` }} />Tags
                         </span>
                         <span className="font-semibold text-white">{blog.tags.length} tags</span>
                       </div>
@@ -1044,7 +1020,7 @@ export default function BlogDetailPage() {
                     className="rounded-xl sm:rounded-2xl p-4 sm:p-5"
                     style={{
                       backgroundColor: NAVY_CARD,
-                      border: `1px solid ${MINT}10`,
+                      border: `1px solid rgba(255,255,255,0.1)`,
                     }}
                   >
                     <h4
@@ -1061,17 +1037,17 @@ export default function BlogDetailPage() {
                           className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-medium rounded-full transition-colors"
                           style={{
                             color: CREAM_60,
-                            backgroundColor: `${MINT}08`,
-                            border: `1px solid ${MINT}10`,
+                            backgroundColor: `rgba(255,255,255,0.05)`,
+                            border: `1px solid rgba(255,255,255,0.1)`,
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = `${TEAL}15`;
-                            e.currentTarget.style.borderColor = `${TEAL}30`;
-                            e.currentTarget.style.color = TEAL;
+                            e.currentTarget.style.backgroundColor = `rgba(255,255,255,0.15)`;
+                            e.currentTarget.style.borderColor = `rgba(255,255,255,0.3)`;
+                            e.currentTarget.style.color = PURE_WHITE;
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = `${MINT}08`;
-                            e.currentTarget.style.borderColor = `${MINT}10`;
+                            e.currentTarget.style.backgroundColor = `rgba(255,255,255,0.05)`;
+                            e.currentTarget.style.borderColor = `rgba(255,255,255,0.1)`;
                             e.currentTarget.style.color = CREAM_60;
                           }}
                         >
@@ -1095,7 +1071,7 @@ export default function BlogDetailPage() {
                     className="rounded-xl sm:rounded-2xl p-4 sm:p-5"
                     style={{
                       backgroundColor: NAVY_CARD,
-                      border: `1px solid ${MINT}10`,
+                      border: `1px solid rgba(255,255,255,0.1)`,
                     }}
                   >
                     <h4
@@ -1114,7 +1090,7 @@ export default function BlogDetailPage() {
                                 className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-lg overflow-hidden"
                                 style={{
                                   backgroundColor: NAVY_DARK,
-                                  border: `1px solid ${MINT}10`,
+                                  border: `1px solid rgba(255,255,255,0.1)`,
                                 }}
                               >
                                 {recImg ? (
@@ -1136,7 +1112,7 @@ export default function BlogDetailPage() {
                                 <h5
                                   className="text-[11px] sm:text-xs font-bold line-clamp-2 transition-colors"
                                   style={{ color: CREAM_80 }}
-                                  onMouseEnter={(e) => (e.currentTarget.style.color = TEAL)}
+                                  onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
                                   onMouseLeave={(e) => (e.currentTarget.style.color = CREAM_80)}
                                 >
                                   {recent.title}
@@ -1145,7 +1121,7 @@ export default function BlogDetailPage() {
                                   className="text-[10px] sm:text-[11px] mt-1 flex items-center gap-1"
                                   style={{ color: CREAM_40 }}
                                 >
-                                  <Calendar size={9} style={{ color: `${TEAL}50` }} />
+                                  <Calendar size={9} style={{ color: `rgba(255,255,255,0.5)` }} />
                                   {formatDateShort(recent.createdAt)}
                                 </p>
                               </div>
@@ -1169,17 +1145,17 @@ export default function BlogDetailPage() {
                   className="rounded-xl sm:rounded-2xl p-4 sm:p-5 flex items-center gap-3"
                   style={{
                     backgroundColor: NAVY_CARD,
-                    border: `1px solid ${MINT}10`,
+                    border: `1px solid rgba(255,255,255,0.1)`,
                   }}
                 >
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
                     style={{
-                      backgroundColor: `${TEAL}15`,
-                      border: `1px solid ${TEAL}30`,
+                      backgroundColor: `rgba(255,255,255,0.1)`,
+                      border: `1px solid rgba(255,255,255,0.2)`,
                     }}
                   >
-                    <CheckCircle2 size={18} style={{ color: TEAL }} />
+                    <CheckCircle2 size={18} style={{ color: PURE_WHITE }} />
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm font-bold text-white">

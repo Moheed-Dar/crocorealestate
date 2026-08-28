@@ -15,12 +15,17 @@ import {
 } from "lucide-react";
 
 // ============================================
-// 3-COLOR SCHEME ONLY (No white)
+// BLACK & WHITE (MONOCHROME) SCHEME
 // ============================================
-const TEAL = "#019586";
-const GREEN = "#00B777";
-const MINT = "#B1F1E9";
-const DARK = "#072A26";
+const BLACK = "#000000";      // Primary Black
+const DARK_GRAY = "#333333";  // Secondary Dark Gray
+const LIGHT_GRAY = "#F4F4F5"; // Main Background
+const PURE_WHITE = "#FFFFFF"; // White for cards/text on black
+
+const TEAL = BLACK;
+const GREEN = DARK_GRAY;
+const MINT = LIGHT_GRAY;
+const DARK = BLACK;
 
 // ============================================
 // SAFE IMAGE HELPER
@@ -36,23 +41,23 @@ const PLACEHOLDER =
   "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80";
 
 // ============================================
-// STATUS DOT COLOR
+// STATUS DOT COLOR (Grayscale)
 // ============================================
 const getStatusDotColor = (status) => {
   const s = (status || "").toLowerCase().trim();
   switch (s) {
     case "available":
-      return "bg-emerald-400";
+      return "bg-gray-800";
     case "sold":
-      return "bg-red-400";
+      return "bg-black";
     case "rented":
-      return "bg-amber-400";
+      return "bg-gray-500";
     case "pending":
-      return "bg-yellow-400";
+      return "bg-gray-400";
     case "new":
-      return GREEN;
+      return "bg-gray-700";
     default:
-      return TEAL;
+      return "bg-black";
   }
 };
 
@@ -146,9 +151,9 @@ export default function HeroSection() {
         href={`/properties/${property._id}`}
         className="group relative flex h-full flex-1 flex-col overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-1"
         style={{
-          backgroundColor: "#FFFFFF",
-          boxShadow: `0 20px 50px -15px ${TEAL}30`,
-          border: `1px solid ${TEAL}20`,
+          backgroundColor: PURE_WHITE,
+          boxShadow: `0 20px 50px -15px ${BLACK}30`,
+          border: `1px solid ${BLACK}20`,
         }}
       >
         {/* Image Area (65% height to fill the space nicely) */}
@@ -158,7 +163,7 @@ export default function HeroSection() {
             alt={property.title || "Property"}
             fill
             loading={index === 0 ? "eager" : "lazy"}
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-60 group-hover:grayscale-0"
             sizes="260px"
           />
 
@@ -167,14 +172,14 @@ export default function HeroSection() {
             onClick={(e) => toggleLike(property._id, e)}
             className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full backdrop-blur-md transition-all hover:scale-110"
             style={{
-              backgroundColor: "#FFFFFFAA",
-              border: `1px solid ${TEAL}30`,
+              backgroundColor: `${PURE_WHITE}AA`,
+              border: `1px solid ${BLACK}30`,
             }}
           >
             <Heart
               size={14}
-              className={isLiked ? "fill-red-400 text-red-400" : ""}
-              style={!isLiked ? { color: TEAL } : undefined}
+              className={isLiked ? "fill-black text-black" : ""}
+              style={!isLiked ? { color: BLACK } : undefined}
             />
           </button>
 
@@ -182,9 +187,9 @@ export default function HeroSection() {
           <div
             className="absolute right-3 bottom-3 flex h-9 w-9 items-center justify-center rounded-xl opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-2"
             style={{
-              backgroundColor: TEAL,
-              color: "#FFFFFF",
-              boxShadow: `0 4px 12px ${GREEN}40`,
+              backgroundColor: BLACK,
+              color: PURE_WHITE,
+              boxShadow: `0 4px 12px ${DARK_GRAY}40`,
             }}
           >
             <ArrowUpRight size={16} strokeWidth={2.5} />
@@ -215,9 +220,9 @@ export default function HeroSection() {
             <span
               className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider"
               style={{
-                backgroundColor: `${TEAL}15`,
-                color: TEAL,
-                border: `1px solid ${TEAL}25`,
+                backgroundColor: `${BLACK}15`,
+                color: BLACK,
+                border: `1px solid ${BLACK}25`,
               }}
             >
               <span
@@ -248,20 +253,20 @@ export default function HeroSection() {
   const CardSkeleton = () => (
     <div
       className="flex h-full flex-1 flex-col overflow-hidden rounded-2xl animate-pulse"
-      style={{ backgroundColor: "#FFFFFF" }}
+      style={{ backgroundColor: PURE_WHITE }}
     >
       <div
         className="h-[65%] w-full"
-        style={{ backgroundColor: `${TEAL}10` }}
+        style={{ backgroundColor: `${BLACK}10` }}
       />
       <div className="flex flex-1 flex-col justify-center gap-2 px-4 py-4">
         <div
           className="h-4 rounded w-3/4"
-          style={{ backgroundColor: `${TEAL}15` }}
+          style={{ backgroundColor: `${BLACK}15` }}
         />
         <div
           className="h-3 rounded w-1/2"
-          style={{ backgroundColor: `${TEAL}15` }}
+          style={{ backgroundColor: `${BLACK}15` }}
         />
       </div>
     </div>
@@ -269,27 +274,27 @@ export default function HeroSection() {
 
   return (
     <section
-      className="relative w-full min-h-screen overflow-hidden text-[#072A26]"
+      className="relative w-full min-h-screen overflow-hidden text-black"
       style={{ backgroundColor: MINT }}
     >
-      {/* ==== TOP GRADIENT ADDED WITH #019586 ==== */}
+      {/* ==== TOP GRADIENT ADDED WITH BLACK ==== */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-150"
         style={{
-          background: `linear-gradient(to bottom, ${TEAL} 0%, transparent 100%)`,
-          opacity: 0.75,
+          background: `linear-gradient(to bottom, #000000 0%, transparent 100%)`,
+          opacity: 0.6,
         }}
       />
 
-      <div className="relative flex min-h-screen w-full flex-col lg:flex-row">
+      <div className="relative flex min-h-screen w-full md:mt-10 flex-col lg:flex-row">
         {/* ============ LEFT : TEXT (VERTICALLY CENTERED) ============ */}
         <div className="relative z-20 flex w-full flex-1 flex-col justify-center px-6 pt-16 pb-8 sm:px-10 sm:pt-20 sm:pb-10 md:pt-0 md:py-32 lg:w-[44%] lg:flex-none lg:py-25 lg:pl-14 lg:pr-8">
           {/* Tag pill */}
           <span
             className="w-fit rounded-full px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] shadow-md sm:text-[11px]"
             style={{
-              backgroundColor: TEAL,
-              color: MINT,
+              backgroundColor: BLACK,
+              color: PURE_WHITE,
             }}
           >
             ( Find Your Place )
@@ -297,24 +302,24 @@ export default function HeroSection() {
 
           {/* Main Heading */}
           <h1 className="mt-6 text-[40px] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-5xl md:text-6xl xl:text-[58px]">
-            <span style={{ color: DARK }}>Discover Your</span>
+            <span style={{ color: BLACK }}>Discover Your</span>
             <br />
-            <span style={{ color: TEAL }}>
+            <span style={{ color: DARK_GRAY }}>
               Dream Home
             </span>{" "}
-            <span style={{ color: DARK }}>Today</span>
+            <span style={{ color: BLACK }}>Today</span>
           </h1>
 
           {/* Divider (Solid Color) */}
           <div
             className="mt-8 h-0.75 w-24 sm:w-32 md:w-36 rounded-full"
-            style={{ backgroundColor: TEAL }}
+            style={{ backgroundColor: BLACK }}
           />
 
           {/* Paragraph */}
           <p
             className="mt-6 sm:mt-8 max-w-[320px] sm:max-w-90 md:max-w-100 text-justify text-[13px] font-medium leading-6 sm:text-sm"
-            style={{ color: `${DARK}CC` }}
+            style={{ color: `${BLACK}CC` }}
           >
             Handpicked properties in prime locations — built for comfort, luxury,
             and everyday living.
@@ -324,18 +329,18 @@ export default function HeroSection() {
           <div className="mt-8 sm:mt-9 flex flex-wrap items-center gap-4 sm:gap-6">
             <Link
               href="/properties"
-              className="group flex w-fit items-center gap-3 sm:gap-4 rounded-full py-2.5 pl-6 sm:pl-7 pr-2 sm:pr-2.5 shadow-[0_12px_30px_-10px_rgba(1,149,134,0.6)] transition-all duration-300 hover:-translate-y-0.5"
+              className="group flex w-fit items-center gap-3 sm:gap-4 rounded-full py-2.5 pl-6 sm:pl-7 pr-2 sm:pr-2.5 shadow-[0_12px_30px_-10px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-0.5"
               style={{
-                backgroundColor: TEAL,
-                color: "#FFFFFF",
+                backgroundColor: BLACK,
+                color: PURE_WHITE,
               }}
             >
               <span className="text-xs sm:text-sm font-extrabold">View Properties</span>
               <span
                 className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1"
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  color: TEAL,
+                  backgroundColor: PURE_WHITE,
+                  color: BLACK,
                 }}
               >
                 <ArrowRight size={14} strokeWidth={2.5} className="sm:hidden" />
@@ -347,63 +352,21 @@ export default function HeroSection() {
               href="https://calendar.app.google/zf9eeGFTRRb44AKU6"
               className="border-b-2 pb-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.18em] transition-colors"
               style={{
-                color: TEAL,
-                borderColor: `${TEAL}50`,
+                color: BLACK,
+                borderColor: `${BLACK}50`,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = GREEN;
-                e.currentTarget.style.borderColor = GREEN;
+                e.currentTarget.style.color = DARK_GRAY;
+                e.currentTarget.style.borderColor = DARK_GRAY;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = TEAL;
-                e.currentTarget.style.borderColor = `${TEAL}50`;
+                e.currentTarget.style.color = BLACK;
+                e.currentTarget.style.borderColor = `${BLACK}50`;
               }}
             >
               ( Book A Consultation )
             </Link>
           </div>
-
-          {/* Social proof */}
-          {/* <Link
-            href="/testimonials"
-            className="group mt-8 sm:mt-9 flex w-fit items-center gap-3 sm:gap-4"
-          >
-            <div className="flex -space-x-2 sm:-space-x-3">
-              {heroImages.slice(0, 3).map((src, i) => (
-                <div
-                  key={i}
-                  className="relative h-9 w-9 sm:h-10 sm:w-10 overflow-hidden rounded-full shadow-md"
-                  style={{ border: `2px solid #FFFFFF` }}
-                >
-                  <Image
-                    src={src}
-                    alt={`Happy homeowner ${i + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="40px"
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col">
-              <span
-                className="flex items-center gap-1 text-xs sm:text-sm font-extrabold"
-                style={{ color: DARK }}
-              >
-                4.9 <Star size={12} className="fill-[#FFC107] text-[#FFC107] sm:hidden" />
-                <Star size={14} className="fill-[#FFC107] text-[#FFC107] hidden sm:block" />
-              </span>
-              <span className="text-[10px] sm:text-xs" style={{ color: `${DARK}A0` }}>
-                12k+ happy homeowners
-              </span>
-            </div>
-            <span
-              className="ml-1 border-b-2 border-transparent pb-0.5 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.18em] transition-colors group-hover:border-[#FFC107]"
-              style={{ color: TEAL }}
-            >
-              ( Testimonials )
-            </span>
-          </Link> */}
         </div>
 
         {/* ============ RIGHT : PROPERTY GALLERY ============ */}
@@ -417,8 +380,8 @@ export default function HeroSection() {
               <div
                 className="group relative h-full w-full overflow-hidden rounded-2xl"
                 style={{
-                  boxShadow: `0 30px 70px -20px ${TEAL}40`,
-                  border: `1px solid #FFFFFF50`,
+                  boxShadow: `0 30px 70px -20px ${BLACK}40`,
+                  border: `1px solid ${PURE_WHITE}50`,
                 }}
               >
                 {heroImages.map((img, index) => (
@@ -434,7 +397,7 @@ export default function HeroSection() {
                       fill
                       priority={index === 0}
                       loading={index === 0 ? "eager" : "lazy"}
-                      className="object-cover transition-transform duration-2000 group-hover:scale-105"
+                      className="object-cover transition-transform duration-2000 group-hover:scale-105 grayscale-60 group-hover:grayscale-0"
                       sizes="100vw"
                     />
                   </div>
@@ -445,12 +408,12 @@ export default function HeroSection() {
                   className="absolute right-4 top-4 flex items-center gap-2 rounded-full px-3 py-1.5 shadow-lg backdrop-blur-md sm:right-5 sm:top-5 sm:px-4 sm:py-2"
                   style={{
                     backgroundColor: `${MINT}E6`,
-                    color: TEAL,
+                    color: BLACK,
                   }}
                 >
                   <span
                     className="h-2 w-2 animate-pulse rounded-full"
-                    style={{ backgroundColor: GREEN }}
+                    style={{ backgroundColor: DARK_GRAY }}
                   />
                   <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.15em]">
                     250+ New Listings
@@ -461,8 +424,8 @@ export default function HeroSection() {
                 <div
                   className="absolute left-4 bottom-4 flex items-center gap-2 rounded-full px-3 py-1.5 backdrop-blur-md sm:left-5 sm:bottom-5 sm:px-4 sm:py-2"
                   style={{
-                    backgroundColor: `${TEAL}E6`,
-                    color: MINT,
+                    backgroundColor: `${BLACK}E6`,
+                    color: PURE_WHITE,
                   }}
                 >
                   <Building2 size={14} />
@@ -475,22 +438,22 @@ export default function HeroSection() {
 
             {/* Progress Bar */}
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">
-              <span className="text-base sm:text-lg font-extrabold" style={{ color: TEAL }}>
+              <span className="text-base sm:text-lg font-extrabold" style={{ color: BLACK }}>
                 {String(currentImageIndex + 1).padStart(2, "0")}
               </span>
               <div
                 className="relative h-0.75 w-28 sm:w-40 overflow-hidden rounded-full"
-                style={{ backgroundColor: "#014D41" }}
+                style={{ backgroundColor: "#E5E5E5" }}
               >
                 <div
                   className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
                   style={{
                     width: `${((currentImageIndex + 1) / totalImages) * 100}%`,
-                    backgroundColor: "#FFFFFF",
+                    backgroundColor: BLACK,
                   }}
                 />
               </div>
-              <span className="text-base sm:text-lg font-extrabold" style={{ color: TEAL }}>
+              <span className="text-base sm:text-lg font-extrabold" style={{ color: BLACK }}>
                 {String(totalImages).padStart(2, "0")}
               </span>
             </div>
@@ -511,12 +474,12 @@ export default function HeroSection() {
                   <div
                     className="flex h-full flex-1 flex-col rounded-2xl"
                     style={{
-                      backgroundColor: "#FFFFFF",
-                      border: `1px solid ${TEAL}20`,
+                      backgroundColor: PURE_WHITE,
+                      border: `1px solid ${BLACK}20`,
                     }}
                   >
                     <div className="flex flex-1 flex-col justify-center items-center px-4">
-                      <Building2 size={32} style={{ color: TEAL }} />
+                      <Building2 size={32} style={{ color: BLACK }} />
                       <span className="mt-3 text-sm font-extrabold text-center" style={{ color: DARK }}>
                         No Properties Available
                       </span>
@@ -525,12 +488,12 @@ export default function HeroSection() {
                   <div
                     className="flex h-full flex-1 flex-col rounded-2xl"
                     style={{
-                      backgroundColor: "#FFFFFF",
-                      border: `1px solid ${TEAL}20`,
+                      backgroundColor: PURE_WHITE,
+                      border: `1px solid ${BLACK}20`,
                     }}
                   >
                     <div className="flex flex-1 flex-col justify-center items-center px-4">
-                      <Crown size={32} style={{ color: GREEN }} />
+                      <Crown size={32} style={{ color: DARK_GRAY }} />
                       <span className="mt-3 text-sm font-extrabold text-center" style={{ color: DARK }}>
                         Featured Soon
                       </span>
@@ -549,16 +512,14 @@ export default function HeroSection() {
             <div
               className="group relative h-full w-full overflow-hidden rounded-tl-[200px] lg:rounded-tl-[300px] rounded-2xl"
               style={{
-                boxShadow: `0 30px 70px -20px ${TEAL}40`,
-                border: `1px solid #FFFFFF50`,
+                boxShadow: `0 30px 70px -20px ${BLACK}40`,
+                border: `1px solid ${PURE_WHITE}50`,
               }}
             >
               {heroImages.map((img, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-0 transition-opacity duration-1200 ease-in-out ${
-                    index === currentImageIndex ? "opacity-100" : "opacity-0"
-                  }`}
+                  className={`Property exterior ${index + 1}`}
                 >
                   <Image
                     src={img}
@@ -566,7 +527,7 @@ export default function HeroSection() {
                     fill
                     priority={index === 0}
                     loading={index === 0 ? "eager" : "lazy"}
-                    className="object-cover transition-transform duration-2000 group-hover:scale-105"
+                    className="object-cover transition-transform duration-2000 group-hover:scale-105 grayscale-60 group-hover:grayscale-0"
                     sizes="(max-width: 1024px) 100vw, 64vw"
                   />
                 </div>
@@ -577,12 +538,12 @@ export default function HeroSection() {
                 className="absolute right-4 top-4 md:right-5 md:top-5 flex items-center gap-2 rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-lg backdrop-blur-md"
                 style={{
                   backgroundColor: `${MINT}E6`,
-                  color: TEAL,
+                  color: BLACK,
                 }}
               >
                 <span
                   className="h-2 w-2 animate-pulse rounded-full"
-                  style={{ backgroundColor: GREEN }}
+                  style={{ backgroundColor: DARK_GRAY }}
                 />
                 <span className="text-[9px] md:text-[10px] font-extrabold uppercase tracking-[0.15em]">
                   250+ New Listings
@@ -593,8 +554,8 @@ export default function HeroSection() {
               <div
                 className="absolute left-4 bottom-4 md:left-5 md:bottom-5 flex items-center gap-2 rounded-full px-3 py-1.5 md:px-4 md:py-2 backdrop-blur-md"
                 style={{
-                  backgroundColor: `${TEAL}E6`,
-                  color: MINT,
+                  backgroundColor: `${BLACK}E6`,
+                  color: PURE_WHITE,
                 }}
               >
                 <Building2 size={14} />
@@ -621,12 +582,12 @@ export default function HeroSection() {
                 <div
                   className="flex h-full flex-1 flex-col rounded-2xl"
                   style={{
-                    backgroundColor: "#FFFFFF",
-                    border: `1px solid ${TEAL}20`,
+                    backgroundColor: PURE_WHITE,
+                    border: `1px solid ${BLACK}20`,
                   }}
                 >
                   <div className="flex flex-1 flex-col justify-center items-center px-4">
-                    <Building2 size={32} style={{ color: TEAL }} />
+                    <Building2 size={32} style={{ color: BLACK }} />
                     <span className="mt-3 text-sm font-extrabold text-center" style={{ color: DARK }}>
                       No Properties Available
                     </span>
@@ -635,12 +596,12 @@ export default function HeroSection() {
                 <div
                   className="flex h-full flex-1 flex-col rounded-2xl -mr-10"
                   style={{
-                    backgroundColor: "#FFFFFF",
-                    border: `1px solid ${TEAL}20`,
+                    backgroundColor: PURE_WHITE,
+                    border: `1px solid ${BLACK}20`,
                   }}
                 >
                   <div className="flex flex-1 flex-col justify-center items-center px-4">
-                    <Crown size={32} style={{ color: GREEN }} />
+                    <Crown size={32} style={{ color: DARK_GRAY }} />
                     <span className="mt-3 text-sm font-extrabold text-center" style={{ color: DARK }}>
                       Featured Soon
                     </span>
@@ -650,25 +611,25 @@ export default function HeroSection() {
             )}
           </div>
 
-          {/* ---------- BOTTOM BAR : 01 —— 05 (White Color) ---------- */}
+          {/* ---------- BOTTOM BAR : 01 —— 05 (Black Color) ---------- */}
           <div className="absolute inset-x-0 bottom-0 flex h-14 items-center pr-5 md:h-16 md:pr-10">
             <div className="flex items-center gap-3 md:gap-4 pl-1">
-              <span className="text-base md:text-lg font-extrabold" style={{ color: TEAL }}>
+              <span className="text-base md:text-lg font-extrabold" style={{ color: BLACK }}>
                 {String(currentImageIndex + 1).padStart(2, "0")}
               </span>
               <div
                 className="relative h-0.75 w-32 md:w-40 lg:w-56 overflow-hidden rounded-full"
-                style={{ backgroundColor: "#014D41" }}
+                style={{ backgroundColor: "#E5E5E5" }}
               >
                 <div
                   className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
                   style={{
                     width: `${((currentImageIndex + 1) / totalImages) * 100}%`,
-                    backgroundColor: "#FFFFFF",
+                    backgroundColor: BLACK,
                   }}
                 />
               </div>
-              <span className="text-base md:text-lg font-extrabold" style={{ color: TEAL }}>
+              <span className="text-base md:text-lg font-extrabold" style={{ color: BLACK }}>
                 {String(totalImages).padStart(2, "0")}
               </span>
             </div>
