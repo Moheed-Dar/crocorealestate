@@ -674,6 +674,475 @@
 
 
 
+// "use client";
+
+// import { useState } from "react";
+// import { useSearchParams } from "next/navigation";
+// import Link from "next/link";
+// import {
+//   Eye,
+//   EyeOff,
+//   Loader2,
+//   ShieldCheck,
+//   ArrowRight,
+//   X,
+//   Home,
+// } from "lucide-react";
+// import { motion } from "framer-motion";
+// import { loginAdmin } from "@/lib/auth/api";
+// import { setStoredUser } from "@/lib/auth";
+
+// export default function LoginForm() {
+//   const searchParams = useSearchParams();
+//   const redirectPath = searchParams.get("redirect") || "/admin/dashboard";
+
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState("");
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setError("");
+
+//     if (!email || !password) {
+//       setError("Email and password are required");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     try {
+//       const data = await loginAdmin(email, password);
+
+//       if (data?.user) {
+//         setStoredUser(data.user);
+//       } else {
+//         setStoredUser({
+//           name: data?.name || "Admin",
+//           email: data?.email || email,
+//           role: data?.role || "admin",
+//         });
+//       }
+
+//       document.cookie = "admin_token=authenticated; path=/; max-age=86400; SameSite=Lax";
+//       window.location.href = redirectPath;
+//     } catch (err) {
+//       setError(err.response?.data?.message || err.message || "Login failed");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const clearFields = () => {
+//     setEmail("");
+//     setPassword("");
+//     setError("");
+//   };
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 30 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.6 }}
+//       className="w-full"
+//     >
+//       {/* Background Glow - Teal */}
+//       <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#019586]/15 rounded-full blur-3xl pointer-events-none" />
+
+//       {/* Card - Dark Teal Background */}
+//       <div className="relative bg-[#013A30] backdrop-blur-xl rounded-2xl border border-white/10 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl shadow-black/40">
+
+//         {/* Title */}
+//         <div className="flex items-center justify-center gap-3 mb-7">
+//           <div className="w-10 h-10 rounded-xl bg-[#019586]/20 flex items-center justify-center border border-[#019586]/30 shrink-0">
+//             <ShieldCheck size={20} className="text-[#019586]" />
+//           </div>
+//           <div>
+//             <h1 className="text-lg sm:text-xl font-bold text-white leading-tight">
+//               Admin Panel
+//             </h1>
+//             <p className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-[0.2em]">
+//               Secure Access
+//             </p>
+//           </div>
+//         </div>
+
+//         {/* Divider */}
+//         <div className="flex items-center gap-3 mb-6">
+//           <div className="h-px flex-1 bg-linear-to-r from-transparent via-white/10 to-transparent" />
+//         </div>
+
+//         {/* Error - Using Red for error state */}
+//         {error && (
+//           <motion.div
+//             initial={{ opacity: 0, y: -10 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             className="mb-5 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl"
+//           >
+//             <p className="text-red-400 text-sm">{error}</p>
+//           </motion.div>
+//         )}
+
+//         {/* Form */}
+//         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+//           {/* Email */}
+//           <div>
+//             <label className="block text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+//               Email Address
+//             </label>
+//             <div className="relative">
+//               <input
+//                 type="email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 placeholder="admin@example.com"
+//                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-10 text-sm text-white placeholder:text-white/25 outline-none focus:border-[#019586]/50 focus:ring-2 focus:ring-[#019586]/20 transition-all"
+//                 autoComplete="email"
+//               />
+//               {email && (
+//                 <button
+//                   type="button"
+//                   onClick={() => setEmail("")}
+//                   className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+//                 >
+//                   <X size={14} className="text-white/30 hover:text-white/70" />
+//                 </button>
+//               )}
+//             </div>
+//           </div>
+
+//           {/* Password */}
+//           <div>
+//             <label className="block text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+//               Password
+//             </label>
+//             <div className="relative">
+//               <input
+//                 type={showPassword ? "text" : "password"}
+//                 value={password}
+//                 onChange={(e) => setPassword(e.target.value)}
+//                 placeholder="Enter your password"
+//                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-20 text-sm text-white placeholder:text-white/25 outline-none focus:border-[#019586]/50 focus:ring-2 focus:ring-[#019586]/20 transition-all"
+//                 autoComplete="current-password"
+//               />
+//               {password && (
+//                 <button
+//                   type="button"
+//                   onClick={() => setPassword("")}
+//                   className="absolute right-12 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+//                 >
+//                   <X size={14} className="text-white/30 hover:text-white/70" />
+//                 </button>
+//               )}
+//               <button
+//                 type="button"
+//                 onClick={() => setShowPassword(!showPassword)}
+//                 className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors"
+//               >
+//                 {showPassword ? (
+//                   <EyeOff size={16} className="text-white/40" />
+//                 ) : (
+//                   <Eye size={16} className="text-white/40" />
+//                 )}
+//               </button>
+//             </div>
+//           </div>
+
+//           {/* Action Buttons */}
+//           <div className="flex gap-3 pt-2">
+//             <button
+//               type="button"
+//               onClick={clearFields}
+//               className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 text-white/60 text-sm font-medium rounded-xl hover:bg-white/10 hover:border-white/20 transition-colors flex-1 cursor-pointer"
+//             >
+//               <X size={14} />
+//               Clear
+//             </button>
+
+//             <button
+//               type="submit"
+//               disabled={loading}
+//               className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-[#019586] to-[#00B777] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 rounded-xl transition-all cursor-pointer shadow-lg shadow-[#019586]/30"
+//             >
+//               {loading ? (
+//                 <>
+//                   <Loader2 size={16} className="animate-spin" />
+//                   Logging...
+//                 </>
+//               ) : (
+//                 <>
+//                   Login
+//                   <ArrowRight size={16} />
+//                 </>
+//               )}
+//             </button>
+//           </div>
+
+//           {/* Home Navigation Button */}
+//           <Link
+//             href="/"
+//             className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-transparent border border-white/10 text-white/70 text-sm font-medium rounded-xl hover:bg-white/5 hover:border-white/20 hover:text-white transition-all cursor-pointer"
+//           >
+//             <Home size={14} />
+//             Back to Home
+//           </Link>
+//         </form>
+
+//         {/* Footer */}
+//         <p className="text-center text-white/30 text-[11px] sm:text-xs mt-7">
+//           Protected area — Unauthorized access is prohibited.
+//         </p>
+//       </div>
+//     </motion.div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { useState } from "react";
+// import { useSearchParams } from "next/navigation";
+// import Link from "next/link";
+// import {
+//   Eye,
+//   EyeOff,
+//   Loader2,
+//   ShieldCheck,
+//   ArrowRight,
+//   X,
+//   Home,
+// } from "lucide-react";
+// import { motion } from "framer-motion";
+// import { loginAdmin } from "@/lib/auth/api";
+// import { setStoredUser } from "@/lib/auth";
+
+// export default function LoginForm() {
+//   const searchParams = useSearchParams();
+//   const redirectPath = searchParams.get("redirect") || "/admin/dashboard";
+
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState("");
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setError("");
+
+//     if (!email || !password) {
+//       setError("Email and password are required");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     try {
+//       const data = await loginAdmin(email, password);
+
+//       if (data?.user) {
+//         setStoredUser(data.user);
+//       } else {
+//         setStoredUser({
+//           name: data?.name || "Admin",
+//           email: data?.email || email,
+//           role: data?.role || "admin",
+//         });
+//       }
+
+//       document.cookie = "admin_token=authenticated; path=/; max-age=86400; SameSite=Lax";
+//       window.location.href = redirectPath;
+//     } catch (err) {
+//       setError(err.response?.data?.message || err.message || "Login failed");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const clearFields = () => {
+//     setEmail("");
+//     setPassword("");
+//     setError("");
+//   };
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 30 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.6 }}
+//       className="w-full"
+//     >
+//       {/* Background Glow - White/Gray for Monochrome look */}
+//       <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+
+//       {/* Card - Pure Black Background */}
+//       <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl shadow-black/50">
+
+//         {/* Title */}
+//         <div className="flex items-center justify-center gap-3 mb-7">
+//           <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/20 shrink-0">
+//             <ShieldCheck size={20} className="text-white" />
+//           </div>
+//           <div>
+//             <h1 className="text-lg sm:text-xl font-bold text-white leading-tight">
+//               Admin Panel
+//             </h1>
+//             <p className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-[0.2em]">
+//               Secure Access
+//             </p>
+//           </div>
+//         </div>
+
+//         {/* Divider */}
+//         <div className="flex items-center gap-3 mb-6">
+//           <div className="h-px flex-1 bg-linear-to-r from-transparent via-white/10 to-transparent" />
+//         </div>
+
+//         {/* Error - Keeping Red for error state for better UX */}
+//         {error && (
+//           <motion.div
+//             initial={{ opacity: 0, y: -10 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             className="mb-5 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl"
+//           >
+//             <p className="text-red-400 text-sm">{error}</p>
+//           </motion.div>
+//         )}
+
+//         {/* Form */}
+//         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+//           {/* Email */}
+//           <div>
+//             <label className="block text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+//               Email Address
+//             </label>
+//             <div className="relative">
+//               <input
+//                 type="email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 placeholder="admin@example.com"
+//                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-10 text-sm text-white placeholder:text-white/25 outline-none focus:border-white/40 focus:ring-2 focus:ring-white/10 transition-all"
+//                 autoComplete="email"
+//               />
+//               {email && (
+//                 <button
+//                   type="button"
+//                   onClick={() => setEmail("")}
+//                   className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+//                 >
+//                   <X size={14} className="text-white/30 hover:text-white/70" />
+//                 </button>
+//               )}
+//             </div>
+//           </div>
+
+//           {/* Password */}
+//           <div>
+//             <label className="block text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+//               Password
+//             </label>
+//             <div className="relative">
+//               <input
+//                 type={showPassword ? "text" : "password"}
+//                 value={password}
+//                 onChange={(e) => setPassword(e.target.value)}
+//                 placeholder="Enter your password"
+//                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-20 text-sm text-white placeholder:text-white/25 outline-none focus:border-white/40 focus:ring-2 focus:ring-white/10 transition-all"
+//                 autoComplete="current-password"
+//               />
+//               {password && (
+//                 <button
+//                   type="button"
+//                   onClick={() => setPassword("")}
+//                   className="absolute right-12 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+//                 >
+//                   <X size={14} className="text-white/30 hover:text-white/70" />
+//                 </button>
+//               )}
+//               <button
+//                 type="button"
+//                 onClick={() => setShowPassword(!showPassword)}
+//                 className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors"
+//               >
+//                 {showPassword ? (
+//                   <EyeOff size={16} className="text-white/40" />
+//                 ) : (
+//                   <Eye size={16} className="text-white/40" />
+//                 )}
+//               </button>
+//             </div>
+//           </div>
+
+//           {/* Action Buttons */}
+//           <div className="flex gap-3 pt-2">
+//             <button
+//               type="button"
+//               onClick={clearFields}
+//               className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 text-white/60 text-sm font-medium rounded-xl hover:bg-white/10 hover:border-white/20 transition-colors flex-1 cursor-pointer"
+//             >
+//               <X size={14} />
+//               Clear
+//             </button>
+
+//             <button
+//               type="submit"
+//               disabled={loading}
+//               className="flex-1 flex items-center justify-center gap-2 bg-white hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed text-black font-semibold text-sm py-3 rounded-xl transition-all cursor-pointer shadow-lg shadow-white/10"
+//             >
+//               {loading ? (
+//                 <>
+//                   <Loader2 size={16} className="animate-spin" />
+//                   Logging...
+//                 </>
+//               ) : (
+//                 <>
+//                   Login
+//                   <ArrowRight size={16} />
+//                 </>
+//               )}
+//             </button>
+//           </div>
+
+//           {/* Home Navigation Button */}
+//           <Link
+//             href="/"
+//             className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-transparent border border-white/10 text-white/70 text-sm font-medium rounded-xl hover:bg-white/5 hover:border-white/20 hover:text-white transition-all cursor-pointer"
+//           >
+//             <Home size={14} />
+//             Back to Home
+//           </Link>
+//         </form>
+
+//         {/* Footer */}
+//         <p className="text-center text-white/30 text-[11px] sm:text-xs mt-7">
+//           Protected area — Unauthorized access is prohibited.
+//         </p>
+//       </div>
+//     </motion.div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 "use client";
 
 import { useState } from "react";
@@ -748,48 +1217,46 @@ export default function LoginForm() {
       transition={{ duration: 0.6 }}
       className="w-full"
     >
-      {/* Background Glow - Teal */}
-      <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#019586]/15 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Glow - Subtle White */}
+      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-white/[0.07] rounded-full blur-3xl pointer-events-none" />
 
-      {/* Card - Dark Teal Background */}
-      <div className="relative bg-[#013A30] backdrop-blur-xl rounded-2xl border border-white/10 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl shadow-black/40">
-
+      {/* Card - Modern Dark Zinc/Black Background */}
+      <div className="relative bg-zinc-950/90 backdrop-blur-xl rounded-2xl border border-zinc-800 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl shadow-black/50">
+        
         {/* Title */}
-        <div className="flex items-center justify-center gap-3 mb-7">
-          <div className="w-10 h-10 rounded-xl bg-[#019586]/20 flex items-center justify-center border border-[#019586]/30 shrink-0">
-            <ShieldCheck size={20} className="text-[#019586]" />
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center border border-zinc-700 shrink-0">
+            <ShieldCheck size={22} className="text-white" />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-white leading-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
               Admin Panel
             </h1>
-            <p className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-[0.2em]">
+            <p className="text-[10px] sm:text-[11px] text-zinc-500 uppercase tracking-[0.25em] mt-1">
               Secure Access
             </p>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-px flex-1 bg-linear-to-r from-transparent via-white/10 to-transparent" />
-        </div>
+        <div className="h-px w-full bg-linear-to-r from-transparent via-zinc-800 to-transparent mb-6" />
 
-        {/* Error - Using Red for error state */}
+        {/* Error Message */}
         {error && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-5 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl"
           >
-            <p className="text-red-400 text-sm">{error}</p>
+            <p className="text-red-400 text-sm font-medium">{error}</p>
           </motion.div>
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-          {/* Email */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Email Input */}
           <div>
-            <label className="block text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+            <label className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
               Email Address
             </label>
             <div className="relative">
@@ -798,24 +1265,24 @@ export default function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@example.com"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-10 text-sm text-white placeholder:text-white/25 outline-none focus:border-[#019586]/50 focus:ring-2 focus:ring-[#019586]/20 transition-all"
+                className="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 pr-10 text-sm text-white placeholder:text-zinc-600 outline-none focus:border-zinc-600 focus:ring-2 focus:ring-zinc-700/50 transition-all"
                 autoComplete="email"
               />
               {email && (
                 <button
                   type="button"
                   onClick={() => setEmail("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors"
                 >
-                  <X size={14} className="text-white/30 hover:text-white/70" />
+                  <X size={14} className="text-zinc-500 hover:text-white" />
                 </button>
               )}
             </div>
           </div>
 
-          {/* Password */}
+          {/* Password Input (With Show/Hide Icon) */}
           <div>
-            <label className="block text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+            <label className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
               Password
             </label>
             <div className="relative">
@@ -824,27 +1291,20 @@ export default function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-20 text-sm text-white placeholder:text-white/25 outline-none focus:border-[#019586]/50 focus:ring-2 focus:ring-[#019586]/20 transition-all"
+                className="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 pr-12 text-sm text-white placeholder:text-zinc-600 outline-none focus:border-zinc-600 focus:ring-2 focus:ring-zinc-700/50 transition-all"
                 autoComplete="current-password"
               />
-              {password && (
-                <button
-                  type="button"
-                  onClick={() => setPassword("")}
-                  className="absolute right-12 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
-                >
-                  <X size={14} className="text-white/30 hover:text-white/70" />
-                </button>
-              )}
+              {/* Show/Hide Password Button */}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-zinc-800 transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
-                  <EyeOff size={16} className="text-white/40" />
+                  <EyeOff size={18} className="text-zinc-400 hover:text-white" />
                 ) : (
-                  <Eye size={16} className="text-white/40" />
+                  <Eye size={18} className="text-zinc-400 hover:text-white" />
                 )}
               </button>
             </div>
@@ -855,7 +1315,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={clearFields}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 text-white/60 text-sm font-medium rounded-xl hover:bg-white/10 hover:border-white/20 transition-colors flex-1 cursor-pointer"
+              className="flex items-center justify-center gap-2 px-4 py-3.5 bg-zinc-900 border border-zinc-800 text-zinc-400 text-sm font-medium rounded-xl hover:bg-zinc-800 hover:text-white transition-all flex-1 cursor-pointer"
             >
               <X size={14} />
               Clear
@@ -864,7 +1324,7 @@ export default function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-[#019586] to-[#00B777] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 rounded-xl transition-all cursor-pointer shadow-lg shadow-[#019586]/30"
+              className="flex-1 flex items-center justify-center gap-2 bg-white hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold text-sm py-3.5 rounded-xl transition-all cursor-pointer shadow-lg shadow-white/10 hover:shadow-white/20"
             >
               {loading ? (
                 <>
@@ -883,7 +1343,7 @@ export default function LoginForm() {
           {/* Home Navigation Button */}
           <Link
             href="/"
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-transparent border border-white/10 text-white/70 text-sm font-medium rounded-xl hover:bg-white/5 hover:border-white/20 hover:text-white transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-transparent border border-zinc-800 text-zinc-500 text-sm font-medium rounded-xl hover:bg-zinc-900 hover:border-zinc-700 hover:text-white transition-all cursor-pointer"
           >
             <Home size={14} />
             Back to Home
@@ -891,7 +1351,7 @@ export default function LoginForm() {
         </form>
 
         {/* Footer */}
-        <p className="text-center text-white/30 text-[11px] sm:text-xs mt-7">
+        <p className="text-center text-zinc-700 text-[11px] sm:text-xs mt-8 font-medium">
           Protected area — Unauthorized access is prohibited.
         </p>
       </div>
