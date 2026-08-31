@@ -850,7 +850,7 @@
 //       "Know what your home is worth with a comprehensive market evaluation. We provide honest advice and local market expertise so you can plan your next move with confidence.",
 //     features: [
 //       "Accurate comparative market analysis",
-//       "Current Northern Virginia market insights",
+//       "Current  Veterans Hwy, Millersville,market insights",
 //       "Pricing strategies for today's market",
 //       "No-obligation consultation",
 //     ],
@@ -1350,7 +1350,7 @@
 //       "Know what your home is worth with a comprehensive market evaluation. We provide honest advice and local market expertise so you can plan your next move with confidence.",
 //     features: [
 //       "Accurate comparative market analysis",
-//       "Current Northern Virginia market insights",
+//       "Current  Veterans Hwy, Millersville,market insights",
 //       "Pricing strategies for today's market",
 //       "No-obligation consultation",
 //     ],
@@ -1873,7 +1873,7 @@ const services = [
       "Know what your home is worth with a comprehensive market evaluation. We provide honest advice and local market expertise so you can plan your next move with confidence.",
     features: [
       "Accurate comparative market analysis",
-      "Current Northern Virginia market insights",
+      "Current  Veterans Hwy, Millersville,market insights",
       "Pricing strategies for today's market",
       "No-obligation consultation",
     ],

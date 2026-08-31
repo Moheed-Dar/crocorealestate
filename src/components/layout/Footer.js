@@ -259,7 +259,7 @@ export default function Footer() {
               className="text-sm sm:text-base leading-relaxed mb-6 max-w-md"
               style={{ color: `${LIGHT_GRAY}CC` }}
             >
-              Helping Northern Virginia homeowners embrace their next chapter
+              Helping  Veterans Hwy, Millersville,homeowners embrace their next chapter
               with thoughtful guidance, local knowledge, and a real estate
               experience built on trust, kindness, and connection.
             </p>
@@ -564,7 +564,7 @@ export default function Footer() {
                 className="text-lg sm:text-xl font-extrabold mb-1"
                 style={{ color: PURE_WHITE }}
               >
-                Stay Updated with Northern Virginia Real Estate
+                Stay Updated with  Veterans Hwy, Millersville,Real Estate
               </h4>
               <p
                 className="text-xs sm:text-sm"
@@ -612,8 +612,8 @@ export default function Footer() {
         </div>
 
         {/* ===== SECTION 4: FOOTER LOGO & DISCLAIMER ===== */}
-        <div className="pt-8 pb-8 flex flex-col justify-center items-center gap-6 text-center max-w-5xl mx-auto">
-          {/* <Image
+        {/* <div className="pt-8 pb-8 flex flex-col justify-center items-center gap-6 text-center max-w-5xl mx-auto">
+          <Image
             src="/images/footlogo1.jpeg"
             alt="Footer Logo"
             width={200}
@@ -621,7 +621,7 @@ export default function Footer() {
             className="object-contain"
             style={{ width: "auto", height: "auto" }}
             priority={false}
-          /> */}
+          />
           <p
             className="text-[11px] leading-[1.7] sm:text-xs text-center max-w-4xl"
             style={{ color: `${LIGHT_GRAY}90` }}
@@ -658,7 +658,7 @@ export default function Footer() {
             about your text plan or data plan, it is best to contact your
             wireless provider.
           </p>
-        </div>
+        </div> */}
 
         {/* ===== SECTION 5: FINAL COPYRIGHT LINE (LAST) ===== */}
         <div

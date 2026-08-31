@@ -37,10 +37,10 @@ export default function About() {
   const bioRef = useRef(null);
 
   const images = [
-    { src: "/images/about5up.jpg", alt: "Northern Virginia Real Estate 1" },
-    { src: "/images/about1up.jpg", alt: "Northern Virginia Real Estate 2" },
-    { src: "/images/about3up.jpg", alt: "Northern Virginia Real Estate 3" },
-    { src: "/images/about2up.jpg", alt: "Northern Virginia Real Estate 4" },
+    { src: "/images/about5up.jpg", alt: " Veterans Hwy, Millersville,Real Estate 1" },
+    { src: "/images/about1up.jpg", alt: " Veterans Hwy, Millersville,Real Estate 2" },
+    { src: "/images/about3up.jpg", alt: " Veterans Hwy, Millersville,Real Estate 3" },
+    { src: "/images/about2up.jpg", alt: " Veterans Hwy, Millersville,Real Estate 4" },
   ];
 
   // Only LinkedIn social link
@@ -337,7 +337,7 @@ export default function About() {
               style={{ color: PURE_WHITE }}
             >
               <p>
-                I provide real estate consulting services in the Northern Virginia Area. I offer all of my clients high-level consulting services that combine data aggregation with proprietary analytical methods while maintaining strict industry standards to ensure thorough preparation for every transaction.
+                I provide real estate consulting services in the  Veterans Hwy, Millersville,. I offer all of my clients high-level consulting services that combine data aggregation with proprietary analytical methods while maintaining strict industry standards to ensure thorough preparation for every transaction.
               </p>
 
               <blockquote
@@ -352,7 +352,7 @@ export default function About() {
               </blockquote>
 
               <p>
-                My approach to real estate consulting goes beyond traditional methods. By leveraging data-driven insights and proprietary constraints, I provide my clients with a competitive edge in the Northern Virginia market. Whether you're buying or selling, I ensure you have all the information you need to make strategic decisions.
+                My approach to real estate consulting goes beyond traditional methods. By leveraging data-driven insights and proprietary constraints, I provide my clients with a competitive edge in the  Veterans Hwy, Millersville,market. Whether you're buying or selling, I ensure you have all the information you need to make strategic decisions.
               </p>
               <p>
                 I specialize in both Seller and Buyer Agent Services. For sellers, I focus on positioning your property to attract the right buyers and maximize value. For buyers, I help you navigate the market with confidence, identifying opportunities that align with your goals and budget.
@@ -538,7 +538,7 @@ export default function About() {
                 }}
               >
                 <Image
-                  src="/images/joncrocoaboutpic.png"
+                  src="/images/about1up.jpg"
                   alt="Jonathan Croco"
                   fill
                   className="object-cover grayscale-30 group-hover:grayscale-0 transition-all duration-500"
