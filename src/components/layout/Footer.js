@@ -16,13 +16,13 @@ import {
 // ============================================
 // BLACK & WHITE (MONOCHROME) SCHEME
 // ============================================
-const BLACK = "#000000";      // Primary Black
-const DARK_GRAY = "#333333";  // Secondary Dark Gray
+const BLACK = "#000000"; // Primary Black
+const DARK_GRAY = "#333333"; // Secondary Dark Gray
 const LIGHT_GRAY = "#F4F4F5"; // Main Background / Mint equivalent
 const PURE_WHITE = "#FFFFFF"; // White for cards/text on black
 
 const TEAL = BLACK;
-const GREEN = "#888888";      // Medium gray for small text labels for readability
+const GREEN = "#888888"; // Medium gray for small text labels for readability
 const MINT = LIGHT_GRAY;
 const DARK = BLACK;
 
@@ -53,7 +53,7 @@ export default function Footer() {
   const socialLinks = [
     {
       name: "Facebook",
-      href: "https://www.facebook.com/ChristopherRyanConsultantrealtor/",
+      href: "https://www.facebook.com/",
       hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -63,7 +63,7 @@ export default function Footer() {
     },
     {
       name: "Instagram",
-      href: "https://www.instagram.com/ChristopherRyanConsultantrealtor/",
+      href: "https://www.instagram.com/",
       hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -73,7 +73,7 @@ export default function Footer() {
     },
     {
       name: "YouTube",
-      href: "https://www.youtube.com/@ChristopherRyanConsultant",
+      href: "https://www.youtube.com/",
       hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -83,7 +83,7 @@ export default function Footer() {
     },
     {
       name: "Pinterest",
-      href: "https://www.pinterest.com/ChristopherRyan_Consultant/",
+      href: "https://www.pinterest.com/",
       hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -144,7 +144,7 @@ export default function Footer() {
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.035]"
           style={{
-            backgroundImage: `url('/images/logo12.png')`,
+            backgroundImage: `url('/images/logo1111.gif')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
             backgroundSize: "45% auto",
@@ -204,8 +204,8 @@ export default function Footer() {
                 className="mt-3 text-sm sm:text-base max-w-md mx-auto lg:mx-0"
                 style={{ color: `${LIGHT_GRAY}CC` }}
               >
-                Whether you're downsizing, upgrading, or investing — I'm here
-                to guide you every step of the way.
+                Whether you're downsizing, upgrading, or investing — I'm here to
+                guide you every step of the way.
               </p>
             </div>
 
@@ -245,8 +245,8 @@ export default function Footer() {
           <div className="lg:col-span-6 flex flex-col">
             <div className="mb-6">
               <Image
-                src="/images/navlogo12.png"
-                alt="Christopher Ryan Logo"
+                src="/images/logo1111.gif"
+                alt="Jonathan Croco Logo"
                 width={180}
                 height={55}
                 className="object-contain"
@@ -259,9 +259,9 @@ export default function Footer() {
               className="text-sm sm:text-base leading-relaxed mb-6 max-w-md"
               style={{ color: `${LIGHT_GRAY}CC` }}
             >
-              Helping Northern Virginia homeowners embrace their next chapter with
-              thoughtful guidance, local knowledge, and a real estate experience
-              built on trust, kindness, and connection.
+              Helping Northern Virginia homeowners embrace their next chapter
+              with thoughtful guidance, local knowledge, and a real estate
+              experience built on trust, kindness, and connection.
             </p>
 
             {/* Contact Mini Cards */}
@@ -292,11 +292,14 @@ export default function Footer() {
                   <Phone size={16} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] uppercase tracking-wider font-bold" style={{ color: GREEN }}>
+                  <p
+                    className="text-[10px] uppercase tracking-wider font-bold"
+                    style={{ color: GREEN }}
+                  >
                     Call Anytime
                   </p>
                   <p className="text-sm font-semibold text-white truncate">
-                    (202) 848-4567
+                    +14433193862
                   </p>
                 </div>
               </a>
@@ -327,11 +330,14 @@ export default function Footer() {
                   <Mail size={16} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] uppercase tracking-wider font-bold" style={{ color: GREEN }}>
+                  <p
+                    className="text-[10px] uppercase tracking-wider font-bold"
+                    style={{ color: GREEN }}
+                  >
                     Email Me
                   </p>
                   <p className="text-sm font-semibold text-white truncate">
-                    chris@margenau.com
+                    joncroco@gmail.com
                   </p>
                 </div>
               </a>
@@ -353,11 +359,14 @@ export default function Footer() {
                   <MapPin size={16} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] uppercase tracking-wider font-bold" style={{ color: GREEN }}>
+                  <p
+                    className="text-[10px] uppercase tracking-wider font-bold"
+                    style={{ color: GREEN }}
+                  >
                     Serving Area
                   </p>
                   <p className="text-sm font-semibold text-white truncate">
-                    Business Address: 20830 Gleedsville Rd. Leesburg, VA 20175
+                    8638 Veterans Hwy, Millersville, MD 21108
                   </p>
                 </div>
               </div>
@@ -365,7 +374,10 @@ export default function Footer() {
 
             {/* Social */}
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold mb-3" style={{ color: LIGHT_GRAY }}>
+              <p
+                className="text-[10px] uppercase tracking-[0.2em] font-bold mb-3"
+                style={{ color: LIGHT_GRAY }}
+              >
                 Follow Along
               </p>
               {/* <div className="flex items-center gap-2.5">
@@ -410,7 +422,10 @@ export default function Footer() {
                 className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-extrabold mb-5"
                 style={{ color: PURE_WHITE }}
               >
-                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: GREEN }} />
+                <div
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: GREEN }}
+                />
                 Company
               </h4>
               <ul className="space-y-3">
@@ -420,8 +435,12 @@ export default function Footer() {
                       href={link.href}
                       className="group flex items-center gap-2 text-sm transition-all duration-300"
                       style={{ color: `${LIGHT_GRAY}B0` }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = `${LIGHT_GRAY}B0`)}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.color = PURE_WHITE)
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.color = `${LIGHT_GRAY}B0`)
+                      }
                     >
                       <ArrowUpRight
                         size={12}
@@ -443,7 +462,10 @@ export default function Footer() {
                 className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-extrabold mb-5"
                 style={{ color: PURE_WHITE }}
               >
-                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: LIGHT_GRAY }} />
+                <div
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: LIGHT_GRAY }}
+                />
                 Resources
               </h4>
               <ul className="space-y-3">
@@ -453,8 +475,12 @@ export default function Footer() {
                       href={link.href}
                       className="group flex items-center gap-2 text-sm transition-all duration-300"
                       style={{ color: `${LIGHT_GRAY}B0` }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = PURE_WHITE)}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = `${LIGHT_GRAY}B0`)}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.color = PURE_WHITE)
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.color = `${LIGHT_GRAY}B0`)
+                      }
                     >
                       <ArrowUpRight
                         size={12}
@@ -483,7 +509,10 @@ export default function Footer() {
                 >
                   Quick Question?
                 </p>
-                <p className="text-sm mb-3" style={{ color: `${LIGHT_GRAY}CC` }}>
+                <p
+                  className="text-sm mb-3"
+                  style={{ color: `${LIGHT_GRAY}CC` }}
+                >
                   Let's talk about your real estate goals.
                 </p>
                 <Link
@@ -524,14 +553,23 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
                 <Send size={16} style={{ color: LIGHT_GRAY }} />
-                <p className="text-[10px] uppercase tracking-[0.2em] font-extrabold" style={{ color: LIGHT_GRAY }}>
+                <p
+                  className="text-[10px] uppercase tracking-[0.2em] font-extrabold"
+                  style={{ color: LIGHT_GRAY }}
+                >
                   Newsletter
                 </p>
               </div>
-              <h4 className="text-lg sm:text-xl font-extrabold mb-1" style={{ color: PURE_WHITE }}>
+              <h4
+                className="text-lg sm:text-xl font-extrabold mb-1"
+                style={{ color: PURE_WHITE }}
+              >
                 Stay Updated with Northern Virginia Real Estate
               </h4>
-              <p className="text-xs sm:text-sm" style={{ color: `${LIGHT_GRAY}B0` }}>
+              <p
+                className="text-xs sm:text-sm"
+                style={{ color: `${LIGHT_GRAY}B0` }}
+              >
                 Get market insights, new listings, and tips delivered monthly.
               </p>
             </div>
@@ -575,7 +613,7 @@ export default function Footer() {
 
         {/* ===== SECTION 4: FOOTER LOGO & DISCLAIMER ===== */}
         <div className="pt-8 pb-8 flex flex-col justify-center items-center gap-6 text-center max-w-5xl mx-auto">
-          <Image
+          {/* <Image
             src="/images/footlogo1.jpeg"
             alt="Footer Logo"
             width={200}
@@ -583,14 +621,42 @@ export default function Footer() {
             className="object-contain"
             style={{ width: "auto", height: "auto" }}
             priority={false}
-          />
+          /> */}
           <p
             className="text-[11px] leading-[1.7] sm:text-xs text-center max-w-4xl"
             style={{ color: `${LIGHT_GRAY}90` }}
           >
-            © 2026 Bright MLS. All rights reserved. The data relating to real estate for sale on this website appears in part through the Bright MLS Internet Data Exchange (IDX) program, a voluntary cooperative exchange of property listing data between licensed real estate brokerage firms in which Casey Margenau Fine Homes and Estates participates, and is provided by Bright MLS through a licensing agreement.
+            © 2026 Bright MLS. All rights reserved. The data relating to real
+            estate for sale on this website appears in part through the Bright
+            MLS Internet Data Exchange (IDX) program, a voluntary cooperative
+            exchange of property listing data between licensed real estate
+            brokerage firms in which Casey Margenau Fine Homes and Estates
+            participates, and is provided by Bright MLS through a licensing
+            agreement.
             <br />
-            Listings held by brokerage firms other than Casey Margenau Fine Homes and Estates are marked with the IDX icon and include the listing broker name. Information is provided for the personal, non-commercial use of consumers and may not be used for any purpose other than identifying properties of interest. Property information is deemed reliable but not guaranteed and should be independently verified. Listings may change or be withdrawn without notice and may include errors, omissions, or status updates. Bright MLS compiles listing data from multiple sources and does not guarantee accuracy, including property status or historical information. Some listings may not appear due to seller instruction, brokerage participation, or MLS reporting limitations. Equal Housing Opportunity.
+            BURBLE EMPIRE LLC SMS TERMS AND CONDITIONS Last Updated: August 2026
+            Burble Empire LLC ("Company," "we," "us," or "our") values clear
+            communication with our clients. By submitting your phone number or
+            opting in to receive SMS messages, you agree to these SMS Terms and
+            Conditions. PROGRAM DESCRIPTION AND PURPOSE We use SMS to confirm
+            appointments, send reminders, and notify clients of schedule updates
+            or important changes directly related to our real estate services.
+            OPT-OUT INSTRUCTIONS You can cancel the SMS service at any time.
+            Just text "STOP". After you send the SMS message "STOP" to us, we
+            will send you an SMS message to confirm that you have been
+            unsubscribed. After this, you will no longer receive SMS messages
+            from us. If you want to join again, just sign up as you did the
+            first time, and we will start sending SMS messages to you again.
+            CUSTOMER SUPPORT AND HELP INSTRUCTIONS If you are experiencing
+            issues with the messaging program, you can reply with the keyword
+            “HELP” for more assistance, or you can get help directly by
+            contacting our support team at: Email: ensopropropmgmt@gmail.com
+            CARRIER LIABILITY Carriers are not liable for delayed or undelivered
+            messages. MESSAGE FREQUENCY, RATES, AND DATA As always, message and
+            data rates may apply for any messages sent to you from us and to us
+            from you. Message frequency may vary. If you have any questions
+            about your text plan or data plan, it is best to contact your
+            wireless provider.
           </p>
         </div>
 
@@ -603,7 +669,7 @@ export default function Footer() {
             className="text-xs sm:text-sm transition-colors text-center"
             style={{ color: `${LIGHT_GRAY}80` }}
           >
-            © 2026 Christopher Ryan. All rights reserved.
+            © 2026 Jonathan Croco. All rights reserved.
           </p>
         </div>
       </div>
@@ -619,7 +685,7 @@ export default function Footer() {
         style={{
           background: `linear-gradient(135deg, ${BLACK}, ${DARK_GRAY})`,
           boxShadow: `0 8px 24px ${BLACK}60`,
-          border: `1px solid ${PURE_WHITE}20`
+          border: `1px solid ${PURE_WHITE}20`,
         }}
         aria-label="Scroll to top"
       >

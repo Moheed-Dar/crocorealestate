@@ -312,7 +312,7 @@ export default function About() {
             >
               Hi, I&apos;m{" "}
               <span className="relative inline-block">
-                <span style={{ color: PURE_WHITE }}>Christopher Ryan</span>
+                <span style={{ color: PURE_WHITE }}>Jonathan Croco</span>
                 <svg
                   className="absolute -bottom-1 left-0 w-full"
                   height="8"
@@ -348,7 +348,7 @@ export default function About() {
                   color: PURE_WHITE,
                 }}
               >
-                "Real estate isn't just about properties — it's about people making informed decisions with confidence. My goal is to provide the strategic guidance needed to navigate today's complex market."
+                "Real estate is my passion. From architecture to contract negotiation to investing, I love every aspect of it. A home is the foundation of a wonderful life and there is nothing better than helping someone buy and sell their home! I have lived and worked in areas all across the state for my entire life and capitalize on my extensive knowledge of these diverse communities to best serve my clients."
               </blockquote>
 
               <p>
@@ -362,7 +362,7 @@ export default function About() {
               </p>
 
               <p className="font-extrabold" style={{ color: LIGHT_GRAY }}>
-                Let's work together! <br /> Christopher Ryan
+                Let's work together! <br /> Jonathan Croco
               </p>
             </motion.div>
 
@@ -398,7 +398,7 @@ export default function About() {
                     </svg>
                   </span>
                   <span className="truncate group-hover:underline" style={{ color: PURE_WHITE }}>
-                    chris@margenau.com
+                    joncroco@gmail.com
                   </span>
                 </a>
 
@@ -431,7 +431,7 @@ export default function About() {
                     </svg>
                   </span>
                   <span className="group-hover:underline" style={{ color: PURE_WHITE }}>
-                    (202) 848-4567
+                    +14433193862
                   </span>
                 </a>
 
@@ -469,7 +469,7 @@ export default function About() {
                     </svg>
                   </span>
                   <span style={{ color: PURE_WHITE }}>
-                    20830 Gleedsville Rd. Leesburg, VA 20175
+                    8638 Veterans Hwy, Millersville, MD 21108
                   </span>
                 </div>
               </div>
@@ -538,8 +538,8 @@ export default function About() {
                 }}
               >
                 <Image
-                  src="/images/chirsaboutpic.png"
-                  alt="Christopher Ryan"
+                  src="/images/joncrocoaboutpic.png"
+                  alt="Jonathan Croco"
                   fill
                   className="object-cover grayscale-30 group-hover:grayscale-0 transition-all duration-500"
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 45vw"
@@ -584,7 +584,7 @@ export default function About() {
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
                 <p className="text-base sm:text-lg lg:text-xl font-extrabold" style={{ color: PURE_WHITE }}>
-                  Christopher Ryan
+                  Jonathan Croco
                 </p>
                 <div className="flex items-center gap-2 mt-1">
                   <div

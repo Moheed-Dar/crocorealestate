@@ -14,10 +14,10 @@ export const NAV_LINKS = {
 };
 
 export const CONTACT_INFO = {
-   phone: "(202) 848-4567",
-  phoneHref: "tel:(202) 848-4567",
-  email: "Christopher Ryan@Christopher RyanConsultant.ca",
-  emailHref: "Christopher Ryan@Christopher RyanConsultant.ca",
+   phone: "+14433193862",
+  phoneHref: "tel:+14433193862",
+  email: "joncroco@gmail.com",
+  emailHref: "mailto:joncroco@gmail.com",
 };
 
 export const BRAND = {

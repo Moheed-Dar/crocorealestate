@@ -54,7 +54,7 @@ export default function Navbar() {
             <div className="relative w-70 h-25 hidden md:block">
               <Image
                 src="/images/logo1111.gif"
-                alt="Christopher Ryan Properties"
+                alt="Jonathan Croco Properties"
                 fill
                 className={`object-contain transition-all duration-300 drop-shadow-[0_4px_8px_#37526E] ${
                   isScrolled ? "invert" : ""
@@ -67,7 +67,7 @@ export default function Navbar() {
             <div className="relative w-35 h-12 md:hidden">
               <Image
                 src="/images/logo1111.gif"
-                alt="Christopher Ryan Properties"
+                alt="Jonathan Croco Properties"
                 fill
                 className="object-contain"
                 sizes="160px"

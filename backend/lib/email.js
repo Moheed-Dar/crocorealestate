@@ -212,7 +212,7 @@ transporter.verify((error, success) => {
 export const sendWelcomeEmail = async (user) => {
   try {
     const mailOptions = {
-      from: `"Casey Margenau Fine Homes and Estates - Christopher Ryan" <${process.env.SMTP_EMAIL}>`,
+      from: `"Casey Margenau Fine Homes and Estates - Jonathan Croco" <${process.env.SMTP_EMAIL}>`,
       to: user.email,
       subject: 'Welcome to Casey Margenau Fine Homes and Estates ! 🏠',
       html: `
@@ -250,7 +250,7 @@ export const sendWelcomeEmail = async (user) => {
 export const sendLeadNotificationEmail = async (lead, property) => {
   try {
     const mailOptions = {
-      from: `"Casey Margenau Fine Homes and Estates - Christopher Ryan" <${process.env.SMTP_EMAIL}>`,
+      from: `"Casey Margenau Fine Homes and Estates - Jonathan Croco" <${process.env.SMTP_EMAIL}>`,
       to: process.env.ADMIN_EMAIL || process.env.SMTP_EMAIL,
       subject: `🎉 New Lead: ${lead.name} interested in ${property?.title || 'Property'}`,
       html: `
@@ -292,7 +292,7 @@ export const sendLeadNotificationEmail = async (lead, property) => {
 export const sendLeadThankYouEmail = async (lead) => {
   try {
     const mailOptions = {
-      from: `"Casey Margenau Fine Homes and Estates - Christopher Ryan " <${process.env.SMTP_EMAIL}>`,
+      from: `"Casey Margenau Fine Homes and Estates - Jonathan Croco " <${process.env.SMTP_EMAIL}>`,
       to: lead.email,
       subject: 'Thank you for your interest! ',
       html: `
@@ -326,7 +326,7 @@ export const sendLeadThankYouEmail = async (lead) => {
 export const sendContactEmail = async (data) => {
   try {
     const mailOptions = {
-      from: `"Casey Margenau Fine Homes and Estates - Christopher Ryan" <${process.env.SMTP_EMAIL}>`,
+      from: `"Casey Margenau Fine Homes and Estates - Jonathan Croco" <${process.env.SMTP_EMAIL}>`,
       to: process.env.ADMIN_EMAIL || process.env.SMTP_EMAIL,
       subject: `📩 Contact Form: ${data.subject}`,
       html: `
@@ -370,7 +370,7 @@ export const sendGuideDownloadNotificationEmail = async (lead, guideType) => {
     const guideEmoji = guideType === 'buyer' ? '📘' : '📗';
 
     const mailOptions = {
-      from: `"Casey Margenau Fine Homes and Estates - Christopher Ryan" <${process.env.SMTP_EMAIL}>`,
+      from: `"Casey Margenau Fine Homes and Estates - Jonathan Croco" <${process.env.SMTP_EMAIL}>`,
       to: process.env.ADMIN_EMAIL || process.env.SMTP_EMAIL,
       subject: `${guideEmoji} ${guideLabel} Downloaded by ${lead.name}`,
       html: `
@@ -399,7 +399,7 @@ export const sendGuideDownloadNotificationEmail = async (lead, guideType) => {
               <p style="margin: 0; color: #856404;">💡 <strong>Tip:</strong> User ne ${guideLabel} download kiya hai. Ye ek potential ${guideType} hai. Jaldi follow up karein!</p>
             </div>
 
-            <p style="color: #999; font-size: 12px; text-align: center; margin-top: 20px;">This is an automated notification from Casey Margenau Fine Homes and Estates - Christopher Ryan</p>
+            <p style="color: #999; font-size: 12px; text-align: center; margin-top: 20px;">This is an automated notification from Casey Margenau Fine Homes and Estates - Jonathan Croco</p>
           </div>
         </div>
       `,
@@ -423,7 +423,7 @@ export const sendGuideDownloadThankYouEmail = async (lead, guideType) => {
     const guideEmoji = guideType === 'buyer' ? '📘' : '📗';
 
     const mailOptions = {
-      from: `"Casey Margenau Fine Homes and Estates - Christopher Ryan" <${process.env.SMTP_EMAIL}>`,
+      from: `"Casey Margenau Fine Homes and Estates - Jonathan Croco" <${process.env.SMTP_EMAIL}>`,
       to: lead.email,
       subject: `Your ${guideLabel} is Ready! ${guideEmoji}`,
       html: `

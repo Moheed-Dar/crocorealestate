@@ -9,8 +9,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "Christopher Ryan Real Estate - Your Trusted Real Estate Partner",
-  description: "Christopher Ryan Real Estate - Find your dream home",
+  title: "Jonathan Croco Real Estate - Your Trusted Real Estate Partner",
+  description: "Jonathan Croco Real Estate - Find your dream home",
 };
 
 export default function RootLayout({ children }) {
