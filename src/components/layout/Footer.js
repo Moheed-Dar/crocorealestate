@@ -53,7 +53,7 @@ export default function Footer() {
   const socialLinks = [
     {
       name: "Facebook",
-      href: "https://www.facebook.com/",
+      href: "https://www.facebook.com/theREALBMoreRealtor",
       hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -62,32 +62,12 @@ export default function Footer() {
       ),
     },
     {
-      name: "Instagram",
-      href: "https://www.instagram.com/",
-      hoverColor: PURE_WHITE,
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-        </svg>
-      ),
-    },
-    {
       name: "YouTube",
-      href: "https://www.youtube.com/",
+      href: "https://www.youtube.com/@JonathanCroco",
       hoverColor: PURE_WHITE,
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-        </svg>
-      ),
-    },
-    {
-      name: "Pinterest",
-      href: "https://www.pinterest.com/",
-      hoverColor: PURE_WHITE,
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
         </svg>
       ),
     },
@@ -380,7 +360,7 @@ export default function Footer() {
               >
                 Follow Along
               </p>
-              {/* <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
@@ -410,7 +390,7 @@ export default function Footer() {
                     {social.icon}
                   </a>
                 ))}
-              </div> */}
+              </div>
             </div>
           </div>
 
@@ -610,55 +590,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
-        {/* ===== SECTION 4: FOOTER LOGO & DISCLAIMER ===== */}
-        {/* <div className="pt-8 pb-8 flex flex-col justify-center items-center gap-6 text-center max-w-5xl mx-auto">
-          <Image
-            src="/images/footlogo1.jpeg"
-            alt="Footer Logo"
-            width={200}
-            height={200}
-            className="object-contain"
-            style={{ width: "auto", height: "auto" }}
-            priority={false}
-          />
-          <p
-            className="text-[11px] leading-[1.7] sm:text-xs text-center max-w-4xl"
-            style={{ color: `${LIGHT_GRAY}90` }}
-          >
-            © 2026 Bright MLS. All rights reserved. The data relating to real
-            estate for sale on this website appears in part through the Bright
-            MLS Internet Data Exchange (IDX) program, a voluntary cooperative
-            exchange of property listing data between licensed real estate
-            brokerage firms in which Casey Margenau Fine Homes and Estates
-            participates, and is provided by Bright MLS through a licensing
-            agreement.
-            <br />
-            BURBLE EMPIRE LLC SMS TERMS AND CONDITIONS Last Updated: August 2026
-            Burble Empire LLC ("Company," "we," "us," or "our") values clear
-            communication with our clients. By submitting your phone number or
-            opting in to receive SMS messages, you agree to these SMS Terms and
-            Conditions. PROGRAM DESCRIPTION AND PURPOSE We use SMS to confirm
-            appointments, send reminders, and notify clients of schedule updates
-            or important changes directly related to our real estate services.
-            OPT-OUT INSTRUCTIONS You can cancel the SMS service at any time.
-            Just text "STOP". After you send the SMS message "STOP" to us, we
-            will send you an SMS message to confirm that you have been
-            unsubscribed. After this, you will no longer receive SMS messages
-            from us. If you want to join again, just sign up as you did the
-            first time, and we will start sending SMS messages to you again.
-            CUSTOMER SUPPORT AND HELP INSTRUCTIONS If you are experiencing
-            issues with the messaging program, you can reply with the keyword
-            “HELP” for more assistance, or you can get help directly by
-            contacting our support team at: Email: ensopropropmgmt@gmail.com
-            CARRIER LIABILITY Carriers are not liable for delayed or undelivered
-            messages. MESSAGE FREQUENCY, RATES, AND DATA As always, message and
-            data rates may apply for any messages sent to you from us and to us
-            from you. Message frequency may vary. If you have any questions
-            about your text plan or data plan, it is best to contact your
-            wireless provider.
-          </p>
-        </div> */}
 
         {/* ===== SECTION 5: FINAL COPYRIGHT LINE (LAST) ===== */}
         <div
