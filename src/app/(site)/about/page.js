@@ -422,7 +422,7 @@ export default function About() {
                     </svg>
                   </span>
                   <span className="truncate group-hover:underline" style={{ color: PURE_WHITE }}>
-                    joncroco@gmail.com
+                    jon@cummingsrealtors.com 
                   </span>
                 </a>
 
@@ -455,7 +455,7 @@ export default function About() {
                     </svg>
                   </span>
                   <span className="group-hover:underline" style={{ color: PURE_WHITE }}>
-                    +14433193862
+                    (443) 319-3862
                   </span>
                 </a>
 
@@ -493,7 +493,7 @@ export default function About() {
                     </svg>
                   </span>
                   <span style={{ color: PURE_WHITE }}>
-                    8638 Veterans Hwy, Millersville, MD 21108
+                    Baltimore metro area
                   </span>
                 </div>
               </div>
@@ -637,7 +637,7 @@ export default function About() {
                   Since
                 </p>
                 <p className="text-2xl sm:text-3xl font-extrabold leading-none mt-0.5" style={{ color: BLACK }}>
-                  2025
+                  2019
                 </p>
               </motion.div>
 

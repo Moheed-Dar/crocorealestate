@@ -810,7 +810,7 @@ export default function FullscreenMenu({ isOpen, onClose }) {
             >
               <Mail size={15} />
               <span className="text-sm font-medium">
-                joncroco@gmail.com
+                jon@cummingsrealtors.com 
               </span>
             </a>
 

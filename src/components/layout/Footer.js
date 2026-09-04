@@ -279,7 +279,7 @@ export default function Footer() {
                     Call Anytime
                   </p>
                   <p className="text-sm font-semibold text-white truncate">
-                    +14433193862
+                    (443) 319-3862
                   </p>
                 </div>
               </a>
@@ -317,7 +317,7 @@ export default function Footer() {
                     Email Me
                   </p>
                   <p className="text-sm font-semibold text-white truncate">
-                    joncroco@gmail.com
+                    jon@cummingsrealtors.com 
                   </p>
                 </div>
               </a>
@@ -346,7 +346,7 @@ export default function Footer() {
                     Serving Area
                   </p>
                   <p className="text-sm font-semibold text-white truncate">
-                    8638 Veterans Hwy, Millersville, MD 21108
+                    Baltimore metro area
                   </p>
                 </div>
               </div>

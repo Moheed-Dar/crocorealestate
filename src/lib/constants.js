@@ -14,10 +14,10 @@ export const NAV_LINKS = {
 };
 
 export const CONTACT_INFO = {
-   phone: "+14433193862",
-  phoneHref: "tel:+14433193862",
-  email: "joncroco@gmail.com",
-  emailHref: "mailto:joncroco@gmail.com",
+   phone: "(443) 319-3862",
+  phoneHref: "tel:(443) 319-3862",
+  email: "jon@cummingsrealtors.com ",
+  emailHref: "mailto:jon@cummingsrealtors.com ",
 };
 
 export const BRAND = {

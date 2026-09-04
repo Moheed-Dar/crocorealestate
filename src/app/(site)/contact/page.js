@@ -349,7 +349,7 @@
 //                   <p className="text-sm font-bold text-[#2B7FFF]">
 //                     Trusted Agency
 //                   </p>
-//                   <p className="text-[11px] text-white/50">Since 2020</p>
+//                   <p className="text-[11px] text-white/50">Since 2019</p>
 //                 </div>
 //               </div>
 //               <div className="space-y-2">
@@ -761,7 +761,7 @@
 //                   <p className="text-sm font-bold text-[#20B2B8]">
 //                     Trusted Agency
 //                   </p>
-//                   <p className="text-[11px] text-[#FFF7F0]/50">Since 2020</p>
+//                   <p className="text-[11px] text-[#FFF7F0]/50">Since 2019</p>
 //                 </div>
 //               </div>
 //               <div className="space-y-2">
@@ -1195,7 +1195,7 @@
 //                 </div>
 //                 <div>
 //                   <p className="text-sm font-bold" style={{ color: TEAL }}>Trusted Agency</p>
-//                   <p className="text-[11px]" style={{ color: CREAM_50 }}>Since 2020</p>
+//                   <p className="text-[11px]" style={{ color: CREAM_50 }}>Since 2019</p>
 //                 </div>
 //               </div>
 //               <div className="space-y-2">
@@ -1632,7 +1632,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-sm font-bold text-black">Trusted Agency</p>
-                  <p className="text-[11px]" style={{ color: CREAM_60 }}>Since 2020</p>
+                  <p className="text-[11px]" style={{ color: CREAM_60 }}>Since 2019</p>
                 </div>
               </div>
               <div className="space-y-2">
