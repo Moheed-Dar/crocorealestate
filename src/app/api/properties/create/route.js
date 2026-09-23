@@ -1099,7 +1099,7 @@ const ALLOWED_PROPERTY_TYPES = [
 
 const ALLOWED_PRICE_TYPES = ['sale', 'rent'];
 const ALLOWED_CURRENCIES = ['PKR', 'USD', 'EUR', 'GBP', 'AED'];
-const ALLOWED_AREA_UNITS = ['sqft', 'sqm', 'marla', 'kanal', 'acre'];
+const ALLOWED_AREA_UNITS = ['sqft', 'sqm', 'marla', 'kanal', 'acre', 'yards'];
 
 const MAX_IMAGES = 10;
 const MIN_TITLE_LENGTH = 5;

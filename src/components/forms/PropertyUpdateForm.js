@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import {
   X,
   Loader2,
@@ -304,6 +305,9 @@ export default function PropertyUpdateForm({ property, onClose, onSuccess }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  // ✅ FIX 1: Portal ke liye mount check (SSR safe)
+  const [mounted, setMounted] = useState(false);
+
   const [existingImages, setExistingImages] = useState([]);
   const [removedImageIds, setRemovedImageIds] = useState([]);
   const [newImages, setNewImages] = useState([]);
@@ -339,6 +343,43 @@ export default function PropertyUpdateForm({ property, onClose, onSuccess }) {
     features: [],
     amenities: [],
   });
+
+  // ============================================
+  // ✅ FIX 1: Portal — client pe mount hone ka intezar
+  // ============================================
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // ============================================
+  // ✅ FIX 2: Body scroll lock while modal is open
+  // ============================================
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+    };
+  }, []);
+
+  // ============================================
+  // ✅ FIX 3: Escape key se modal close
+  // ============================================
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && !saving) onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose, saving]);
 
   // Calculate description length safely (stripping HTML)
   const descriptionTextLength = form.description ? form.description.replace(/<[^>]*>/g, ' ').trim().length : 0;
@@ -569,15 +610,16 @@ export default function PropertyUpdateForm({ property, onClose, onSuccess }) {
   const optionStyle = { backgroundColor: "#0f2240" };
 
   // ============================================
-  // LOADING STATE
+  // LOADING STATE (portal ke andar)
   // ============================================
   if (loading) {
-    return (
+    if (!mounted) return null;
+    return createPortal(
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-9999 bg-[#040d1a]/95"
+        className="fixed inset-0 z-9999 bg-[#040d1a]/95 overflow-hidden"
         onClick={onClose}
       >
         <motion.div
@@ -590,7 +632,8 @@ export default function PropertyUpdateForm({ property, onClose, onSuccess }) {
           <Loader2 size={32} className="animate-spin text-[#2B7FFF]/50" />
           <span className="text-white/25 text-sm mt-3">Loading property...</span>
         </motion.div>
-      </motion.div>
+      </motion.div>,
+      document.body
     );
   }
 
@@ -599,568 +642,612 @@ export default function PropertyUpdateForm({ property, onClose, onSuccess }) {
   // ============================================
   const visibleExisting = getVisibleExistingImages();
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-9999 bg-[#040d1a]/95"
-      onClick={onClose}
-    >
+  // ✅ Modal ka poora JSX — phir portal se render hoga
+  const modalContent = (
+    <>
+      {/* ✅ Custom scrollbar + dynamic viewport height */}
+      <style>{`
+        .property-form-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(43, 127, 255, 0.35) transparent;
+        }
+        .property-form-scroll::-webkit-scrollbar {
+          width: 6px;
+        }
+        .property-form-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .property-form-scroll::-webkit-scrollbar-thumb {
+          background: rgba(43, 127, 255, 0.35);
+          border-radius: 999px;
+        }
+        .property-form-scroll::-webkit-scrollbar-thumb:hover {
+          background: rgba(43, 127, 255, 0.6);
+        }
+        /* ✅ FIX: dynamic viewport height (mobile URL bar) */
+        .modal-full-height {
+          height: 100vh;
+          height: 100dvh;
+        }
+      `}</style>
+
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 10 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
-        className="relative z-10 flex flex-col h-full bg-[#081730]"
-        onClick={(e) => e.stopPropagation()}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-9999 bg-[#040d1a]/95 overflow-hidden"
+        onClick={onClose}
       >
-        {/* ===== HEADER ===== */}
-        <div className="shrink-0 border-b border-white/6 bg-[#081730]">
-          <div className="flex items-center justify-between px-6 lg:px-8 h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                <Building2 size={18} className="text-amber-400" />
-              </div>
-              <div>
-                <h2 className="text-base font-bold text-white">
-                  Edit Property
-                </h2>
-                <p className="text-white/30 text-[11px] -mt-0.5">
-                  {form.propertyCode || property._id}
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors"
-            >
-              <X size={16} className="text-white/50" />
-            </button>
-          </div>
-
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="px-6 lg:px-8 pb-3"
-            >
-              <div className="px-4 py-2.5 bg-red-500/10 border border-red-500/15 rounded-xl flex items-center gap-3">
-                <AlertCircle size={15} className="text-red-400 shrink-0" />
-                <p className="text-red-300 text-xs flex-1 wrap-break-word">{error}</p>
-                <button
-                  type="button"
-                  onClick={() => setError("")}
-                  className="shrink-0 p-0.5 hover:bg-red-500/20 rounded-lg transition-colors"
-                >
-                  <X size={13} className="text-red-400" />
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* ===== SCROLLABLE CONTENT ===== */}
-        <div className="flex-1 overflow-y-auto overscroll-contain will-change-transform">
-          <form
-            id="propertyUpdateForm"
-            onSubmit={handleSubmit}
-            className="px-6 lg:px-8 py-6 space-y-5 max-w-6xl mx-auto"
-          >
-            {/* ===== BASIC INFORMATION ===== */}
-            <Section icon={Building2} title="Basic Information">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <Field label="Property Code" hint="Leave empty to keep existing">
-                  <div className="relative">
-                    <Hash size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                    <input
-                      type="text"
-                      value={form.propertyCode}
-                      onChange={(e) => handleChange("propertyCode", e.target.value)}
-                      placeholder={property.propertyCode || "Auto-generated"}
-                      className={`${inputClass} pl-9`}
-                    />
-                  </div>
-                </Field>
-
-                <Field label="Property Type" required>
-                  <select
-                    value={form.propertyType}
-                    onChange={(e) => handleChange("propertyType", e.target.value)}
-                    className={selectClass}
-                  >
-                    <option value="" style={optionStyle}>Select type...</option>
-                    {PROPERTY_TYPES.map((t) => (
-                      <option key={t} value={t} style={optionStyle} className="capitalize">{t}</option>
-                    ))}
-                  </select>
-                </Field>
-              </div>
-
-              <Field label="Title" required>
-                <input
-                  type="text"
-                  value={form.title}
-                  onChange={(e) => handleChange("title", e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-
-              {/* ✅ RICH TEXT EDITOR FOR DESCRIPTION */}
-              <Field label="Description" required hint="Use the toolbar to format text (Minimum 20 characters)">
-                <CustomRichTextEditor
-                  value={form.description}
-                  onChange={(val) => handleChange("description", val)}
-                />
-                <div className="flex justify-between mt-1">
-                  <p className="text-white/15 text-[10px]">Minimum 20 characters</p>
-                  <p className={`text-[10px] ${descriptionTextLength < 20 ? 'text-red-400/80' : 'text-emerald-300/80'}`}>
-                    {descriptionTextLength}/5000
+        {/* ✅ FIX: modal-full-height + flex column layout
+            Header (shrink-0) + Content (flex-1 MIN-H-0 scroll) + Footer (shrink-0)
+            => Footer har screen size pe HAMESHA visible rahega */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Edit property"
+          className="relative z-10 flex flex-col modal-full-height w-full overflow-hidden bg-[#081730]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* ===== HEADER (fixed top — kabhi scroll nahi hota) ===== */}
+          <div className="shrink-0 border-b border-white/6 bg-[#081730]">
+            <div className="flex items-center justify-between px-6 lg:px-8 h-16">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                  <Building2 size={18} className="text-amber-400" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-white">
+                    Edit Property
+                  </h2>
+                  <p className="text-white/30 text-[11px] -mt-0.5">
+                    {form.propertyCode || property._id}
                   </p>
                 </div>
-              </Field>
-            </Section>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors"
+              >
+                <X size={16} className="text-white/50" />
+              </button>
+            </div>
 
-            {/* ===== PRICING ===== */}
-            <Section icon={DollarSign} title="Pricing">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <Field label="Price" required>
-                  <input
-                    type="number"
-                    value={form.price}
-                    onChange={(e) => handleChange("price", e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Price Type">
-                  <select
-                    value={form.priceType}
-                    onChange={(e) => handleChange("priceType", e.target.value)}
-                    className={selectClass}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="px-6 lg:px-8 pb-3"
+              >
+                <div className="px-4 py-2.5 bg-red-500/10 border border-red-500/15 rounded-xl flex items-center gap-3">
+                  <AlertCircle size={15} className="text-red-400 shrink-0" />
+                  <p className="text-red-300 text-xs flex-1 wrap-break-word">{error}</p>
+                  <button
+                    type="button"
+                    onClick={() => setError("")}
+                    className="shrink-0 p-0.5 hover:bg-red-500/20 rounded-lg transition-colors"
                   >
-                    {PRICE_TYPES.map((t) => (
-                      <option key={t} value={t} style={optionStyle} className="capitalize">{t}</option>
-                    ))}
-                  </select>
-                </Field>
-                <Field label="Currency">
-                  <select
-                    value={form.currency}
-                    onChange={(e) => handleChange("currency", e.target.value)}
-                    className={selectClass}
-                  >
-                    {CURRENCIES.map((c) => (
-                      <option key={c} value={c} style={optionStyle}>{c}</option>
-                    ))}
-                  </select>
-                </Field>
-              </div>
-            </Section>
+                    <X size={13} className="text-red-400" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </div>
 
-            {/* ===== LOCATION ===== */}
-            <Section icon={MapPin} title="Location">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <Field label="Location" required>
-                  <input
-                    type="text"
-                    value={form.location}
-                    onChange={(e) => handleChange("location", e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="City" required>
-                  <input
-                    type="text"
-                    value={form.city}
-                    onChange={(e) => handleChange("city", e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-              </div>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <Field label="Area / Society">
-                  <input
-                    type="text"
-                    value={form.area}
-                    onChange={(e) => handleChange("area", e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Full Address">
-                  <input
-                    type="text"
-                    value={form.address}
-                    onChange={(e) => handleChange("address", e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Latitude" hint="Optional">
-                  <input
-                    type="number"
-                    step="any"
-                    value={form.latitude}
-                    onChange={(e) => handleChange("latitude", e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Longitude" hint="Optional">
-                  <input
-                    type="number"
-                    step="any"
-                    value={form.longitude}
-                    onChange={(e) => handleChange("longitude", e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-              </div>
-            </Section>
+          {/* ===== SCROLLABLE CONTENT =====
+              ✅ FIX: min-h-0 add kiya — yehi sab se zaroori tha.
+              flex-1 ke sath min-h-0 na ho to content apni height
+              container ko bara kar deta hai aur footer screen se neeche chala jata hai */}
+          <div
+            className="property-form-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain"
+            data-lenis-prevent
+          >
+            <form
+              id="propertyUpdateForm"
+              onSubmit={handleSubmit}
+              className="px-6 lg:px-8 py-6 pb-8 space-y-5 max-w-6xl mx-auto"
+            >
+              {/* ===== BASIC INFORMATION ===== */}
+              <Section icon={Building2} title="Basic Information">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <Field label="Property Code" hint="Leave empty to keep existing">
+                    <div className="relative">
+                      <Hash size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/20" />
+                      <input
+                        type="text"
+                        value={form.propertyCode}
+                        onChange={(e) => handleChange("propertyCode", e.target.value)}
+                        placeholder={property.propertyCode || "Auto-generated"}
+                        className={`${inputClass} pl-9`}
+                      />
+                    </div>
+                  </Field>
 
-            {/* ===== PROPERTY DETAILS ===== */}
-            <Section icon={Home} title="Property Details" optional>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {[
-                  { key: "bedrooms", label: "Bedrooms" },
-                  { key: "bathrooms", label: "Bathrooms" },
-                  { key: "kitchens", label: "Kitchens" },
-                  { key: "floors", label: "Floors" },
-                ].map(({ key, label }) => (
-                  <Field key={key} label={label}>
+                  <Field label="Property Type" required>
+                    <select
+                      value={form.propertyType}
+                      onChange={(e) => handleChange("propertyType", e.target.value)}
+                      className={selectClass}
+                    >
+                      <option value="" style={optionStyle}>Select type...</option>
+                      {PROPERTY_TYPES.map((t) => (
+                        <option key={t} value={t} style={optionStyle} className="capitalize">{t}</option>
+                      ))}
+                    </select>
+                  </Field>
+                </div>
+
+                <Field label="Title" required>
+                  <input
+                    type="text"
+                    value={form.title}
+                    onChange={(e) => handleChange("title", e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+
+                {/* ✅ RICH TEXT EDITOR FOR DESCRIPTION */}
+                <Field label="Description" required hint="Use the toolbar to format text (Minimum 20 characters)">
+                  <CustomRichTextEditor
+                    value={form.description}
+                    onChange={(val) => handleChange("description", val)}
+                  />
+                  <div className="flex justify-between mt-1">
+                    <p className="text-white/15 text-[10px]">Minimum 20 characters</p>
+                    <p className={`text-[10px] ${descriptionTextLength < 20 ? 'text-red-400/80' : 'text-emerald-300/80'}`}>
+                      {descriptionTextLength}/5000
+                    </p>
+                  </div>
+                </Field>
+              </Section>
+
+              {/* ===== PRICING ===== */}
+              <Section icon={DollarSign} title="Pricing">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <Field label="Price" required>
                     <input
                       type="number"
-                      value={form[key]}
-                      onChange={(e) => handleChange(key, e.target.value)}
+                      value={form.price}
+                      onChange={(e) => handleChange("price", e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Price Type">
+                    <select
+                      value={form.priceType}
+                      onChange={(e) => handleChange("priceType", e.target.value)}
+                      className={selectClass}
+                    >
+                      {PRICE_TYPES.map((t) => (
+                        <option key={t} value={t} style={optionStyle} className="capitalize">{t}</option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Field label="Currency">
+                    <select
+                      value={form.currency}
+                      onChange={(e) => handleChange("currency", e.target.value)}
+                      className={selectClass}
+                    >
+                      {CURRENCIES.map((c) => (
+                        <option key={c} value={c} style={optionStyle}>{c}</option>
+                      ))}
+                    </select>
+                  </Field>
+                </div>
+              </Section>
+
+              {/* ===== LOCATION ===== */}
+              <Section icon={MapPin} title="Location">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <Field label="Location" required>
+                    <input
+                      type="text"
+                      value={form.location}
+                      onChange={(e) => handleChange("location", e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="City" required>
+                    <input
+                      type="text"
+                      value={form.city}
+                      onChange={(e) => handleChange("city", e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <Field label="Area / Society">
+                    <input
+                      type="text"
+                      value={form.area}
+                      onChange={(e) => handleChange("area", e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Full Address">
+                    <input
+                      type="text"
+                      value={form.address}
+                      onChange={(e) => handleChange("address", e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Field label="Latitude" hint="Optional">
+                    <input
+                      type="number"
+                      step="any"
+                      value={form.latitude}
+                      onChange={(e) => handleChange("latitude", e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Longitude" hint="Optional">
+                    <input
+                      type="number"
+                      step="any"
+                      value={form.longitude}
+                      onChange={(e) => handleChange("longitude", e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                </div>
+              </Section>
+
+              {/* ===== PROPERTY DETAILS ===== */}
+              <Section icon={Home} title="Property Details" optional>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {[
+                    { key: "bedrooms", label: "Bedrooms" },
+                    { key: "bathrooms", label: "Bathrooms" },
+                    { key: "kitchens", label: "Kitchens" },
+                    { key: "floors", label: "Floors" },
+                  ].map(({ key, label }) => (
+                    <Field key={key} label={label}>
+                      <input
+                        type="number"
+                        value={form[key]}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                        placeholder="0"
+                        className={inputClass}
+                      />
+                    </Field>
+                  ))}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <Field label="Area Size">
+                    <input
+                      type="number"
+                      value={form.areaSize}
+                      onChange={(e) => handleChange("areaSize", e.target.value)}
                       placeholder="0"
                       className={inputClass}
                     />
                   </Field>
-                ))}
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <Field label="Area Size">
-                  <input
-                    type="number"
-                    value={form.areaSize}
-                    onChange={(e) => handleChange("areaSize", e.target.value)}
-                    placeholder="0"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Area Unit">
-                  <select
-                    value={form.areaUnit}
-                    onChange={(e) => handleChange("areaUnit", e.target.value)}
-                    className={selectClass}
-                  >
-                    {AREA_UNITS.map((u) => (
-                      <option key={u} value={u} style={optionStyle}>{u}</option>
-                    ))}
-                  </select>
-                </Field>
-                <Field label="Year Built">
-                  <input
-                    type="number"
-                    value={form.yearBuilt}
-                    onChange={(e) => handleChange("yearBuilt", e.target.value)}
-                    placeholder="2024"
-                    className={inputClass}
-                  />
-                </Field>
-              </div>
-            </Section>
-
-            {/* ===== STATUS ===== */}
-            <Section icon={Eye} title="Status & Visibility" optional>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Status">
-                  <select
-                    value={form.status}
-                    onChange={(e) => handleChange("status", e.target.value)}
-                    className={selectClass}
-                  >
-                    {STATUS_OPTIONS.map((s) => (
-                      <option key={s} value={s} style={optionStyle} className="capitalize">{s}</option>
-                    ))}
-                  </select>
-                </Field>
-                <div className="flex items-end gap-6 pb-1">
-                  <label className="flex items-center gap-2.5 cursor-pointer select-none">
-                    <button
-                      type="button"
-                      onClick={() => handleChange("isFeatured", !form.isFeatured)}
-                      className={`relative w-11 h-6 rounded-full transition-colors ${form.isFeatured ? "bg-[#2B7FFF]" : "bg-white/10"}`}
+                  <Field label="Area Unit">
+                    <select
+                      value={form.areaUnit}
+                      onChange={(e) => handleChange("areaUnit", e.target.value)}
+                      className={selectClass}
                     >
-                      <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${form.isFeatured ? "translate-x-5" : "translate-x-0"}`} />
-                    </button>
-                    <div className="flex items-center gap-1.5">
-                      <Star size={12} className="text-white/25" />
-                      <span className="text-xs text-white/40">Featured</span>
-                    </div>
-                  </label>
-                  <label className="flex items-center gap-2.5 cursor-pointer select-none">
-                    <button
-                      type="button"
-                      onClick={() => handleChange("isPublished", !form.isPublished)}
-                      className={`relative w-11 h-6 rounded-full transition-colors ${form.isPublished ? "bg-[#2B7FFF]" : "bg-white/10"}`}
-                    >
-                      <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${form.isPublished ? "translate-x-5" : "translate-x-0"}`} />
-                    </button>
-                    <div className="flex items-center gap-1.5">
-                      <Eye size={12} className="text-white/25" />
-                      <span className="text-xs text-white/40">Published</span>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </Section>
-
-            {/* ===== FEATURES & AMENITIES ===== */}
-            <Section icon={Layers} title="Features & Amenities" optional>
-              <div>
-                <div className="flex items-center justify-between mb-2.5">
-                  <span className="text-xs font-semibold text-white/40">Features</span>
-                  <span className="text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full">
-                    {form.features.length} selected
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {SUGGESTED_FEATURES.map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => toggleItem("features", item)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                        form.features.includes(item)
-                          ? "bg-[#2B7FFF]/15 text-[#2B7FFF] border border-[#2B7FFF]/25"
-                          : "bg-white/3 text-white/30 border border-white/6 hover:bg-white/6 hover:text-white/50"
-                      }`}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="border-t border-white/4" />
-              <div>
-                <div className="flex items-center justify-between mb-2.5">
-                  <span className="text-xs font-semibold text-white/40">Amenities</span>
-                  <span className="text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full">
-                    {form.amenities.length} selected
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {SUGGESTED_AMENITIES.map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => toggleItem("amenities", item)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                        form.amenities.includes(item)
-                          ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/25"
-                          : "bg-white/3 text-white/30 border border-white/6 hover:bg-white/6 hover:text-white/50"
-                      }`}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </Section>
-
-            {/* ===== IMAGES ===== */}
-            <Section icon={ImageIcon} title="Images" optional>
-              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-3">
-                {/* Existing images (not removed) */}
-                {visibleExisting.map((img, i) => (
-                  <div
-                    key={`existing-${img.public_id || i}`}
-                    className="relative aspect-square rounded-xl overflow-hidden border border-white/8 group"
-                  >
-                    <Image
-                      src={getImgUrl(img)}
-                      alt=""
-                      fill
-                      className="object-cover"
-                      sizes="120px"
+                      {AREA_UNITS.map((u) => (
+                        <option key={u} value={u} style={optionStyle}>{u}</option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Field label="Year Built">
+                    <input
+                      type="number"
+                      value={form.yearBuilt}
+                      onChange={(e) => handleChange("yearBuilt", e.target.value)}
+                      placeholder="2024"
+                      className={inputClass}
                     />
-                    {i === 0 && (
-                      <span className="absolute bottom-1.5 left-1.5 px-2 py-0.5 bg-[#2B7FFF]/90 text-white text-[8px] font-bold rounded-md uppercase tracking-wider shadow-lg">
-                        Cover
-                      </span>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => removeExistingImage(img.public_id)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-500/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                  </Field>
+                </div>
+              </Section>
+
+              {/* ===== STATUS ===== */}
+              <Section icon={Eye} title="Status & Visibility" optional>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Field label="Status">
+                    <select
+                      value={form.status}
+                      onChange={(e) => handleChange("status", e.target.value)}
+                      className={selectClass}
                     >
-                      <X size={11} className="text-white" />
-                    </button>
+                      {STATUS_OPTIONS.map((s) => (
+                        <option key={s} value={s} style={optionStyle} className="capitalize">{s}</option>
+                      ))}
+                    </select>
+                  </Field>
+                  <div className="flex items-end gap-6 pb-1">
+                    <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                      <button
+                        type="button"
+                        onClick={() => handleChange("isFeatured", !form.isFeatured)}
+                        className={`relative w-11 h-6 rounded-full transition-colors ${form.isFeatured ? "bg-[#2B7FFF]" : "bg-white/10"}`}
+                      >
+                        <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${form.isFeatured ? "translate-x-5" : "translate-x-0"}`} />
+                      </button>
+                      <div className="flex items-center gap-1.5">
+                        <Star size={12} className="text-white/25" />
+                        <span className="text-xs text-white/40">Featured</span>
+                      </div>
+                    </label>
+                    <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                      <button
+                        type="button"
+                        onClick={() => handleChange("isPublished", !form.isPublished)}
+                        className={`relative w-11 h-6 rounded-full transition-colors ${form.isPublished ? "bg-[#2B7FFF]" : "bg-white/10"}`}
+                      >
+                        <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${form.isPublished ? "translate-x-5" : "translate-x-0"}`} />
+                      </button>
+                      <div className="flex items-center gap-1.5">
+                        <Eye size={12} className="text-white/25" />
+                        <span className="text-xs text-white/40">Published</span>
+                      </div>
+                    </label>
                   </div>
-                ))}
+                </div>
+              </Section>
 
-                {/* New images */}
-                {newImagePreviews.map((src, i) => (
-                  <div
-                    key={`new-${i}`}
-                    className="relative aspect-square rounded-xl overflow-hidden border-2 border-dashed border-[#2B7FFF]/30 group"
-                  >
-                    <img
-                      src={src}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                    <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-[#2B7FFF]/80 text-white text-[7px] font-bold rounded-md uppercase">
-                      New
+              {/* ===== FEATURES & AMENITIES ===== */}
+              <Section icon={Layers} title="Features & Amenities" optional>
+                <div>
+                  <div className="flex items-center justify-between mb-2.5">
+                    <span className="text-xs font-semibold text-white/40">Features</span>
+                    <span className="text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full">
+                      {form.features.length} selected
                     </span>
-                    <button
-                      type="button"
-                      onClick={() => removeNewImage(i)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-500/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
-                    >
-                      <X size={11} className="text-white" />
-                    </button>
                   </div>
-                ))}
-
-                {/* Add button */}
-                {getTotalImageCount() < 10 && (
-                  <label className="aspect-square rounded-xl border-2 border-dashed border-white/8 hover:border-[#2B7FFF]/30 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-white/2">
-                    <ImagePlus size={22} className="text-white/15 mb-1" />
-                    <span className="text-[10px] text-white/20 font-medium">Add</span>
-                    <span className="text-[9px] text-white/10">{getTotalImageCount()}/10</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      onChange={handleNewImageChange}
-                      className="hidden"
-                    />
-                  </label>
-                )}
-              </div>
-
-              {/* Removed images — restore option */}
-              {removedImageIds.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-white/4">
-                  <p className="text-[10px] text-red-400/60 mb-2 uppercase tracking-wider font-semibold">
-                    Marked for removal ({removedImageIds.length})
-                  </p>
                   <div className="flex flex-wrap gap-2">
-                    {removedImageIds.map((publicId) => {
-                      const img = existingImages.find((im) => im.public_id === publicId);
-                      if (!img) return null;
-                      return (
-                        <button
-                          key={publicId}
-                          type="button"
-                          onClick={() => restoreExistingImage(publicId)}
-                          className="relative w-16 h-12 rounded-lg overflow-hidden border border-red-500/30 opacity-40 hover:opacity-80 transition-opacity"
-                          title="Click to restore"
-                        >
-                          <Image
-                            src={getImgUrl(img)}
-                            alt=""
-                            fill
-                            className="object-cover"
-                            sizes="64px"
-                          />
-                          <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center">
-                            <span className="text-white text-[9px] font-bold">RESTORE</span>
-                          </div>
-                        </button>
-                      );
-                    })}
+                    {SUGGESTED_FEATURES.map((item) => (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => toggleItem("features", item)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                          form.features.includes(item)
+                            ? "bg-[#2B7FFF]/15 text-[#2B7FFF] border border-[#2B7FFF]/25"
+                            : "bg-white/3 text-white/30 border border-white/6 hover:bg-white/6 hover:text-white/50"
+                        }`}
+                      >
+                        {item}
+                      </button>
+                    ))}
                   </div>
                 </div>
-              )}
-
-              <p className="text-white/15 text-[10px] mt-2">
-                Hover over image and click X to remove. Removed images can be restored. First image is cover.
-              </p>
-            </Section>
-
-            {/* ===== CONTACT ===== */}
-            <Section icon={Phone} title="Contact Information" optional>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <Field label="Contact Name">
-                  <div className="relative">
-                    <User size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/15" />
-                    <input
-                      type="text"
-                      value={form.contactName}
-                      onChange={(e) => handleChange("contactName", e.target.value)}
-                      className={`${inputClass} pl-9`}
-                    />
+                <div className="border-t border-white/4" />
+                <div>
+                  <div className="flex items-center justify-between mb-2.5">
+                    <span className="text-xs font-semibold text-white/40">Amenities</span>
+                    <span className="text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full">
+                      {form.amenities.length} selected
+                    </span>
                   </div>
-                </Field>
-                <Field label="Contact Phone">
-                  <div className="relative">
-                    <Phone size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/15" />
-                    <input
-                      type="tel"
-                      value={form.contactPhone}
-                      onChange={(e) => handleChange("contactPhone", e.target.value)}
-                      className={`${inputClass} pl-9`}
-                    />
+                  <div className="flex flex-wrap gap-2">
+                    {SUGGESTED_AMENITIES.map((item) => (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => toggleItem("amenities", item)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                          form.amenities.includes(item)
+                            ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/25"
+                            : "bg-white/3 text-white/30 border border-white/6 hover:bg-white/6 hover:text-white/50"
+                        }`}
+                      >
+                        {item}
+                      </button>
+                    ))}
                   </div>
-                </Field>
-                <Field label="Contact Email">
-                  <div className="relative">
-                    <Mail size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/15" />
-                    <input
-                      type="email"
-                      value={form.contactEmail}
-                      onChange={(e) => handleChange("contactEmail", e.target.value)}
-                      className={`${inputClass} pl-9`}
-                    />
+                </div>
+              </Section>
+
+              {/* ===== IMAGES ===== */}
+              <Section icon={ImageIcon} title="Images" optional>
+                <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-3">
+                  {/* Existing images (not removed) */}
+                  {visibleExisting.map((img, i) => (
+                    <div
+                      key={`existing-${img.public_id || i}`}
+                      className="relative aspect-square rounded-xl overflow-hidden border border-white/8 group"
+                    >
+                      <Image
+                        src={getImgUrl(img)}
+                        alt=""
+                        fill
+                        className="object-cover"
+                        sizes="120px"
+                      />
+                      {i === 0 && (
+                        <span className="absolute bottom-1.5 left-1.5 px-2 py-0.5 bg-[#2B7FFF]/90 text-white text-[8px] font-bold rounded-md uppercase tracking-wider shadow-lg">
+                          Cover
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeExistingImage(img.public_id)}
+                        className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-500/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                      >
+                        <X size={11} className="text-white" />
+                      </button>
+                    </div>
+                  ))}
+
+                  {/* New images */}
+                  {newImagePreviews.map((src, i) => (
+                    <div
+                      key={`new-${i}`}
+                      className="relative aspect-square rounded-xl overflow-hidden border-2 border-dashed border-[#2B7FFF]/30 group"
+                    >
+                      <img
+                        src={src}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-[#2B7FFF]/80 text-white text-[7px] font-bold rounded-md uppercase">
+                        New
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeNewImage(i)}
+                        className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-500/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                      >
+                        <X size={11} className="text-white" />
+                      </button>
+                    </div>
+                  ))}
+
+                  {/* Add button */}
+                  {getTotalImageCount() < 10 && (
+                    <label className="aspect-square rounded-xl border-2 border-dashed border-white/8 hover:border-[#2B7FFF]/30 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-white/2">
+                      <ImagePlus size={22} className="text-white/15 mb-1" />
+                      <span className="text-[10px] text-white/20 font-medium">Add</span>
+                      <span className="text-[9px] text-white/10">{getTotalImageCount()}/10</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleNewImageChange}
+                        className="hidden"
+                      />
+                    </label>
+                  )}
+                </div>
+
+                {/* Removed images — restore option */}
+                {removedImageIds.length > 0 && (
+                  <div className="mt-3 pt-3 border-t border-white/4">
+                    <p className="text-[10px] text-red-400/60 mb-2 uppercase tracking-wider font-semibold">
+                      Marked for removal ({removedImageIds.length})
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {removedImageIds.map((publicId) => {
+                        const img = existingImages.find((im) => im.public_id === publicId);
+                        if (!img) return null;
+                        return (
+                          <button
+                            key={publicId}
+                            type="button"
+                            onClick={() => restoreExistingImage(publicId)}
+                            className="relative w-16 h-12 rounded-lg overflow-hidden border border-red-500/30 opacity-40 hover:opacity-80 transition-opacity"
+                            title="Click to restore"
+                          >
+                            <Image
+                              src={getImgUrl(img)}
+                              alt=""
+                              fill
+                              className="object-cover"
+                              sizes="64px"
+                            />
+                            <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center">
+                              <span className="text-white text-[9px] font-bold">RESTORE</span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </Field>
-              </div>
-            </Section>
-
-            <div className="h-24" />
-          </form>
-        </div>
-
-        {/* ===== FOOTER ===== */}
-        <div className="shrink-0 border-t border-white/6 bg-[#081730] shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
-          <div className="flex items-center justify-between px-6 lg:px-8 h-16 max-w-6xl mx-auto">
-            <p className="text-white/20 text-xs hidden sm:block">
-              <span className="text-red-400/60">*</span> Required fields
-            </p>
-            <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-5 py-2.5 border border-white/10 text-white/50 text-sm font-semibold rounded-xl hover:bg-white/5 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                form="propertyUpdateForm"
-                disabled={saving}
-                className="flex items-center gap-2 px-7 py-2.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30"
-              >
-                {saving ? (
-                  <>
-                    <Loader2 size={16} className="animate-spin" />
-                    Updating...
-                  </>
-                ) : (
-                  <>
-                    <Building2 size={15} />
-                    Update Property
-                  </>
                 )}
-              </button>
+
+                <p className="text-white/15 text-[10px] mt-2">
+                  Hover over image and click X to remove. Removed images can be restored. First image is cover.
+                </p>
+              </Section>
+
+              {/* ===== CONTACT ===== */}
+              <Section icon={Phone} title="Contact Information" optional>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <Field label="Contact Name">
+                    <div className="relative">
+                      <User size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/15" />
+                      <input
+                        type="text"
+                        value={form.contactName}
+                        onChange={(e) => handleChange("contactName", e.target.value)}
+                        className={`${inputClass} pl-9`}
+                      />
+                    </div>
+                  </Field>
+                  <Field label="Contact Phone">
+                    <div className="relative">
+                      <Phone size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/15" />
+                      <input
+                        type="tel"
+                        value={form.contactPhone}
+                        onChange={(e) => handleChange("contactPhone", e.target.value)}
+                        className={`${inputClass} pl-9`}
+                      />
+                    </div>
+                  </Field>
+                  <Field label="Contact Email">
+                    <div className="relative">
+                      <Mail size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/15" />
+                      <input
+                        type="email"
+                        value={form.contactEmail}
+                        onChange={(e) => handleChange("contactEmail", e.target.value)}
+                        className={`${inputClass} pl-9`}
+                      />
+                    </div>
+                  </Field>
+                </div>
+              </Section>
+            </form>
+          </div>
+
+          {/* ===== FOOTER (fixed bottom — Update button HAMESHA visible) ===== */}
+          <div className="shrink-0 border-t border-white/6 bg-[#081730] shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
+            <div className="flex items-center justify-between px-6 lg:px-8 h-16 max-w-6xl mx-auto">
+              <p className="text-white/20 text-xs hidden sm:block">
+                <span className="text-red-400/60">*</span> Required fields
+              </p>
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  disabled={saving}
+                  className="px-5 py-2.5 border border-white/10 text-white/50 text-sm font-semibold rounded-xl hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  form="propertyUpdateForm"
+                  disabled={saving}
+                  className="flex items-center gap-2 px-7 py-2.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 shrink-0"
+                >
+                  {saving ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      Updating...
+                    </>
+                  ) : (
+                    <>
+                      <Building2 size={15} />
+                      Update Property
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </>
   );
+
+  // ✅ FIX 1: Portal — modal seedha document.body pe render hota hai,
+  // koi bhi transformed/filtered parent iski fixed positioning nahi tod sakta
+  return mounted ? createPortal(modalContent, document.body) : null;
 }
