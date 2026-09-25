@@ -239,7 +239,7 @@ export default function Footer() {
               className="text-sm sm:text-base leading-relaxed mb-6 max-w-md"
               style={{ color: `${LIGHT_GRAY}CC` }}
             >
-              Helping  Veterans Hwy, Millersville,homeowners embrace their next chapter
+              Helping  Baltimore Metro,homeowners embrace their next chapter
               with thoughtful guidance, local knowledge, and a real estate
               experience built on trust, kindness, and connection.
             </p>
@@ -544,7 +544,7 @@ export default function Footer() {
                 className="text-lg sm:text-xl font-extrabold mb-1"
                 style={{ color: PURE_WHITE }}
               >
-                Stay Updated with  Veterans Hwy, Millersville,Real Estate
+                Stay Updated with  Baltimore Metro,Real Estate
               </h4>
               <p
                 className="text-xs sm:text-sm"
